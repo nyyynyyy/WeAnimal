@@ -1,6 +1,8 @@
 package jsc.cactus.com.weanimal.g_animal.main.main.weanimal;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -24,6 +26,7 @@ import jsc.cactus.com.weanimal.g_animal.main.animal.Animal;
 import jsc.cactus.com.weanimal.g_animal.main.animal.AnimalType;
 import jsc.cactus.com.weanimal.g_animal.main.animal.status.Status;
 import jsc.cactus.com.weanimal.g_animal.main.animal.status.StatusType;
+import jsc.cactus.com.weanimal.g_animal.main.familychat.ChatManager;
 import jsc.cactus.com.weanimal.g_animal.main.familychat.FamilyChatShowManager;
 import jsc.cactus.com.weanimal.g_animal.main.users.User;
 import jsc.cactus.com.weanimal.g_animal.main.users.UserGender;
@@ -52,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onStop(){
+    public void onStop() {
         super.onStop();
         MyService.mSocket.off("RES_STATUS", statusRecive);
     }
@@ -96,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
                         NAME = data.getString("name");
                         TYPE = data.getString("type");
                         LEVEL = data.getInt("level");
-                        FOOD  = STATUS.getInt("feed");
+                        FOOD = STATUS.getInt("feed");
                         WATER = STATUS.getInt("thirst");
                         LOVE = STATUS.getInt("love");
 
@@ -129,10 +132,10 @@ public class MainActivity extends AppCompatActivity {
     public void init() {
 
         mainActivity = this;
-
+        new ChatManager();
         new FamilyChatShowManager(this);
         new Animal(this);
-        new UserManager(new User(Variable.user_id , Variable.user_name , Variable.user_birthday, UserGender.MALE));
+        new UserManager(new User(Variable.user_id, Variable.user_name, Variable.user_birthday, UserGender.MALE));
 
         Button test = (Button) findViewById(R.id.missionButton);
 
@@ -140,7 +143,7 @@ public class MainActivity extends AppCompatActivity {
                 new View.OnClickListener() {
                     public void onClick(View v) {
                         Intent callIntent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:010-2975-7544"));
-                        startActivity(callIntent);
+                        //startActivity(callIntent);
                     }
                 });
     }
