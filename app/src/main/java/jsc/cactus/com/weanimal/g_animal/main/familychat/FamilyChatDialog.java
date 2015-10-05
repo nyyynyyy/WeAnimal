@@ -4,6 +4,7 @@ import android.app.DialogFragment;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,7 +30,7 @@ public class FamilyChatDialog extends DialogFragment {
     private Button acceptButton;
     private boolean isOnMission = false, isOpen = false;
 
-    static List<ChatItem> items = new ArrayList<ChatItem>();
+    private static List<ChatItem> items = new ArrayList<ChatItem>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -40,6 +41,7 @@ public class FamilyChatDialog extends DialogFragment {
 
     private void init(View view) {
 
+        Log.i("jsc", "ChatDialog init");
         getDialog().setTitle("Family Chat");
         textEdit = (EditText) view.findViewById(R.id.familychat_editText);
         acceptButton = (Button) view.findViewById(R.id.familychat_acceptButton);
@@ -54,10 +56,13 @@ public class FamilyChatDialog extends DialogFragment {
         acceptButton.setEnabled(false);
     }
 
-    View.OnClickListener confirm = new View.OnClickListener() {
+    public static ChatListViewAdapter getChatListViewAdapter(){
+        return chatListViewAdapter;
+    }
+
+    private View.OnClickListener confirm = new View.OnClickListener() {
         public void onClick(View v) {
-            chatListViewAdapter.add(new ChatItem(null, textEdit.getText().toString(), UserManager.getLocalUser().getName(), new Date()));
-            chatListViewAdapter.notifyDataSetChanged();
+            ChatManager.callChatEvent(UserManager.getLocalUser(), textEdit.getText().toString());
             listView.setSelection(listView.getCount() - 1);
             textEdit.setText("");
             acceptButton.setEnabled(false);

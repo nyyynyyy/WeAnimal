@@ -36,6 +36,12 @@ public class ChatListViewAdapter extends ArrayAdapter<ChatItem> {
     }
 
     @Override
+    public void add(ChatItem object) {
+        super.add(object);
+        super.notifyDataSetChanged();
+    }
+
+    @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = activity.getLayoutInflater();
         View item = inflater.inflate(R.layout.familychat_item, null);

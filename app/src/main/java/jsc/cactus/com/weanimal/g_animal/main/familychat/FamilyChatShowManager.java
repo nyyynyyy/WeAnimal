@@ -25,6 +25,7 @@ public class FamilyChatShowManager {
         familyChatDialog = new FamilyChatDialog();
 
 
+
         signImageView.setOnClickListener(clickSign);
     }
 
