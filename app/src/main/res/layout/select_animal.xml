@@ -69,7 +69,8 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginLeft="50dp"
             android:layout_marginRight="50dp"
-            android:gravity="center" />
+            android:gravity="center"
+            android:inputType="text" />
 
         <Button
             android:layout_width="fill_parent"
