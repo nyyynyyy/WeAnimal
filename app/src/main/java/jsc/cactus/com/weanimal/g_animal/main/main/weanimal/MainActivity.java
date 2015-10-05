@@ -14,6 +14,8 @@ import android.widget.TextView;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+
 import io.socket.emitter.Emitter;
 import jsc.cactus.com.weanimal.MyService;
 import jsc.cactus.com.weanimal.R;
@@ -31,6 +33,8 @@ import jsc.cactus.com.weanimal.g_animal.main.users.UserManager;
  * Created by INSI on 15. 9. 23..
  */
 public class MainActivity extends AppCompatActivity {
+
+    public static MainActivity mainActivity;
 
     long missionTime = 0;
 
@@ -50,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onStop(){
         super.onStop();
-        MyService.mSocket.off("RES_STATUS",statusRecive);
+        MyService.mSocket.off("RES_STATUS", statusRecive);
     }
 
     private void getStatus() throws JSONException {
@@ -123,6 +127,8 @@ public class MainActivity extends AppCompatActivity {
     };
 
     public void init() {
+
+        mainActivity = this;
 
         new FamilyChatShowManager(this);
         new Animal(this);
