@@ -1,0 +1,116 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="jsc.cactus.com.weanimal.e_set.Complete_regist"
+    android:orientation="vertical"
+    android:gravity="center_horizontal">
+
+    <View android:layout_height="0dp"
+        android:layout_width="match_parent"
+        android:layout_weight="1.5" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="당신이 가족의 대표입니다."
+        android:id="@+id/textView"
+        android:layout_gravity="center_horizontal" />
+
+    <View android:layout_height="0dp"
+        android:layout_width="match_parent"
+        android:layout_weight="1" />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="ID"
+            android:id="@+id/textView2"
+            android:layout_gravity="center_horizontal" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Large Text"
+            android:id="@+id/a5_txt_id"
+            android:layout_gravity="center_horizontal" />
+
+    </LinearLayout>
+
+    <View android:layout_height="0dp"
+        android:layout_width="match_parent"
+        android:layout_weight="1" />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="가족번호"
+            android:id="@+id/a3_1_txt_id"
+            android:layout_gravity="center_horizontal" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Large Text"
+            android:id="@+id/a5_txt_fn"
+            android:layout_gravity="center_horizontal" />
+    </LinearLayout>
+
+    <View android:layout_height="0dp"
+        android:layout_width="match_parent"
+        android:layout_weight="1" />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="가족비밀번호"
+            android:id="@+id/a3_1_txt_name"
+            android:layout_gravity="center_horizontal" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Large Text"
+            android:id="@+id/a5_txt_fp"
+            android:layout_gravity="center_horizontal" />
+    </LinearLayout>
+
+    <View android:layout_height="0dp"
+        android:layout_width="match_parent"
+        android:layout_weight="1" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="확인"
+        android:id="@+id/a5_btn_acc" />
+
+    <View android:layout_height="0dp"
+        android:layout_width="match_parent"
+        android:layout_weight="1" />
+</LinearLayout>
