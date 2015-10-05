@@ -156,13 +156,7 @@ public class Havenot_family extends AppCompatActivity {
                         CH = data.getBoolean("success");
                         FN = data.getInt("familycode");
                         if (CH == true) {
-                            push(1, "계정이 생성되었습니다..");
-
-                            //nextFN = FN;
-
                             Variable.user_familycode = FN;
-
-                            push(2, Integer.toString(FN));
 
                             Id_query act03 = (Id_query) Id_query.ac03;
                             Family_query act04 = (Family_query) Family_query.ac04;
@@ -174,7 +168,7 @@ public class Havenot_family extends AppCompatActivity {
                             finish();
 
                         } else {
-                            push(1, "계정이 존재합니다..");
+                            OftenMethod.message(Havenot_family.this,"누군가가 사용하고 있는 아이디입니다.");
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -207,7 +201,5 @@ public class Havenot_family extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void push(int id, String msg) {
-        OftenMethod.onBtnNotification(id, this, msg, (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE));
-    }
+
 }

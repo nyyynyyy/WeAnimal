@@ -6,8 +6,10 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import jsc.cactus.com.weanimal.MyService;
 import jsc.cactus.com.weanimal.c_login.Id_query;
 import jsc.cactus.com.weanimal.R;
+import jsc.cactus.com.weanimal.f_list.View_family;
 
 public class Loding extends AppCompatActivity {
 
@@ -16,31 +18,14 @@ public class Loding extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.loading);
 
-        Intent intent = new Intent(this, Id_query.class);
-        //intent.putExtras(bundle);
-        startActivity(intent);
-        finish();
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_activity02, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        if (MyService.login) {
+            Intent intent = new Intent(this, View_family.class);
+            startActivity(intent);
+            finish();
+        } else {
+            Intent intent = new Intent(this, Id_query.class);
+            startActivity(intent);
+            finish();
         }
-
-        return super.onOptionsItemSelected(item);
     }
 }

@@ -24,6 +24,8 @@ import jsc.cactus.com.weanimal.g_animal.main.animal.status.Share_status;
 public class MyService extends Service {
     static boolean turn = false;
 
+    public static boolean login = false;
+
     static Activity activity;
     static Context context;
 
