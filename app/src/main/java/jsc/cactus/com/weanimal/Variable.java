@@ -12,4 +12,5 @@ public class Variable {
     public static String user_gender = "male";
     public static String user_birthday = "1999-12-23";
     public static String user_phonenumber = "010-1999-1223";
+    public static String test = "yoo";
 }
