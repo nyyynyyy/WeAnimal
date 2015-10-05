@@ -6,6 +6,8 @@ import java.util.Calendar;
  * Created by INSI on 2015. 10. 2..
  */
 public class User {
+
+    private Integer profileImage;
     private String id;
     private String name;
     private String birth;
@@ -18,6 +20,10 @@ public class User {
         this.gender = gender;
     }
 
+    public void setProfileImage(Integer profileImageId){
+        this.profileImage = profileImageId;
+    }
+
     public String getId() {
         return id;
     }
@@ -28,6 +34,10 @@ public class User {
 
     public UserGender getGender() {
         return gender;
+    }
+
+    public Integer getProfileImageId(){
+        return profileImage;
     }
 
     public boolean isTodayBirthDay() {
