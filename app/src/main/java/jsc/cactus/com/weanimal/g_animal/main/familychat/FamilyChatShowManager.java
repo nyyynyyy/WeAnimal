@@ -12,14 +12,14 @@ import jsc.cactus.com.weanimal.g_animal.main.mission.MissionListener;
 /**
  * Created by INSI on 15. 9. 30..
  */
-public class FamilyChatManager implements MissionListener {
+public class FamilyChatShowManager {
 
     private FamilyChatDialog familyChatDialog;
     private FragmentManager fragmentManager;
     private ImageView signImageView;
     private boolean isOnMission = false;
 
-    public FamilyChatManager(Activity activity){
+    public FamilyChatShowManager(Activity activity){
         fragmentManager = activity.getFragmentManager();
         signImageView = (ImageView) activity.findViewById(R.id.imageView);
         familyChatDialog = new FamilyChatDialog();
@@ -34,14 +34,4 @@ public class FamilyChatManager implements MissionListener {
                 familyChatDialog.show(fragmentManager, "");
         }
     };
-
-    @Override
-    public void startMission(Mission mission) {
-
-    }
-
-    @Override
-    public void clearMission() {
-
-    }
 }

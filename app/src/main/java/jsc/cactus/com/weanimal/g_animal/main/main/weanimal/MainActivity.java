@@ -1,6 +1,5 @@
 package jsc.cactus.com.weanimal.g_animal.main.main.weanimal;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -17,15 +16,13 @@ import org.json.JSONObject;
 
 import io.socket.emitter.Emitter;
 import jsc.cactus.com.weanimal.MyService;
-import jsc.cactus.com.weanimal.OftenMethod;
 import jsc.cactus.com.weanimal.R;
 import jsc.cactus.com.weanimal.Variable;
-import jsc.cactus.com.weanimal.d_regist.Family_query;
 import jsc.cactus.com.weanimal.g_animal.main.animal.Animal;
 import jsc.cactus.com.weanimal.g_animal.main.animal.AnimalType;
 import jsc.cactus.com.weanimal.g_animal.main.animal.status.Status;
 import jsc.cactus.com.weanimal.g_animal.main.animal.status.StatusType;
-import jsc.cactus.com.weanimal.g_animal.main.familychat.FamilyChatManager;
+import jsc.cactus.com.weanimal.g_animal.main.familychat.FamilyChatShowManager;
 import jsc.cactus.com.weanimal.g_animal.main.users.User;
 import jsc.cactus.com.weanimal.g_animal.main.users.UserGender;
 import jsc.cactus.com.weanimal.g_animal.main.users.UserManager;
@@ -127,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void init() {
 
-        new FamilyChatManager(this);
+        new FamilyChatShowManager(this);
         new Animal(this);
         new UserManager(new User(Variable.user_id , Variable.user_name , Variable.user_birthday, UserGender.MALE));
 
