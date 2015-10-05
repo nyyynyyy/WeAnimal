@@ -1,11 +1,15 @@
 package jsc.cactus.com.weanimal;
 
 import android.app.Activity;
+import android.app.AlarmManager;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
+import android.os.Message;
+import android.os.SystemClock;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -49,7 +53,11 @@ public class MyService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         turn = true;
 
+        Toast.makeText(this, "위애니멀", Toast.LENGTH_SHORT).show();
+
         Log.i("TEST", "Service Command");
+
+        unregisterRestartAlarm();
 
         while (!mSocket.connected()) {
             mSocket.connect();
@@ -79,6 +87,27 @@ public class MyService extends Service {
         return Service.START_STICKY;
     }
 
+    public void registerRestartAlarm() {
+        Log.d("PersistentService", "registerRestartAlarm");
+        Intent intent = new Intent(MyService.this, RestartService.class);
+        intent.setAction("ACTION.RESTART.PersistentService");
+        PendingIntent sender = PendingIntent.getBroadcast(MyService.this, 0, intent, 0);
+        long firstTime = SystemClock.elapsedRealtime();
+        firstTime += 10*1000;                                               // 10초 후에 알람이벤트 발생
+        AlarmManager am = (AlarmManager)getSystemService(ALARM_SERVICE);
+        am.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, firstTime, 10*1000, sender);
+    }
+
+    public void unregisterRestartAlarm() {
+        Log.d("PersistentService", "unregisterRestartAlarm");
+        Intent intent = new Intent(MyService.this, RestartService.class);
+        intent.setAction("ACTION.RESTART.PersistentService");
+        PendingIntent sender = PendingIntent.getBroadcast(MyService.this, 0, intent, 0);
+        AlarmManager am = (AlarmManager)getSystemService(ALARM_SERVICE);
+        am.cancel(sender);
+    }
+
+
     @Override
     public IBinder onBind(Intent arg0) {
         Log.i("TEST", "Service Bind");
@@ -93,19 +122,17 @@ public class MyService extends Service {
 
         turn = false;
 
-        push(1, "서비스가 종료되었습니다.");
+        Toast.makeText(this, "서비스 종료", Toast.LENGTH_SHORT).show();
 
         Log.i("TEST", "Service Destroy");
+
+        registerRestartAlarm();
+
+        super.onDestroy();
 
     }
 
     public void onSocket() throws JSONException {
-        JSONObject data = new JSONObject();
-
-
-//        data.put("FA", Variable.user_familycode);
-
-//        MyService.mSocket.emit("STATUS", data);
         MyService.mSocket.on("RES_SET", StatusRecive);
     }
 
