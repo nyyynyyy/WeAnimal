@@ -59,7 +59,7 @@ public class MyService extends Service {
 
         unregisterRestartAlarm();
 
-        while (!mSocket.connected()) {
+        do {
             mSocket.connect();
             Toast.makeText(this, "연결 시도", Toast.LENGTH_SHORT).show();
 
@@ -81,7 +81,7 @@ public class MyService extends Service {
                     e.printStackTrace();
                 }
             }
-        }
+        }while(!mSocket.connected());
 
 
         return Service.START_STICKY;
