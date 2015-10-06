@@ -16,6 +16,7 @@ import android.widget.Toast;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.net.URISyntaxException;
 
 import io.socket.client.IO;
@@ -53,6 +54,21 @@ public class MyService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         turn = true;
 
+        FileMethod file = new FileMethod(new File("/data/data/jsc.cactus.com.weanimal/files/login/"),"login.txt");
+
+        String userData = file.readFile();
+
+        if(userData != null) {
+            String data[] = userData.split("/");
+
+            Variable.user_id = data[0];
+            Variable.user_name = data[1];
+            Variable.user_familycode = Integer.parseInt(data[2]);
+            Variable.user_birthday = data[3];
+            Variable.user_gender = data[4];
+            login = true;
+        }
+
         Toast.makeText(this, "위애니멀", Toast.LENGTH_SHORT).show();
 
         Log.i("TEST", "Service Command");
@@ -74,7 +90,15 @@ public class MyService extends Service {
             } else {
                 Toast.makeText(this, "연결 성공", Toast.LENGTH_SHORT).show();
                 Log.i("TEST", "Socket connect");
+
+                try {
+                    sendMessage();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
                 mSocket.on("SEND_MSG", Recive);
+
                 try {
                     onSocket();
                 } catch (JSONException e) {
@@ -134,6 +158,16 @@ public class MyService extends Service {
 
     public void onSocket() throws JSONException {
         MyService.mSocket.on("RES_SET", StatusRecive);
+    }
+
+    public void sendMessage() throws JSONException {
+        JSONObject data = new JSONObject();
+
+        int msgfc = Variable.user_familycode;
+
+        data.put("FC", msgfc);
+
+        MyService.mSocket.emit("AUTO_LOGIN", data);
     }
 
     private Emitter.Listener Recive = new Emitter.Listener() {

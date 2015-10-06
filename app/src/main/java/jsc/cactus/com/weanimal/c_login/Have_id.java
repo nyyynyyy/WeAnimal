@@ -3,6 +3,7 @@ package jsc.cactus.com.weanimal.c_login;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,7 +13,15 @@ import android.widget.EditText;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+
 import io.socket.emitter.Emitter;
+import jsc.cactus.com.weanimal.FileMethod;
 import jsc.cactus.com.weanimal.MyService;
 import jsc.cactus.com.weanimal.f_list.View_family;
 import jsc.cactus.com.weanimal.OftenMethod;
@@ -111,6 +120,14 @@ public class Have_id extends AppCompatActivity {
                                     Variable.user_familycode= data.getInt("familycode");
                                     Variable.user_gender = data.getString("gender");
                                     Variable.user_birthday = data.getString("birth");
+
+                                    FileMethod file = new FileMethod(new File("/data/data/jsc.cactus.com.weanimal/files/login/"),"login.txt");
+                                    file.writeFile("@" + Variable.user_id + "/" + Variable.user_name + "/" + Variable.user_familycode + "/" + Variable.user_birthday + "/" + Variable.user_gender);
+                                    Log.i("TEST", file.readFile());
+                                    Log.i("TEST", Have_id.this.getFilesDir().toString());
+
+                                    //  "/data/data/jsc.cactus.com.weanimal/files"
+
                                     goin();
                                     MyService.login = true;
                                     finish();
