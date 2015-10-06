@@ -106,6 +106,11 @@ public class Have_id extends AppCompatActivity {
                         switch (CH) {
                             case 1:
                                 if(!View_family.on_ac) {
+                                    Variable.user_id = data.getString("id");
+                                    Variable.user_name = data.getString("name");
+                                    Variable.user_familycode= data.getInt("familycode");
+                                    Variable.user_gender = data.getString("gender");
+                                    Variable.user_birthday = data.getString("birth");
                                     goin();
                                     MyService.login = true;
                                     finish();
