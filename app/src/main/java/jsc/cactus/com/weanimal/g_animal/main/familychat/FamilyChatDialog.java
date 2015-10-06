@@ -49,7 +49,10 @@ public class FamilyChatDialog extends DialogFragment {
         if (chatListViewAdapter == null)
             chatListViewAdapter = new ChatListViewAdapter(getActivity(), R.layout.familychat_item, items);
 
+        new ChatManager();
+
         listView.setAdapter(chatListViewAdapter);
+        listView.setSelection(listView.getCount() - 1);
 
         textEdit.addTextChangedListener(edit);
         acceptButton.setOnClickListener(confirm);
@@ -57,6 +60,7 @@ public class FamilyChatDialog extends DialogFragment {
     }
 
     public static ChatListViewAdapter getChatListViewAdapter(){
+
         return chatListViewAdapter;
     }
 

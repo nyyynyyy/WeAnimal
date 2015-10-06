@@ -132,7 +132,6 @@ public class MainActivity extends AppCompatActivity {
     public void init() {
 
         mainActivity = this;
-        new ChatManager();
         new FamilyChatShowManager(this);
         new Animal(this);
         new UserManager(new User(Variable.user_id, Variable.user_name, Variable.user_birthday, UserGender.MALE));
