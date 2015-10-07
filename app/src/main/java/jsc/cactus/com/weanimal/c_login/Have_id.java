@@ -122,8 +122,10 @@ public class Have_id extends AppCompatActivity {
                                     Variable.user_birthday = data.getString("birth");
 
                                     FileMethod file = new FileMethod(new File("/data/data/jsc.cactus.com.weanimal/files/login/"),"login.txt");
+
                                     file.writeFile("@" + Variable.user_id + "/" + Variable.user_name + "/" + Variable.user_familycode + "/" + Variable.user_birthday + "/" + Variable.user_gender);
                                     Log.i("TEST", file.readFile());
+
                                     Log.i("TEST", Have_id.this.getFilesDir().toString());
 
                                     //  "/data/data/jsc.cactus.com.weanimal/files"

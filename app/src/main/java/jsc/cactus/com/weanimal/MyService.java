@@ -21,7 +21,10 @@ import java.net.URISyntaxException;
 
 import io.socket.client.IO;
 import io.socket.emitter.Emitter;
+import jsc.cactus.com.weanimal.g_animal.main.animal.Animal;
 import jsc.cactus.com.weanimal.g_animal.main.animal.status.Share_status;
+import jsc.cactus.com.weanimal.g_animal.main.animal.status.Status;
+import jsc.cactus.com.weanimal.g_animal.main.animal.status.StatusType;
 
 /**
  * Created by nyyyn on 2015-10-03.
@@ -35,7 +38,6 @@ public class MyService extends Service {
     static Context context;
 
     public static io.socket.client.Socket mSocket;
-
     {
         try {
             mSocket = IO.socket("http://gondr.iptime.org:52273");
@@ -46,19 +48,23 @@ public class MyService extends Service {
     }
 
     public static void cons(Activity act, Context ctx) {
-        activity = act;
-        context = ctx;
+        Variable.service_activity = act;
+        Variable.service_context = ctx;
     }
+
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        activity = Variable.service_activity;
+        context = Variable.service_context;
+
         turn = true;
 
         FileMethod file = new FileMethod(new File("/data/data/jsc.cactus.com.weanimal/files/login/"),"login.txt");
 
         String userData = file.readFile();
 
-        if(userData != null) {
+        if(userData != "") {
             String data[] = userData.split("/");
 
             Variable.user_id = data[0];
@@ -68,6 +74,8 @@ public class MyService extends Service {
             Variable.user_gender = data[4];
             login = true;
         }
+
+        Log.i("TEST", Boolean.toString(login));
 
         Toast.makeText(this, "위애니멀", Toast.LENGTH_SHORT).show();
 
@@ -91,10 +99,12 @@ public class MyService extends Service {
                 Toast.makeText(this, "연결 성공", Toast.LENGTH_SHORT).show();
                 Log.i("TEST", "Socket connect");
 
-                try {
-                    sendMessage();
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                if(login) {
+                    try {
+                        sendMessage();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
 
                 mSocket.on("SEND_MSG", Recive);
@@ -117,7 +127,7 @@ public class MyService extends Service {
         intent.setAction("ACTION.RESTART.PersistentService");
         PendingIntent sender = PendingIntent.getBroadcast(MyService.this, 0, intent, 0);
         long firstTime = SystemClock.elapsedRealtime();
-        firstTime += 10*1000;                                               // 10초 후에 알람이벤트 발생
+        firstTime += 5 * 1000;                                               // 10초 후에 알람이벤트 발생
         AlarmManager am = (AlarmManager)getSystemService(ALARM_SERVICE);
         am.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, firstTime, 10*1000, sender);
     }
@@ -207,17 +217,19 @@ public class MyService extends Service {
                     JSONObject data = (JSONObject) args[0];
                     int family_love;
                     int family_food;
-                    int family__water;
+                    int family_water;
 
                     try {
-                        family__water = data.getInt("WA");
+                        family_water = data.getInt("WA");
                         family_food = data.getInt("FO");
                         family_love = data.getInt("LO");
 
                         Log.i("TEST", "push");
                         push(2, "동물의 상태가 변화하였습니다.");
 
-                        new Share_status(family__water, family_food, family_love);
+                        Animal.animal.getStatus().setStatus(StatusType.FOOD, family_food);
+                        Animal.animal.getStatus().setStatus(StatusType.LOVE,family_love);
+                        Animal.animal.getStatus().setStatus(StatusType.WATER,family_water);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }

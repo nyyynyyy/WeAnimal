@@ -1,6 +1,7 @@
 package jsc.cactus.com.weanimal.g_animal.main.animal.status;
 
 import android.app.Activity;
+import android.util.Log;
 
 import jsc.cactus.com.weanimal.g_animal.main.animal.Animal;
 
@@ -29,7 +30,7 @@ public class Status {
         water = statusProgressBar.pbWater.getMax();
         love = 0;
 
-        thread();
+        //thread();
     }
 
     private void resize() {
@@ -59,7 +60,7 @@ public class Status {
         statusListenerManager.StatusChangeEventCall();
     }
 
-    public void addStatus(StatusType type, int value) {
+   public void addStatus(StatusType type, int value) {
         switch (type) {
             case FOOD:
                 food += value;
@@ -75,6 +76,7 @@ public class Status {
         statusProgressBar.notifyDataChanged();
         statusListenerManager.StatusChangeEventCall();
         new Share_status(food,water,love);
+        Log.i("TEST", "GET");
     }
 
     public int getStatus(StatusType type) {
@@ -85,7 +87,7 @@ public class Status {
     /*********************************
      * 테스트
      *****************************/
-    public void thread() {
+   /* public void thread() {
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -103,6 +105,6 @@ public class Status {
                 }
             }
         }).start();
-    }
+    }*/
     /********************************************************************/
 }

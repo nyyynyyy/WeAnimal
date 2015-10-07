@@ -1,5 +1,8 @@
 package jsc.cactus.com.weanimal;
 
+import android.app.Activity;
+import android.content.Context;
+
 /**
  * Created by nyyyn on 2015-09-22.
  */
@@ -13,4 +16,7 @@ public class Variable {
     public static String user_birthday = "1999-12-23";
     public static String user_phonenumber = "010-1999-1223";
     public static String test = "yoo";
+
+    public static Activity service_activity;
+    public static Context service_context;
 }

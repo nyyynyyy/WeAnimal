@@ -1,5 +1,7 @@
 package jsc.cactus.com.weanimal.g_animal.main.animal.status;
 
+import android.util.Log;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -25,6 +27,7 @@ public class Share_status {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        Log.i("TEST","SET");
     }
 
     public void sendMessage() throws JSONException {

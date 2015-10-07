@@ -96,9 +96,8 @@ public class Havenot_family extends AppCompatActivity {
 
     @Override
     public void onStop() {
-        super.onStop();
-
         MyService.mSocket.off("RESULT", fregistRecive);
+        super.onStop();
     }
 
     void goin() {

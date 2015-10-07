@@ -1,6 +1,7 @@
 package jsc.cactus.com.weanimal.g_animal.main.animal.status;
 
 import android.app.Activity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 

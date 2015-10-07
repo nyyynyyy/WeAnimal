@@ -48,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
         init();
     }
 
@@ -135,16 +136,6 @@ public class MainActivity extends AppCompatActivity {
         userManager = new UserManager(new User(Variable.user_id, Variable.user_name, Variable.user_birthday, UserGender.MALE));
 
     }
-
-    /*public void onPause() {
-        missionTime = System.currentTimeMillis();
-        super.onPause();
-    }
-
-    public void onResume() {
-        super.onResume();
-        handler.sendMessage(Message.obtain());
-    }*/
 
     Handler handler = new Handler() {
         @Override

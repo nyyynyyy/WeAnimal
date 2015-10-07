@@ -46,9 +46,9 @@ public class FileMethod {
         String content = "";
         try {
             if (!file.exists()) {
-                folder.mkdir();
-                file.createNewFile();
-                return null;
+//                folder.mkdir();
+//                file.createNewFile();
+                return "";
             }
 
             BufferedReader br = new BufferedReader(new FileReader(file));
