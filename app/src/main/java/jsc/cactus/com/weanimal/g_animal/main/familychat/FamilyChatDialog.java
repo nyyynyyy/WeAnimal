@@ -35,8 +35,7 @@ public class FamilyChatDialog extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_familychat, container, false);
 
-        if(chatListViewAdapter==null)
-            init(view);
+        init(view);
 
         return view;
     }
@@ -48,9 +47,11 @@ public class FamilyChatDialog extends DialogFragment {
         acceptButton = (Button) view.findViewById(R.id.familychat_acceptButton);
         listView = (ListView) view.findViewById(R.id.family_listView);
 
-        chatListViewAdapter = new ChatListViewAdapter(getActivity(), R.layout.familychat_item, items);
+        if(chatListViewAdapter==null) {
+            chatListViewAdapter = new ChatListViewAdapter(getActivity(), R.layout.familychat_item, items);
 
-        new ChatManager();
+            new ChatManager();
+        }
 
         listView.setAdapter(chatListViewAdapter);
         listView.setSelection(listView.getCount() - 1);

@@ -18,7 +18,7 @@ import jsc.cactus.com.weanimal.R;
  */
 public class MissionDialog extends DialogFragment {
 
-    private static ListView listView;
+    private ListView listView;
     private static MissionAdapter missionAdapter;
     private static List<MissionItem> items = new ArrayList<MissionItem>();
 
@@ -26,15 +26,15 @@ public class MissionDialog extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view  = inflater.inflate(R.layout.activity_mission, container, false);
 
-        if(missionAdapter == null)
-            init(view);
+        init(view);
 
         return view;
     }
 
     public void init(View view){
         getDialog().setTitle("미션");
-        missionAdapter = new MissionAdapter(getActivity() ,R.layout.mission_item, items);
+        if(missionAdapter == null)
+            missionAdapter = new MissionAdapter(getActivity() ,R.layout.mission_item, items);
 
         listView = (ListView) view.findViewById(R.id.mission_listView);
         listView.setAdapter(missionAdapter);
