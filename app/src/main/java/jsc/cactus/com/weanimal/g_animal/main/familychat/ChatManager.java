@@ -1,5 +1,6 @@
 package jsc.cactus.com.weanimal.g_animal.main.familychat;
 
+
 import android.util.Log;
 
 import java.io.BufferedInputStream;
@@ -29,15 +30,10 @@ import jsc.cactus.com.weanimal.g_animal.main.users.UserManager;
 public class ChatManager {
 
     private static List<ChatListener> listeners = new ArrayList<ChatListener>();
-    private static final String filePath = MainActivity.mainActivity.getFilesDir().getPath()+"/";// + "/chatData/";
+    private final String filePath = MainActivity.mainActivity.getFilesDir().getPath()+"/";// + "/chatData/";
     private static final File folder = new File(MainActivity.mainActivity.getFilesDir()+"/chat/");
 
-    private boolean isRun = false;
-
     public ChatManager() {
-        if(isRun)
-            return;
-        isRun = true;
         List<ChatItem> chatItems = getChatData(0);
         if (chatItems != null)
             for (ChatItem chatItem : chatItems)

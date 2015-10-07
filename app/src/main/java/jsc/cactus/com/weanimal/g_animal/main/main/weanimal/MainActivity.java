@@ -1,22 +1,14 @@
 package jsc.cactus.com.weanimal.g_animal.main.main.weanimal;
 
-import android.Manifest;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.io.File;
 
 import io.socket.emitter.Emitter;
 import jsc.cactus.com.weanimal.MyService;
@@ -26,8 +18,8 @@ import jsc.cactus.com.weanimal.g_animal.main.animal.Animal;
 import jsc.cactus.com.weanimal.g_animal.main.animal.AnimalType;
 import jsc.cactus.com.weanimal.g_animal.main.animal.status.Status;
 import jsc.cactus.com.weanimal.g_animal.main.animal.status.StatusType;
-import jsc.cactus.com.weanimal.g_animal.main.familychat.ChatManager;
-import jsc.cactus.com.weanimal.g_animal.main.familychat.FamilyChatShowManager;
+import jsc.cactus.com.weanimal.g_animal.main.familychat.FamilyChatViewManager;
+import jsc.cactus.com.weanimal.g_animal.main.mission.view.MissionViewManager;
 import jsc.cactus.com.weanimal.g_animal.main.users.User;
 import jsc.cactus.com.weanimal.g_animal.main.users.UserGender;
 import jsc.cactus.com.weanimal.g_animal.main.users.UserManager;
@@ -38,6 +30,11 @@ import jsc.cactus.com.weanimal.g_animal.main.users.UserManager;
 public class MainActivity extends AppCompatActivity {
 
     public static MainActivity mainActivity;
+
+    private FamilyChatViewManager familyChatViewManager;
+    private MissionViewManager missionViewManager;
+    private Animal animal;
+    private UserManager userManager;
 
     long missionTime = 0;
 
@@ -132,19 +129,11 @@ public class MainActivity extends AppCompatActivity {
     public void init() {
 
         mainActivity = this;
-        new FamilyChatShowManager(this);
-        new Animal(this);
-        new UserManager(new User(Variable.user_id, Variable.user_name, Variable.user_birthday, UserGender.MALE));
+        familyChatViewManager = new FamilyChatViewManager(this);
+        missionViewManager = new MissionViewManager(this);
+        animal = new Animal(this);
+        userManager = new UserManager(new User(Variable.user_id, Variable.user_name, Variable.user_birthday, UserGender.MALE));
 
-        Button test = (Button) findViewById(R.id.missionButton);
-
-        test.setOnClickListener(
-                new View.OnClickListener() {
-                    public void onClick(View v) {
-                        Intent callIntent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:010-2975-7544"));
-                        //startActivity(callIntent);
-                    }
-                });
     }
 
     /*public void onPause() {

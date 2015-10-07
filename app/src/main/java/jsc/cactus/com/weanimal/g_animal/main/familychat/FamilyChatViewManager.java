@@ -12,24 +12,22 @@ import jsc.cactus.com.weanimal.g_animal.main.mission.MissionListener;
 /**
  * Created by INSI on 15. 9. 30..
  */
-public class FamilyChatShowManager {
+public class FamilyChatViewManager {
 
     private FamilyChatDialog familyChatDialog;
     private FragmentManager fragmentManager;
     private ImageView signImageView;
     private boolean isOnMission = false;
 
-    public FamilyChatShowManager(Activity activity){
+    public FamilyChatViewManager(Activity activity){
         fragmentManager = activity.getFragmentManager();
         signImageView = (ImageView) activity.findViewById(R.id.imageView);
         familyChatDialog = new FamilyChatDialog();
 
-
-
         signImageView.setOnClickListener(clickSign);
     }
 
-    View.OnClickListener clickSign = new View.OnClickListener(){
+    private View.OnClickListener clickSign = new View.OnClickListener(){
         public void onClick(View v){
             if(!familyChatDialog.isVisible())
                 familyChatDialog.show(fragmentManager, "");

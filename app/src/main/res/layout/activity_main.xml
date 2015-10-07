@@ -3,11 +3,12 @@
     android:layout_width="match_parent" android:layout_height="match_parent"
     android:orientation="vertical"
     android:baselineAligned="false"
-    >
+    android:paddingBottom="0dp"
+    android:padding="20dp">
 
-    <View
+    <!--View
         android:layout_width="match_parent"
-        android:layout_height="20dp" />
+        android:layout_height="20dp" />-->
 
     <LinearLayout
         android:orientation="horizontal"
@@ -32,7 +33,7 @@
             android:layout_height="wrap_content">
 
             <ProgressBar
-                style="?android:attr/progressBarStyleHorizontal"
+                style="@style/CustomProgressBar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/progressBar_food"
@@ -68,10 +69,10 @@
                 android:progressDrawable="@drawable/pb_love" />
         </LinearLayout>
 
-        <View
+        <!--<View
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1" />
+            android:layout_weight="1" />-->
 
     </LinearLayout>
 
@@ -81,28 +82,31 @@
         android:layout_height="250dp"
         android:layout_gravity="center_horizontal">
 
-        <View
+        <!--<View
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1" />
+            android:layout_weight="1" />-->
 
         <ImageView
             android:layout_width="90dp"
-            android:layout_height="130dp"
+            android:layout_height="115dp"
             android:id="@+id/imageView"
             android:layout_gravity="bottom"
-            android:src="@drawable/sign02" />
+            android:src="@drawable/sign02"
+            android:paddingBottom="0dp"
+            android:layout_marginBottom="20dp" />
 
         <ImageView
             android:layout_width="220dp"
             android:layout_height="match_parent"
             android:id="@+id/imageView2"
-            android:src="@drawable/chicken_one_normal" />
+            android:src="@drawable/chicken_one_normal"
+            android:layout_weight="1" />
 
-        <View
+        <!--<View
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1" />
+            android:layout_weight="1" />-->
     </LinearLayout>
 
     <LinearLayout
@@ -140,12 +144,26 @@
         android:id="@+id/textView"
         android:layout_gravity="center_horizontal" />
 
-    <Button
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="誘몄뀡"
-        android:id="@+id/missionButton"
-        android:layout_weight="0"
-        android:layout_gravity="center_horizontal" />
+        android:layout_gravity="center_horizontal">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="설정-테스트"
+            android:id="@+id/settingButton"
+            android:layout_weight="0"
+            android:layout_gravity="center_horizontal" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="미션-테스트"
+            android:id="@+id/missionButton"
+            android:layout_gravity="center_horizontal" />
+    </LinearLayout>
 
 </LinearLayout>

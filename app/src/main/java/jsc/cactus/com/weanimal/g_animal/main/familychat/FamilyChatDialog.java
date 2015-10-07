@@ -13,7 +13,6 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import jsc.cactus.com.weanimal.R;
@@ -28,26 +27,28 @@ public class FamilyChatDialog extends DialogFragment {
     private ListView listView;
     private EditText textEdit;
     private Button acceptButton;
-    private boolean isOnMission = false, isOpen = false;
+    private boolean isOnMission = false;
 
     private static List<ChatItem> items = new ArrayList<ChatItem>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_familychat, container, false);
-        init(view);
+
+        if(chatListViewAdapter==null)
+            init(view);
+
         return view;
     }
 
     private void init(View view) {
-
         Log.i("jsc", "ChatDialog init");
         getDialog().setTitle("Family Chat");
         textEdit = (EditText) view.findViewById(R.id.familychat_editText);
         acceptButton = (Button) view.findViewById(R.id.familychat_acceptButton);
         listView = (ListView) view.findViewById(R.id.family_listView);
-        if (chatListViewAdapter == null)
-            chatListViewAdapter = new ChatListViewAdapter(getActivity(), R.layout.familychat_item, items);
+
+        chatListViewAdapter = new ChatListViewAdapter(getActivity(), R.layout.familychat_item, items);
 
         new ChatManager();
 
@@ -60,7 +61,6 @@ public class FamilyChatDialog extends DialogFragment {
     }
 
     public static ChatListViewAdapter getChatListViewAdapter(){
-
         return chatListViewAdapter;
     }
 
@@ -73,7 +73,8 @@ public class FamilyChatDialog extends DialogFragment {
         }
     };
 
-    TextWatcher edit = new TextWatcher() {
+    //
+    private TextWatcher edit = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
