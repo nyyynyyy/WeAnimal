@@ -38,7 +38,7 @@ public class Status {
         water = Math.max(Math.min(water, statusProgressBar.pbWater.getMax()), 0);
         love = Math.max(Math.min(love, statusProgressBar.pbLove.getMax()), 0);
         if(love == statusProgressBar.pbLove.getMax()) {
-            animal.addAge(1);
+            new Level_up();
             love = 0;
         }
     }

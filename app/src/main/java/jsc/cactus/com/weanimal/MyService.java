@@ -109,6 +109,7 @@ public class MyService extends Service {
 
                 mSocket.on("SEND_MSG", Recive);
 
+
                 try {
                     onSocket();
                 } catch (JSONException e) {
@@ -153,6 +154,7 @@ public class MyService extends Service {
 
         mSocket.off("SEND_MSG", Recive);
         mSocket.off("RES_SET", StatusRecive);
+        mSocket.off("RES_LEVEL",LevelRecive);
 
         turn = false;
 
@@ -167,7 +169,8 @@ public class MyService extends Service {
     }
 
     public void onSocket() throws JSONException {
-        MyService.mSocket.on("RES_SET", StatusRecive);
+        mSocket.on("RES_SET", StatusRecive);
+        mSocket.on("RES_LEVEL",LevelRecive);
     }
 
     public void sendMessage() throws JSONException {
@@ -228,8 +231,35 @@ public class MyService extends Service {
                         push(2, "동물의 상태가 변화하였습니다.");
 
                         Animal.animal.getStatus().setStatus(StatusType.FOOD, family_food);
-                        Animal.animal.getStatus().setStatus(StatusType.LOVE,family_love);
-                        Animal.animal.getStatus().setStatus(StatusType.WATER,family_water);
+                        Animal.animal.getStatus().setStatus(StatusType.LOVE, family_love);
+                        Animal.animal.getStatus().setStatus(StatusType.WATER, family_water);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+
+
+        }
+    };
+
+    private Emitter.Listener LevelRecive = new Emitter.Listener() {
+        @Override
+        public void call(final Object... args) {
+
+            activity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    JSONObject data = (JSONObject) args[0];
+                    int animal_level;
+
+                    try {
+                        animal_level = data.getInt("level");
+
+                        Log.i("TEST", "push");
+                        push(3, "동물의 성장하였습니다.");
+
+                        Animal.animal.setAge(animal_level);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
