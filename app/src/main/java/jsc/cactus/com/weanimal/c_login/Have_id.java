@@ -1,5 +1,7 @@
 package jsc.cactus.com.weanimal.c_login;
 
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -161,5 +163,9 @@ public class Have_id extends AppCompatActivity {
         act03.finish();
         Intent intent = new Intent(this, View_family.class);
         startActivity(intent);
+    }
+
+    public void push(int id, String msg, Long time) {
+        OftenMethod.LoginNoti(id, this, msg, (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE), time);
     }
 }

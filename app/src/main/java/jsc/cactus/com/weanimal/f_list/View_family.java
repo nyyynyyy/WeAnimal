@@ -157,8 +157,4 @@ public class View_family extends AppCompatActivity {
             });
         }
     };
-
-    public void push(int id, String msg) {
-        OftenMethod.onBtnNotification(id, this, msg, (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE));
-    }
 }

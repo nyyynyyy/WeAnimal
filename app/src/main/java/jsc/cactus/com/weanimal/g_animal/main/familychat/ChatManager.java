@@ -70,6 +70,11 @@ public class ChatManager {
         }
     }
 
+    public void sendMessage(String text ,String day , String time)
+    {
+
+    }
+
     public static List<ChatItem> getChatData(int before) {
         try {
             Date day = new Date();
