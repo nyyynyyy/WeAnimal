@@ -19,6 +19,8 @@ import jsc.cactus.com.weanimal.g_animal.main.animal.AnimalType;
 import jsc.cactus.com.weanimal.g_animal.main.animal.status.Status;
 import jsc.cactus.com.weanimal.g_animal.main.animal.status.StatusType;
 import jsc.cactus.com.weanimal.g_animal.main.familychat.FamilyChatViewManager;
+import jsc.cactus.com.weanimal.g_animal.main.mission.Mission;
+import jsc.cactus.com.weanimal.g_animal.main.mission.MissionListener;
 import jsc.cactus.com.weanimal.g_animal.main.mission.view.MissionViewManager;
 import jsc.cactus.com.weanimal.g_animal.main.users.User;
 import jsc.cactus.com.weanimal.g_animal.main.users.UserGender;
@@ -27,7 +29,7 @@ import jsc.cactus.com.weanimal.g_animal.main.users.UserManager;
 /**
  * Created by INSI on 15. 9. 23..
  */
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements MissionListener{
 
     public static MainActivity mainActivity;
 
@@ -106,16 +108,18 @@ public class MainActivity extends AppCompatActivity {
                         Log.i("TEST", Integer.toString(WATER));
                         Log.i("TEST", Integer.toString(LOVE));
 
-
                         Animal animal = Animal.animal;
                         animal.setAge(LEVEL);
                         animal.setName(NAME);
-                        animal.setType(AnimalType.getType(TYPE));
 
                         Status status = Animal.animal.getStatus();
                         status.setStatus(StatusType.FOOD, FOOD);
                         status.setStatus(StatusType.WATER, WATER);
                         status.setStatus(StatusType.LOVE, LOVE);
+
+
+                        animal.setType(AnimalType.valueOf(TYPE));
+                        Log.i("TEST", AnimalType.valueOf(TYPE).toString());
 
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -137,7 +141,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    Handler handler = new Handler() {
+    private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
@@ -145,4 +149,16 @@ public class MainActivity extends AppCompatActivity {
             textView.setText(String.format("Time : %.2f", (float) ((float) (System.currentTimeMillis() - missionTime) / 1000F)));
         }
     };
+
+    //미션에 대한 이벤트
+
+    @Override
+    public void startMission(Mission mission) {
+
+    }
+
+    @Override
+    public void clearMission() {
+
+    }
 }

@@ -6,6 +6,9 @@ import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.DecelerateInterpolator;
+import android.view.animation.TranslateAnimation;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -14,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import jsc.cactus.com.weanimal.R;
+import jsc.cactus.com.weanimal.g_animal.main.animal.Animal;
 import jsc.cactus.com.weanimal.g_animal.main.users.UserManager;
 
 /**
@@ -61,6 +65,11 @@ public class ChatListViewAdapter extends ArrayAdapter<ChatItem> {
 
         ctext.setText(citem.getText());
         cinfo.setText(citem.getInfo());
+
+        //Animation animationY = new TranslateAnimation(0, 0, new Holder().llParent.getHeight()/4, 0);
+        //animationY.setDuration(1000);
+
+        //item.startAnimation(animationY);
 
         return item;
     }

@@ -1,8 +1,10 @@
 package jsc.cactus.com.weanimal.g_animal.main.animal;
 
 import android.app.Activity;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.widget.ImageView;
 
 import jsc.cactus.com.weanimal.R;
@@ -35,7 +37,7 @@ public class Animal implements StatusChangeListener {
         status = new Status(activity, this);
         StatusListenerManager.addStatusChangeListener(this);
         animalView = (ImageView) activity.findViewById(R.id.imageView2);
-        reimage();
+        //reimage();
     }
 
     public int getAge() {
@@ -65,6 +67,7 @@ public class Animal implements StatusChangeListener {
 
     public void setType(AnimalType type){
         this.type =type;
+        reimage();
     }
 
     public void setAnimalCode(int animalCode){
@@ -73,6 +76,7 @@ public class Animal implements StatusChangeListener {
 
     public void setAge(int age){
         this.age = age;
+        reimage();
     }
 
     public void reimage() {
@@ -87,6 +91,11 @@ public class Animal implements StatusChangeListener {
     Handler reimage = new Handler(){
         @Override
         public void handleMessage(Message msg) {
+            if(type!=null)
+                return;
+
+            //((BitmapDrawable)animalView.getDrawable()).getBitmap().recycle();
+
             animalView.setImageResource(AnimalKind.getImageResource(type, AnimalStatusType.getStatusType((status.getStatus(StatusType.FOOD) + status.getStatus(StatusType.WATER))), age));
         }
     };

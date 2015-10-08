@@ -13,12 +13,9 @@ import jsc.cactus.com.weanimal.g_animal.main.animal.Animal;
  * Created by nyyyn on 2015-10-07.
  */
 public class Level_up {
-    private int LEVEL;
 
     public Level_up(){
-        LEVEL = Animal.animal.getAge();
-        LEVEL += 1;
-        Animal.animal.setAge(LEVEL);
+        Animal.animal.addAge(1);
         try {
             sendMessage();
         } catch (JSONException e) {
@@ -32,7 +29,7 @@ public class Level_up {
 
         // perform the user login attempt.
 
-        data.put("LE", LEVEL);
+        data.put("LE", Animal.animal.getAge());
         data.put("CO", Variable.user_familycode);
 
         MyService.mSocket.emit("LEVELUP", data);

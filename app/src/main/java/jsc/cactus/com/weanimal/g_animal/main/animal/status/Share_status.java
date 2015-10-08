@@ -18,7 +18,7 @@ public class Share_status {
     int WATER;
     int LOVE;
 
-    public Share_status(int food,int water,int love){
+    public Share_status(int food,int water,int love) {
         FOOD = food;
         WATER = water;
         LOVE = love;
@@ -32,8 +32,6 @@ public class Share_status {
 
     public void sendMessage() throws JSONException {
         JSONObject data = new JSONObject();
-
-        // perform the user login attempt.
 
         data.put("FO", FOOD);
         data.put("WA", WATER);

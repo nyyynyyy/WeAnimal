@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -33,12 +34,22 @@ public class MissionDialog extends DialogFragment {
 
     public void init(View view){
         getDialog().setTitle("미션");
-        if(missionAdapter == null)
+        if(missionAdapter == null){
             missionAdapter = new MissionAdapter(getActivity() ,R.layout.mission_item, items);
+            missionAdapter.add(new MissionItem(R.drawable.phoneicon, "전화 걸기"));
+            missionAdapter.add(new MissionItem(R.drawable.post, "메세지 보내기"));
+        }
 
         listView = (ListView) view.findViewById(R.id.mission_listView);
         listView.setAdapter(missionAdapter);
 
-        missionAdapter.add(new MissionItem(R.drawable.phoneicon, "전화 걸기"));
-   }
+        listView.setOnItemClickListener(itemClick);
+    }
+
+    private AdapterView.OnItemClickListener itemClick = new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            
+        }
+    };
 }
