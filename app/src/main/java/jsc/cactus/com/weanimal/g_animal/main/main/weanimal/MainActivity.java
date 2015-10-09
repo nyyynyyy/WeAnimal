@@ -112,14 +112,15 @@ public class MainActivity extends AppCompatActivity implements MissionListener{
                         Animal animal = Animal.animal;
                         animal.setAge(LEVEL);
                         animal.setName(NAME);
+                        animal.setType(AnimalType.valueOf(TYPE));
 
                         Status status = Animal.animal.getStatus();
                         status.setStatus(StatusType.FOOD, FOOD);
                         status.setStatus(StatusType.WATER, WATER);
                         status.setStatus(StatusType.LOVE, LOVE);
 
+                        animal.setReady(true);
 
-                        animal.setType(AnimalType.valueOf(TYPE));
                         Log.i("TEST", AnimalType.valueOf(TYPE).toString());
 
                     } catch (JSONException e) {

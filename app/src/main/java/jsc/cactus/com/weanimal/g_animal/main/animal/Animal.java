@@ -30,6 +30,7 @@ public class Animal implements StatusChangeListener {
     private AnimalType type;
     private int age;
 
+    private boolean ready;
     public Animal(Activity activity) {
 
         animal = this;
@@ -41,7 +42,6 @@ public class Animal implements StatusChangeListener {
     }
 
     public int getAge() {
-        reimage();
         return age;
     }
 
@@ -60,6 +60,12 @@ public class Animal implements StatusChangeListener {
     public void addAge(int age) {
         this.age += age;
         reimage();
+    }
+
+    public void setReady(boolean bool){
+        ready = true;
+        if(ready)
+            reimage();
     }
 
     public void setName(String name){
@@ -92,7 +98,7 @@ public class Animal implements StatusChangeListener {
     Handler reimage = new Handler(){
         @Override
         public void handleMessage(Message msg) {
-            if(type==null)
+            if(!ready)
                 return;
 
             animalView.setImageResource(AnimalKind.getImageResource(type, AnimalStatusType.getStatusType((status.getStatus(StatusType.FOOD) + status.getStatus(StatusType.WATER))), age));
