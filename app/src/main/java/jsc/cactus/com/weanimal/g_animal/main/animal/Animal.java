@@ -91,12 +91,11 @@ public class Animal implements StatusChangeListener {
     Handler reimage = new Handler(){
         @Override
         public void handleMessage(Message msg) {
-            if(type!=null)
+            if(type==null)
                 return;
 
-            //((BitmapDrawable)animalView.getDrawable()).getBitmap().recycle();
-
             animalView.setImageResource(AnimalKind.getImageResource(type, AnimalStatusType.getStatusType((status.getStatus(StatusType.FOOD) + status.getStatus(StatusType.WATER))), age));
+            //((BitmapDrawable)animalView.getDrawable()).getBitmap().recycle();
         }
     };
 }

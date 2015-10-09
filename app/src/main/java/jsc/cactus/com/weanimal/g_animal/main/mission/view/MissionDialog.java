@@ -2,12 +2,12 @@ package jsc.cactus.com.weanimal.g_animal.main.mission.view;
 
 import android.app.DialogFragment;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +26,7 @@ public class MissionDialog extends DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view  = inflater.inflate(R.layout.activity_mission, container, false);
-
+        getDialog().getWindow().getAttributes().windowAnimations = R.style.CustomDialogAnimation;
         init(view);
 
         return view;
@@ -49,7 +49,8 @@ public class MissionDialog extends DialogFragment {
     private AdapterView.OnItemClickListener itemClick = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            
+            //if(position==0)
+                Toast.makeText(getActivity(), "전화걸기", Toast.LENGTH_SHORT).show();
         }
     };
 }
