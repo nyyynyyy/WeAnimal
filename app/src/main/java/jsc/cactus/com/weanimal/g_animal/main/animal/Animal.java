@@ -41,6 +41,7 @@ public class Animal implements StatusChangeListener {
     }
 
     public int getAge() {
+        reimage();
         return age;
     }
 
