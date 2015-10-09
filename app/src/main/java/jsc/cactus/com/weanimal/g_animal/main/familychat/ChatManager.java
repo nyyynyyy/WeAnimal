@@ -3,6 +3,9 @@ package jsc.cactus.com.weanimal.g_animal.main.familychat;
 
 import android.util.Log;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -20,6 +23,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import jsc.cactus.com.weanimal.MyService;
+import jsc.cactus.com.weanimal.Variable;
 import jsc.cactus.com.weanimal.g_animal.main.main.weanimal.MainActivity;
 import jsc.cactus.com.weanimal.g_animal.main.users.User;
 import jsc.cactus.com.weanimal.g_animal.main.users.UserManager;
@@ -70,9 +75,14 @@ public class ChatManager {
         }
     }
 
-    public void sendMessage(String text ,String day , String time)
-    {
+    public void sendMessage(String text ,String day , String time) throws JSONException {
+        JSONObject data = new JSONObject();
 
+        data.put("ID", text);
+        data.put("DAY", day);
+        data.put("TIME", time);
+
+        MyService.mSocket.emit("CHAT", data);
     }
 
     public static List<ChatItem> getChatData(int before) {

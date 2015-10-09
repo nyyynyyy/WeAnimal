@@ -17,6 +17,9 @@ public class OftenMethod {
         Toast.makeText( ac , msg ,Toast.LENGTH_SHORT).show();
     }
 
+
+
+
     //로그인
     public static void LoginNoti(int ID, Context c, String msg , NotificationManager no ,long time) {
         PendingIntent pendingIntent = PendingIntent.getActivity(c, 0, new Intent(c, StartActivty.class), PendingIntent.FLAG_UPDATE_CURRENT);

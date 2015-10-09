@@ -35,7 +35,6 @@ public class AnimalKind {
 //                get = statusType == AnimalStatusType.DEFAULT ? CAT_DEFAULT : statusType == AnimalStatusType.FLABBY ? CAT_FLABBY : CAT_WEAK;
 //                break;
             default:
-                Log.i("TEST", "이게 출력되면 심각한건데.");
         }
 
         return get[Math.min(age, get.length - 1)];
