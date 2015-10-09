@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 
 import jsc.cactus.com.weanimal.R;
 import jsc.cactus.com.weanimal.g_animal.main.animal.Animal;
@@ -14,12 +16,12 @@ import jsc.cactus.com.weanimal.g_animal.main.animal.Animal;
  */
 public class StatusButton_test {
 
-    Button bFood, bWater, bLove;
+    ImageView bFood, bWater, bLove;
 
     public StatusButton_test(Activity activity) {
-        bFood = (Button) activity.findViewById(R.id.bt_food);
-        bWater = (Button) activity.findViewById(R.id.bt_water);
-        bLove = (Button) activity.findViewById(R.id.bt_love);
+        bFood = (ImageView) activity.findViewById(R.id.bt_food);
+        bWater = (ImageView) activity.findViewById(R.id.bt_water);
+        bLove = (ImageView) activity.findViewById(R.id.bt_love);
 
         bFood.setOnClickListener(buttontest);
         bWater.setOnClickListener(buttontest);
