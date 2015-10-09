@@ -2,6 +2,7 @@ package jsc.cactus.com.weanimal;
 
 import android.app.Activity;
 import android.app.AlarmManager;
+import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
@@ -11,6 +12,7 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
 import android.os.SystemClock;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -31,6 +33,7 @@ import jsc.cactus.com.weanimal.g_animal.main.animal.status.Share_status;
 import jsc.cactus.com.weanimal.g_animal.main.animal.status.Status;
 import jsc.cactus.com.weanimal.g_animal.main.animal.status.StatusType;
 import jsc.cactus.com.weanimal.g_animal.main.familychat.DateFormat;
+import jsc.cactus.com.weanimal.g_animal.main.main.weanimal.MainActivity;
 
 /**
  * Created by nyyyn on 2015-10-03.
@@ -38,7 +41,7 @@ import jsc.cactus.com.weanimal.g_animal.main.familychat.DateFormat;
 public class MyService extends Service {
 
     private Handler toastHandler;
-    private Handler pushHandler;
+//    private Handler pushHandler;
 
     //토스트-------------------------------------------------
     private class ToastRunnable implements Runnable {
@@ -59,26 +62,45 @@ public class MyService extends Service {
     }
     //--------------------------------------------------------
 
-    //토스트-------------------------------------------------
-    private class PushRunnable extends Activity implements Runnable {
-        String pushText;
-        int pushId;
-        long pushTime;
-
-        public PushRunnable(String text, int id, long time) {
-            pushText = text;
-            pushId = id;
-            pushTime = time;
-        }
-
-        @Override
-        public void run() {
-            OftenMethod.LoginNoti(pushId, this, pushText, (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE), pushTime);
-        }
+    //푸쉬-------------------------------------------------
+    private void noti(int ID, String tickerText, String titleText, String mainText, long time) {
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, new Intent(this, MainActivity.class), PendingIntent.FLAG_UPDATE_CURRENT);
+        Notification.Builder builder = new Notification.Builder(this);
+        // 작은 아이콘 이미지.
+        builder.setSmallIcon(R.mipmap.ic_launcher);
+        // 알림이 출력될 때 상단에 나오는 문구.
+        builder.setTicker(tickerText);
+        // 알림 출력 시간.
+        builder.setWhen(time);
+        // 알림 제목.
+        builder.setContentTitle(titleText);
+        // 알림 내용.
+        builder.setContentText(mainText);
+        // 알림 터치시 반응.
+        builder.setContentIntent(pendingIntent);
+        // 알림 터치시 반응 후 알림 삭제 여부.
+        builder.setAutoCancel(true);
+        // 우선순위.
+        //builder.setPriority(NotificationCompat.PRIORITY_MAX);
+        // 고유ID로 알림을 생성.
+        NotificationManager nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        nm.notify(ID, builder.build());
     }
 
-    private void push(int id, String text, long time) {
-        pushHandler.post(new PushRunnable(text, id, time));
+    private void loginPush(String user_name, long time) {
+        noti(1, "누군가가 접속하였습니다.", user_name, "님이 접속하였습니다.", time);
+    }
+
+    private void statusPush(String user_name, String type, long time) {
+        noti(2, "동물의 상태가 변화하였습니다.", user_name, "님이 " + type + " 주셨습니다.", time);
+    }
+
+    private void levelupPush(String animal_name, long time) {
+        noti(3, "동물이 성장하였습니다.", animal_name, "이(가) 성장하였습니다.", time);
+    }
+
+    private void chatPush(String user_name, String msg, long time) {
+        noti(4, user_name + " : " + msg, user_name, msg, time);
     }
     //--------------------------------------------------------
 
@@ -91,6 +113,7 @@ public class MyService extends Service {
 
     //소켓----------------------------------------------------
     public static io.socket.client.Socket mSocket;
+
     {
         try {
             mSocket = IO.socket("http://gondr.iptime.org:52273");
@@ -114,6 +137,7 @@ public class MyService extends Service {
 
         //핸들러
         toastHandler = new Handler();
+//        pushHandler = new Handler();
 
         //서비스 작동 여부
         turn = true;
@@ -164,7 +188,7 @@ public class MyService extends Service {
                         if (login) {
                             try {
                                 sendMessage();
-                                Log.i("TEST","LOGIN OK");
+                                Log.i("TEST", "LOGIN OK");
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -181,7 +205,11 @@ public class MyService extends Service {
             }
         }).start();
 
-        return Service.START_STICKY;
+        if (login) {
+            return Service.START_STICKY;
+        } else {
+            return Service.START_NOT_STICKY;
+        }
     }
 
     public void registerRestartAlarm() {
@@ -230,6 +258,7 @@ public class MyService extends Service {
 
     }
 
+    //소켓 받을 준비
     public void onSocket() throws JSONException {
         mSocket.on("SEND_MSG", Recive);
         mSocket.on("RES_SET", StatusRecive);
@@ -238,6 +267,7 @@ public class MyService extends Service {
         Log.i("TEST", "ON SOCKET");
     }
 
+    //서버에게 방 가입을 요청
     public void sendMessage() throws JSONException {
         JSONObject data = new JSONObject();
 
@@ -265,7 +295,7 @@ public class MyService extends Service {
                         //time = data.getLong("synctime");
 
                         Log.i("TEST", "push");
-                        //push(1, ID + "님이 접속하셨습니다.", time);
+                        loginPush(ID, System.currentTimeMillis());
 
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -292,6 +322,8 @@ public class MyService extends Service {
                     int family_love;
                     int family_food;
                     int family_water;
+                    String typeI = "";
+                    String typeII = "";
 
                     long time;
 
@@ -299,10 +331,26 @@ public class MyService extends Service {
                         family_water = data.getInt("WA");
                         family_food = data.getInt("FO");
                         family_love = data.getInt("LO");
+                        //typeI = data.getString("TYPE");
                         //time = data.getLong("synctime");
 
                         Log.i("TEST", "push");
-                        //push(2, "동물의 상태가 변화하였습니다.", time);
+
+                        switch (typeI) {
+                            case "FOOD":
+                                typeII = "먹이를";
+                                break;
+                            case "WATER":
+                                typeII = "물을";
+                                break;
+                            case "LOVE":
+                                typeII = "사랑을";
+                                break;
+                            default:
+                                typeII = "무언가를";
+                        }
+
+                        statusPush("이름", typeII, System.currentTimeMillis());
 
                         Animal.animal.getStatus().setStatus(StatusType.FOOD, family_food);
                         Animal.animal.getStatus().setStatus(StatusType.LOVE, family_love);
@@ -330,14 +378,14 @@ public class MyService extends Service {
 
                     long time;
 
-                    Log.i("TEST","LEVEL!!");
+                    Log.i("TEST", "LEVEL!!");
 
                     try {
                         animal_level = data.getInt("level");
                         //time = data.getLong("synctime");
 
                         Log.i("TEST", Integer.toString(animal_level));
-                       // push(3, "동물의 성장하였습니다.", time);
+                        levelupPush("동물", System.currentTimeMillis());
 
                         Animal.animal.setAge(animal_level);
                     } catch (JSONException e) {

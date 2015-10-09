@@ -122,11 +122,8 @@ public class Havenot_family extends AppCompatActivity {
         String msgname = name_ed.getText().toString();
         String msgfp = fp_ed.getText().toString();
 
-
         nextID = msgId;
         nextPW = msgfp;
-
-        //OftenMethod.message(this, "ID : " + msgId + "\nNAME : " + msgname + "\nPASSWORD : " + msgfp);
 
         data.put("ID", msgId);
         data.put("NA", msgname);

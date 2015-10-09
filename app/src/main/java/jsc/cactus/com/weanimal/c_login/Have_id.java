@@ -164,8 +164,4 @@ public class Have_id extends AppCompatActivity {
         Intent intent = new Intent(this, View_family.class);
         startActivity(intent);
     }
-
-    public void push(int id, String msg, Long time) {
-        OftenMethod.LoginNoti(id, this, msg, (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE), time);
-    }
 }

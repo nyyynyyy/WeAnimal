@@ -131,16 +131,10 @@ public class View_family extends AppCompatActivity {
                             if (!(fid.equals(OI))) {
                                 Adapter.add(new Family_Item(fna, fid + "\n" + fge + "\n" + fbd));
                             }
-                            // family.add(fid + "\n" + fna + "\n" + fge + "\n" + fbd);
                             else {
                                 Adapter.insert(new Family_Item("[PRESIDENT] " + fna,fid + "\n" + fge + "\n" + fbd),0);
                             }
-                            // family.set(0, family.get(0).toString() + "\n" + fna + "\n" + fge + "\n" + fbd);
                             list.setAdapter(Adapter);
-
-                           // push(i + 1, fam.getString("id") + "님께서 로그인 하셨습니다.");
-
-
                         }
 
                         Log.i("sss", "try!");
@@ -150,8 +144,6 @@ public class View_family extends AppCompatActivity {
 
                     } catch (JSONException e) {
                         e.printStackTrace();
-                        Log.i("sss", e.toString());
-                        OftenMethod.message(View_family.this, "오류 발생 !!!");
                     }
                 }
             });
