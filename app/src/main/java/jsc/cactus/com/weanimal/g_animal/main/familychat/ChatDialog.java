@@ -16,12 +16,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import jsc.cactus.com.weanimal.R;
+import jsc.cactus.com.weanimal.g_animal.main.familychat.view.ChatItem;
+import jsc.cactus.com.weanimal.g_animal.main.familychat.view.ChatListViewAdapter;
 import jsc.cactus.com.weanimal.g_animal.main.users.UserManager;
 
 /**
  * Created by INSI on 15. 9. 28..
  */
-public class FamilyChatDialog extends DialogFragment {
+public class ChatDialog extends DialogFragment {
 
     private static ChatListViewAdapter chatListViewAdapter;
     private ListView listView;

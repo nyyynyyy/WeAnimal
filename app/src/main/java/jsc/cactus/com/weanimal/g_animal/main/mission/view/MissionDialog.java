@@ -13,6 +13,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import jsc.cactus.com.weanimal.R;
+import jsc.cactus.com.weanimal.g_animal.main.mission.Mission;
+import jsc.cactus.com.weanimal.g_animal.main.mission.MissionManager;
+import jsc.cactus.com.weanimal.g_animal.main.mission.missions.MessageSendMission;
+import jsc.cactus.com.weanimal.g_animal.main.mission.missions.TelMission;
 
 /**
  * Created by INSI on 2015. 10. 7..
@@ -49,8 +53,17 @@ public class MissionDialog extends DialogFragment {
     private AdapterView.OnItemClickListener itemClick = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            //if(position==0)
-                Toast.makeText(getActivity(), "전화걸기", Toast.LENGTH_SHORT).show();
+            switch (position) {
+                case 0:
+                    MissionManager.instance.startMission(new TelMission(60));
+                    break;
+                case 1:
+                    MissionManager.instance.startMission(new MessageSendMission("파이팅"));
+                    break;
+            }
+
+            Toast.makeText(getActivity(), missionAdapter.getItem(position).getText()+" 미션 시작!", Toast.LENGTH_SHORT).show();
+            getDialog().cancel();
         }
     };
 }

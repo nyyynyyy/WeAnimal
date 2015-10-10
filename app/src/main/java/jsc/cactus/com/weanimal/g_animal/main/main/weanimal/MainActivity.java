@@ -18,7 +18,7 @@ import jsc.cactus.com.weanimal.g_animal.main.animal.Animal;
 import jsc.cactus.com.weanimal.g_animal.main.animal.AnimalType;
 import jsc.cactus.com.weanimal.g_animal.main.animal.status.Status;
 import jsc.cactus.com.weanimal.g_animal.main.animal.status.StatusType;
-import jsc.cactus.com.weanimal.g_animal.main.familychat.FamilyChatViewManager;
+import jsc.cactus.com.weanimal.g_animal.main.familychat.view.ChatViewManager;
 import jsc.cactus.com.weanimal.g_animal.main.mission.Mission;
 import jsc.cactus.com.weanimal.g_animal.main.mission.MissionListener;
 import jsc.cactus.com.weanimal.g_animal.main.mission.MissionManager;
@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity implements MissionListener{
 
     public static MainActivity mainActivity;
 
-    private FamilyChatViewManager familyChatViewManager;
+    private ChatViewManager familyChatViewManager;
     private MissionViewManager missionViewManager;
     private Animal animal;
     private UserManager userManager;
@@ -136,11 +136,11 @@ public class MainActivity extends AppCompatActivity implements MissionListener{
     public void init() {
 
         mainActivity = this;
-        familyChatViewManager = new FamilyChatViewManager(this);
         missionViewManager = new MissionViewManager(this);
         animal = new Animal(this);
         new MissionManager(this);
         userManager = new UserManager(new User(Variable.user_id, Variable.user_name, Variable.user_birthday, UserGender.MALE));
+        familyChatViewManager = new ChatViewManager(this);
 
         MissionManager.instance.addMissionListener(this);
 

@@ -1,4 +1,4 @@
-package jsc.cactus.com.weanimal.g_animal.main.familychat;
+package jsc.cactus.com.weanimal.g_animal.main;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -6,7 +6,7 @@ import java.util.Date;
 
 
 public class DateFormat {
-	public static enum Type{
+	public enum Type{
 		DAY(FORMAT_DAY), SECOND(FORMAT_SECOND);
 
 		private SimpleDateFormat formatDay;

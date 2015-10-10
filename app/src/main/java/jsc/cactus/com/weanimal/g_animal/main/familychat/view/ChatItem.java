@@ -1,4 +1,4 @@
-package jsc.cactus.com.weanimal.g_animal.main.familychat;
+package jsc.cactus.com.weanimal.g_animal.main.familychat.view;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -40,6 +40,6 @@ public class ChatItem {
 
     public String getInfo() {
         Date currentDate = new Date();
-        return user.getName() + " - " + new SimpleDateFormat((currentDate.getTime() / 1000 / 86400) - (date.getTime() / 1000 / 86400) >= 1 ? "yy년 MM월 dd일" : "" + "a hh:mm").format(date).replace("AM", "오전").replace("PM", "오후");
+        return user.getName() + " - " + new SimpleDateFormat(((currentDate.getTime() / 1000 / 86400) - (date.getTime() / 1000 / 86400) >= 1 ? "yy년 MM월 dd일 " : "" )+ "a hh:mm").format(date).replace("AM", "오전").replace("PM", "오후");
     }
 }
