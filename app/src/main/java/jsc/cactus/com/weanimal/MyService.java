@@ -40,6 +40,8 @@ import jsc.cactus.com.weanimal.g_animal.main.main.weanimal.MainActivity;
  */
 public class MyService extends Service {
 
+    public static boolean animal = false;
+
     private Handler toastHandler;
 //    private Handler pushHandler;
 
@@ -132,6 +134,8 @@ public class MyService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        animal = false;
+
         activity = Variable.service_activity;
         context = Variable.service_context;
 
@@ -263,6 +267,7 @@ public class MyService extends Service {
         mSocket.on("SEND_MSG", Recive);
         mSocket.on("RES_SET", StatusRecive);
         mSocket.on("RES_LEVEL", LevelRecive);
+        mSocket.on("RES_CHAT", ChatRecive);
 
         Log.i("TEST", "ON SOCKET");
     }
@@ -292,10 +297,10 @@ public class MyService extends Service {
 
                     try {
                         ID = data.getString("id");
-                        //time = data.getLong("synctime");
+                        time = data.getLong("nowtime");
 
                         Log.i("TEST", "push");
-                        loginPush(ID, System.currentTimeMillis());
+                        loginPush(ID, time);
 
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -322,7 +327,8 @@ public class MyService extends Service {
                     int family_love;
                     int family_food;
                     int family_water;
-                    String typeI = "";
+                    int typeI = -1;
+                    String send_name = "";
                     String typeII = "";
 
                     long time;
@@ -331,30 +337,42 @@ public class MyService extends Service {
                         family_water = data.getInt("WA");
                         family_food = data.getInt("FO");
                         family_love = data.getInt("LO");
-                        //typeI = data.getString("TYPE");
-                        //time = data.getLong("synctime");
 
-                        Log.i("TEST", "push");
+                        send_name = data.getString("name");
 
+                        typeI = data.getInt("TYPE");
+                        time = data.getLong("nowtime");
+
+                        Log.i("TEST", Integer.toString(typeI));
                         switch (typeI) {
-                            case "FOOD":
+                            case 0:
+                                Log.i("TEST", "이게 출력되면 종현이 병신새끼");
+                                break;
+                            case 1:
                                 typeII = "먹이를";
+                                statusPush(send_name, typeII, time);
+                                Log.i("TEST", "push");
                                 break;
-                            case "WATER":
+                            case 2:
                                 typeII = "물을";
+                                statusPush(send_name, typeII, time);
                                 break;
-                            case "LOVE":
+                            case 3:
                                 typeII = "사랑을";
+                                statusPush(send_name, typeII, time);
                                 break;
                             default:
                                 typeII = "무언가를";
+                                statusPush(send_name, typeII, time);
                         }
 
-                        statusPush("이름", typeII, System.currentTimeMillis());
+                        Log.i("TEST", Integer.toString(family_food));
 
-                        Animal.animal.getStatus().setStatus(StatusType.FOOD, family_food);
-                        Animal.animal.getStatus().setStatus(StatusType.LOVE, family_love);
-                        Animal.animal.getStatus().setStatus(StatusType.WATER, family_water);
+                        if (animal) {
+                            Animal.animal.getStatus().setStatus(StatusType.FOOD, family_food);
+                            Animal.animal.getStatus().setStatus(StatusType.LOVE, family_love);
+                            Animal.animal.getStatus().setStatus(StatusType.WATER, family_water);
+                        }
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -382,10 +400,10 @@ public class MyService extends Service {
 
                     try {
                         animal_level = data.getInt("level");
-                        //time = data.getLong("synctime");
+                        time = data.getLong("nowtime");
 
                         Log.i("TEST", Integer.toString(animal_level));
-                        levelupPush("동물", System.currentTimeMillis());
+                        levelupPush("동물", time);
 
                         Animal.animal.setAge(animal_level);
                     } catch (JSONException e) {
@@ -417,8 +435,8 @@ public class MyService extends Service {
                         id = data.getString("ID");
                         name = data.getString("NAME");
                         text = data.getString("TEXT");
-                        day = data.getString("DAY");
                         time = data.getString("TIME");
+                        day = data.getString("DAY");
 
                         Log.i("TEST", "push");
 

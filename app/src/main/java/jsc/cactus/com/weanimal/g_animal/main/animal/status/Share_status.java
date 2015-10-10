@@ -36,6 +36,7 @@ public class Share_status {
         data.put("FO", FOOD);
         data.put("WA", WATER);
         data.put("LO",LOVE);
+        data.put("ID",Variable.user_id);
         data.put("CO",Variable.user_familycode);
 
         MyService.mSocket.emit("SETSTATUS", data);

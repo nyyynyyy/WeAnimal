@@ -138,6 +138,7 @@ public class MainActivity extends AppCompatActivity implements MissionListener{
         mainActivity = this;
         missionViewManager = new MissionViewManager(this);
         animal = new Animal(this);
+        MyService.animal = true;
         new MissionManager(this);
         userManager = new UserManager(new User(Variable.user_id, Variable.user_name, Variable.user_birthday, UserGender.MALE));
         familyChatViewManager = new ChatViewManager(this);

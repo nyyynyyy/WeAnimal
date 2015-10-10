@@ -69,12 +69,11 @@ public class ChatManager {
         }
     }
 
-    public void sendMessage(String text ,String day , String time) throws JSONException {
+    public void sendMessage(String id ,String msg) throws JSONException {
         JSONObject data = new JSONObject();
 
-        data.put("ID", text);
-        data.put("DAY", day);
-        data.put("TIME", time);
+        data.put("ID", id);
+        data.put("MSG", msg);
 
         MyService.mSocket.emit("CHAT", data);
     }

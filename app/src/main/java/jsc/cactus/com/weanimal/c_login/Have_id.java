@@ -149,6 +149,9 @@ public class Have_id extends AppCompatActivity {
                             case -2:
                                 OftenMethod.message(Have_id.this, "가족코드를 다시 생각해보세요.");
                                 break;
+                            case -4:
+                                OftenMethod.message(Have_id.this, "이미 접속종인 아이디입니다.");
+                                break;
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
