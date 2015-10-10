@@ -1,14 +1,19 @@
 package jsc.cactus.com.weanimal.g_animal.main.main.weanimal;
 
+import android.animation.LayoutTransition;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.Date;
 
 import io.socket.emitter.Emitter;
 import jsc.cactus.com.weanimal.MyService;
@@ -30,7 +35,7 @@ import jsc.cactus.com.weanimal.g_animal.main.users.UserManager;
 /**
  * Created by INSI on 15. 9. 23..
  */
-public class MainActivity extends AppCompatActivity implements MissionListener{
+public class MainActivity extends AppCompatActivity implements MissionListener {
 
     public static MainActivity mainActivity;
 
@@ -39,12 +44,20 @@ public class MainActivity extends AppCompatActivity implements MissionListener{
     private Animal animal;
     private UserManager userManager;
 
+    private LinearLayout animal_hill;
+
     long missionTime = 0;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // 시간에 따른 배경 설정
+        animal_hill = (LinearLayout) findViewById(R.id.AnimalHill);
+
+        setBackground();
+        //
 
         try {
             getStatus();
@@ -63,6 +76,19 @@ public class MainActivity extends AppCompatActivity implements MissionListener{
 
     private void getStatus() throws JSONException {
         sendMessage();
+    }
+
+    private void setBackground() {
+        int hour = new Date().getHours();
+
+        if (Variable.morning(hour))
+            animal_hill.setBackgroundResource(R.drawable.background_evening);
+        if (Variable.daytime(hour))
+            animal_hill.setBackgroundResource(R.drawable.background_morning);
+        if (Variable.evening(hour))
+            animal_hill.setBackgroundResource(R.drawable.background_evening);
+        if (Variable.night(hour))
+            animal_hill.setBackgroundResource(R.drawable.background_night);
     }
 
     public void sendMessage() throws JSONException {

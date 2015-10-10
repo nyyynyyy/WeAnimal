@@ -32,7 +32,6 @@ import jsc.cactus.com.weanimal.g_animal.main.animal.Animal;
 import jsc.cactus.com.weanimal.g_animal.main.animal.status.Share_status;
 import jsc.cactus.com.weanimal.g_animal.main.animal.status.Status;
 import jsc.cactus.com.weanimal.g_animal.main.animal.status.StatusType;
-import jsc.cactus.com.weanimal.g_animal.main.familychat.DateFormat;
 import jsc.cactus.com.weanimal.g_animal.main.main.weanimal.MainActivity;
 
 /**
