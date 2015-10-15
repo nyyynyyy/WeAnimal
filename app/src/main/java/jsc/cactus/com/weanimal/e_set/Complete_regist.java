@@ -50,7 +50,7 @@ public class Complete_regist extends AppCompatActivity {
     }
 
     void goin() {
-        Intent intent = new Intent(this, Select_animal.class);
+        Intent intent = new Intent(this, Set_birthday_gender.class);
 
         startActivity(intent);
         finish();

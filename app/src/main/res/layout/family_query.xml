@@ -5,47 +5,75 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="jsc.cactus.com.weanimal.d_regist.Family_query"
-    android:id="@+id/rootContainer">
+    android:id="@+id/rootContainer"
+    android:background="@drawable/background_blue">
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_alignParentBottom="true">
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="130dp">
 
-        <TextView android:text="@string/checkFamily" android:layout_width="fill_parent"
+        <TextView android:text="당신의 가족은" android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="150dp"
-            android:textColor="#000000"
-            android:textSize="25dp"
+            android:textColor="#fdf59f"
+            android:textSize="35dp"
             android:id="@+id/textView2"
             android:layout_alignParentTop="true"
             android:layout_alignParentStart="true"
-            android:gravity="center" />
+            android:gravity="center"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="경험해보셨습니까?"
+            android:id="@+id/textView10"
+            android:layout_gravity="center_horizontal"
+            android:textSize="30dp"
+            android:textStyle="bold"
+            android:textColor="#ffffff" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="[가족 계정이 존재하는가?]"
+            android:id="@+id/textView11"
+            android:layout_gravity="center_horizontal"
+            android:textSize="20dp"
+            android:textColor="#d7d7d7"
+            android:textStyle="bold" />
 
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="180dp"
+            android:layout_marginTop="150dp"
             android:focusableInTouchMode="false"
             android:gravity="center">
 
             <Button
-                android:layout_width="wrap_content"
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:text="네"
                 android:id="@+id/a4_btn_yes"
                 android:layout_centerVertical="true"
-                style="1" />
+                style="@style/Base.Widget.AppCompat.ActionButton.CloseMode"
+                android:textSize="25dp"
+                android:textColor="#ffffff" />
 
             <Button
-                android:layout_width="wrap_content"
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:text="아니요"
                 android:id="@+id/a4_btn_no"
-                style="1"
-                android:layout_marginLeft="50dp" />
+                style="@style/Base.Widget.AppCompat.ActionButton.CloseMode"
+                android:layout_marginLeft="50dp"
+                android:textSize="25dp"
+                android:textColor="#ffffff" />
         </LinearLayout>
     </LinearLayout>
 

@@ -12,10 +12,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import org.json.JSONException;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import jsc.cactus.com.weanimal.R;
+import jsc.cactus.com.weanimal.Variable;
 import jsc.cactus.com.weanimal.g_animal.main.familychat.view.ChatItem;
 import jsc.cactus.com.weanimal.g_animal.main.familychat.view.ChatListViewAdapter;
 import jsc.cactus.com.weanimal.g_animal.main.users.UserManager;
@@ -70,6 +73,11 @@ public class ChatDialog extends DialogFragment {
     private View.OnClickListener confirm = new View.OnClickListener() {
         public void onClick(View v) {
             ChatManager.callChatEvent(UserManager.getLocalUser(), textEdit.getText().toString());
+            try {
+                ChatManager.sendMessage(Variable.user_id, textEdit.getText().toString());
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
             listView.setSelection(listView.getCount() - 1);
             textEdit.setText("");
             acceptButton.setEnabled(false);

@@ -77,10 +77,15 @@ public class Set_birthday_gender extends AppCompatActivity {
 
 
                 if(radio_f.isChecked()||radio_m.isChecked()) {
-                    try {
-                        sendMessage();
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+                    if(txt_birthday.getText().toString().equals("생년월일 선택")){
+                        OftenMethod.message(Set_birthday_gender.this, "생년월일을 알려주세요.");
+                    }
+                    else {
+                        try {
+                            sendMessage();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
                 else
@@ -97,12 +102,9 @@ public class Set_birthday_gender extends AppCompatActivity {
     public void sendMessage() throws JSONException {
         JSONObject data = new JSONObject();
 
-        // perform the user login attempt.
         String msggendr = gender;
         String msgbirthday = Integer.toString(Year) + "-" + Integer.toString(Month) + "-" + Integer.toString(Day);
 
-
-        //OftenMethod.message(this, "Gender : " + msggendr + "\nBirthDay : " + msgbirthday);
 
         data.put("ID", Variable.user_id);
         data.put("GE", msggendr);
@@ -120,7 +122,7 @@ public class Set_birthday_gender extends AppCompatActivity {
 
 
     void goin() {
-        Intent intent = new Intent(this, View_family.class);
+        Intent intent = new Intent(this, Select_animal.class);
 
         startActivity(intent);
         finish();
@@ -138,7 +140,6 @@ public class Set_birthday_gender extends AppCompatActivity {
 
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
 
-            //Toast.makeText(getApplicationContext(), year + "년" + ( monthOfYear + 1 ) + "월" + dayOfMonth + "일", Toast.LENGTH_SHORT).show();
             Year = year;
             Month = monthOfYear + 1;
             Day = dayOfMonth;

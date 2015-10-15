@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:background="#76ff00">
 
     <LinearLayout
         android:orientation="vertical"
@@ -8,17 +9,18 @@
         android:layout_height="fill_parent"
         android:layout_weight="1"
         android:layout_marginLeft="50dp"
-        android:layout_marginRight="50dp">
+        android:layout_marginRight="50dp"
+        android:gravity="center">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="ID"
             android:id="@+id/a3_1_txt_id"
             android:layout_below="@+id/a3_1_txt_name"
             android:layout_alignStart="@+id/a3_1_txt_name"
-            android:layout_marginTop="70dp" />
+            android:textColor="#029700" />
 
         <EditText
             android:layout_width="fill_parent"
@@ -26,17 +28,19 @@
             android:id="@+id/a3_1_edit_id"
             android:layout_below="@+id/a3_1_txt_id"
             android:layout_alignStart="@+id/a3_1_txt_id"
-            android:inputType="textVisiblePassword" />
+            android:inputType="textVisiblePassword"
+            android:textColor="#029700" />
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="가족코드"
             android:id="@+id/a5_txt_fn"
             android:layout_centerVertical="true"
             android:layout_alignStart="@+id/a3_1_edit_id"
-            android:layout_marginTop="50dp" />
+            android:layout_marginTop="50dp"
+            android:textColor="#029700" />
 
         <EditText
             android:layout_width="fill_parent"
@@ -45,17 +49,19 @@
             android:id="@+id/a3_1_edit_familycode"
             android:layout_below="@+id/a5_txt_fn"
             android:layout_alignStart="@+id/a5_txt_fn"
-            android:inputType="number" />
+            android:inputType="number"
+            android:textColor="#029700" />
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="가족비밀번호"
             android:id="@+id/a5_txt_fp"
             android:layout_below="@+id/a3_1_edit_name"
             android:layout_alignStart="@+id/a3_1_edit_name"
-            android:layout_marginTop="50dp" />
+            android:layout_marginTop="50dp"
+            android:textColor="#029700" />
 
         <EditText
             android:layout_width="fill_parent"
@@ -64,7 +70,8 @@
             android:ems="10"
             android:id="@+id/a3_1_edit_familypassword"
             android:layout_below="@+id/a5_txt_fp"
-            android:layout_alignStart="@+id/a5_txt_fp" />
+            android:layout_alignStart="@+id/a5_txt_fp"
+            android:textColor="#029700" />
 
         <LinearLayout
             android:orientation="horizontal"
@@ -73,15 +80,17 @@
             android:layout_gravity="right"></LinearLayout>
 
         <Button
-            android:layout_width="fill_parent"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:text="로그인"
             android:id="@+id/a3_1_btn_login"
             android:layout_alignParentBottom="true"
             android:layout_alignParentStart="true"
-            android:background="#ffffff"
+            android:background="#029700"
             android:textStyle="bold"
-            android:layout_marginTop="50dp" />
+            android:layout_marginTop="50dp"
+            android:textSize="25dp"
+            android:textColor="#76ff00" />
 
     </LinearLayout>
 

@@ -69,7 +69,7 @@ public class ChatManager {
         }
     }
 
-    public void sendMessage(String id ,String msg) throws JSONException {
+    public static void sendMessage(String id ,String msg) throws JSONException {
         JSONObject data = new JSONObject();
 
         data.put("ID", id);

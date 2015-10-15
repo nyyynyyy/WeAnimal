@@ -21,7 +21,7 @@ public class StartActivty extends AppCompatActivity {
 
         registerReceiver(receiver, mainFilter);
 
-        if(!MyService.turn) {
+        if(!MyService.service_turn) {
             Intent intent = new Intent(StartActivty.this, MyService.class);
             startService(intent);
             MyService.cons(StartActivty.this, getApplicationContext());

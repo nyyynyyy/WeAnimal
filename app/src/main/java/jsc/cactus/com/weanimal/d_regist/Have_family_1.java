@@ -102,6 +102,11 @@ public class Have_family_1 extends AppCompatActivity {
                     try {
                         CH = data.getInt("CH");
                         switch (CH) {
+                            case -2:
+                                OftenMethod.message(Have_family_1.this, "그 가족은 동물이 없습니다.");
+                                OftenMethod.message(Have_family_1.this, "가장이 로그인하여 동물을 골라주세요.");
+                                break;
+
                             case -1:
                                 OftenMethod.message(Have_family_1.this, "존재하지 않는 가족코드입니다.");
                                 break;

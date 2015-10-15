@@ -59,7 +59,7 @@ public class View_family extends AppCompatActivity {
 
         list.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 
-        list.setDivider(new ColorDrawable(Color.WHITE));
+        list.setDivider(new ColorDrawable(Color.argb(255,253,96,41)));
 
         list.setDividerHeight(2);
 
@@ -132,7 +132,7 @@ public class View_family extends AppCompatActivity {
                                 Adapter.add(new Family_Item(fna, fid + "\n" + fge + "\n" + fbd));
                             }
                             else {
-                                Adapter.insert(new Family_Item("[PRESIDENT] " + fna,fid + "\n" + fge + "\n" + fbd),0);
+                                Adapter.insert(new Family_Item("[가장] " + fna,fid + "\n" + fge + "\n" + fbd),0);
                             }
                             list.setAdapter(Adapter);
                         }

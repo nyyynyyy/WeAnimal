@@ -17,6 +17,8 @@ public class Variable {
     public static String user_birthday = "1999-12-23";
     public static String user_phonenumber = "010-1999-1223";
 
+    public static String animal_name = "카투스";
+
     public static boolean morning(int hour) {
         if (hour >= 7 && hour < 9)
             return true;

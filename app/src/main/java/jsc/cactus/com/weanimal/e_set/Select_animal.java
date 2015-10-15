@@ -20,6 +20,7 @@ import jsc.cactus.com.weanimal.R;
 import jsc.cactus.com.weanimal.Variable;
 import jsc.cactus.com.weanimal.c_login.Id_query;
 import jsc.cactus.com.weanimal.d_regist.Family_query;
+import jsc.cactus.com.weanimal.f_list.View_family;
 import jsc.cactus.com.weanimal.g_animal.main.animal.Animal;
 import jsc.cactus.com.weanimal.g_animal.main.animal.AnimalType;
 
@@ -132,6 +133,8 @@ public class Select_animal extends AppCompatActivity {
         data.put("TYPE", msgtype);
         data.put("NA", msgname);
 
+        Variable.animal_name = animal_name;
+
         MyService.mSocket.emit("CREATE_ANIMAL", data);
 
         goin();
@@ -151,7 +154,7 @@ public class Select_animal extends AppCompatActivity {
     }
 
     void goin() {
-        Intent intent = new Intent(this, Set_birthday_gender.class);
+        Intent intent = new Intent(this, View_family.class);
 
         startActivity(intent);
         finish();

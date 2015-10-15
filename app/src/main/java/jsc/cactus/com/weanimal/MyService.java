@@ -28,21 +28,25 @@ import java.util.Date;
 
 import io.socket.client.IO;
 import io.socket.emitter.Emitter;
+import jsc.cactus.com.weanimal.g_animal.main.DateFormat;
 import jsc.cactus.com.weanimal.g_animal.main.animal.Animal;
 import jsc.cactus.com.weanimal.g_animal.main.animal.status.Share_status;
 import jsc.cactus.com.weanimal.g_animal.main.animal.status.Status;
 import jsc.cactus.com.weanimal.g_animal.main.animal.status.StatusType;
+import jsc.cactus.com.weanimal.g_animal.main.familychat.ChatManager;
 import jsc.cactus.com.weanimal.g_animal.main.main.weanimal.MainActivity;
+import jsc.cactus.com.weanimal.g_animal.main.users.User;
+import jsc.cactus.com.weanimal.g_animal.main.users.UserGender;
 
 /**
  * Created by nyyyn on 2015-10-03.
  */
 public class MyService extends Service {
 
-    public static boolean animal = false;
-
     private Handler toastHandler;
 //    private Handler pushHandler;
+
+    private Thread connect;
 
     //토스트-------------------------------------------------
     private class ToastRunnable implements Runnable {
@@ -105,9 +109,11 @@ public class MyService extends Service {
     }
     //--------------------------------------------------------
 
-    static boolean turn = false;
-
+    public static boolean service_turn = false;
+    public static boolean server_turn = false;
+    public static boolean connect_turn = false;
     public static boolean login = false;
+    public static boolean animal = false;
 
     static Activity activity;
     static Context context;
@@ -143,7 +149,7 @@ public class MyService extends Service {
 //        pushHandler = new Handler();
 
         //서비스 작동 여부
-        turn = true;
+        service_turn = true;
 
         //파일 위치
         FileMethod file = new FileMethod(new File("/data/data/jsc.cactus.com.weanimal/files/login/"), "login.txt");
@@ -169,9 +175,44 @@ public class MyService extends Service {
 
         unregisterRestartAlarm();
 
+        setupConnect();
+
+        connect.start();
+
         new Thread(new Runnable() {
             @Override
             public void run() {
+                while (true) {
+                    if (!mSocket.connected()&&!connect_turn) {
+                        server_turn = false;
+                        Log.i("TEST", "SERVER DOWN");
+                        Log.i("TEST", "스레드는 과연 뒤졌을까? " + Boolean.toString(connect.isAlive()));
+                        setupConnect();
+                        connect.start();
+                    }
+                    try {
+                        Thread.sleep(1000L);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }).start();
+
+        if (login) {
+            return Service.START_STICKY;
+        } else {
+            return Service.START_NOT_STICKY;
+        }
+
+
+    }
+
+    public void setupConnect(){
+        connect = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                connect_turn = true;
                 do {
                     mSocket.connect();
                     toast("연결시도");
@@ -188,6 +229,9 @@ public class MyService extends Service {
                         toast("연결성공");
                         Log.i("TEST", "Socket connect");
 
+                        connect_turn = false;
+                        server_turn = true;
+
                         if (login) {
                             try {
                                 sendMessage();
@@ -203,16 +247,11 @@ public class MyService extends Service {
                             e.printStackTrace();
                         }
 
+                        connect.interrupt();
                     }
                 } while (!mSocket.connected());
             }
-        }).start();
-
-        if (login) {
-            return Service.START_STICKY;
-        } else {
-            return Service.START_NOT_STICKY;
-        }
+        });
     }
 
     public void registerRestartAlarm() {
@@ -248,8 +287,12 @@ public class MyService extends Service {
         mSocket.off("SEND_MSG", Recive);
         mSocket.off("RES_SET", StatusRecive);
         mSocket.off("RES_LEVEL", LevelRecive);
+        mSocket.off("RES_CHAT", ChatRecive);
+        mSocket.off("RESET", ResetRecive);
 
-        turn = false;
+        service_turn = false;
+        server_turn = false;
+        connect_turn = false;
 
         Toast.makeText(this, "서비스 종료", Toast.LENGTH_SHORT).show();
 
@@ -267,6 +310,7 @@ public class MyService extends Service {
         mSocket.on("RES_SET", StatusRecive);
         mSocket.on("RES_LEVEL", LevelRecive);
         mSocket.on("RES_CHAT", ChatRecive);
+        mSocket.on("RESET", ResetRecive);
 
         Log.i("TEST", "ON SOCKET");
     }
@@ -402,7 +446,7 @@ public class MyService extends Service {
                         time = data.getLong("nowtime");
 
                         Log.i("TEST", Integer.toString(animal_level));
-                        levelupPush("동물", time);
+                        levelupPush(Variable.animal_name, time);
 
                         Animal.animal.setAge(animal_level);
                     } catch (JSONException e) {
@@ -418,14 +462,15 @@ public class MyService extends Service {
         @Override
         public void call(final Object... args) {
 
-            activity.runOnUiThread(new Runnable() {
+            new Thread(new Runnable() {
                 @Override
                 public void run() {
                     JSONObject data = (JSONObject) args[0];
+
                     String id;
                     String name;
                     String text;
-                    String time;
+                    Long time;
                     String day;
 
                     BufferedWriter bw;
@@ -434,26 +479,43 @@ public class MyService extends Service {
                         id = data.getString("ID");
                         name = data.getString("NAME");
                         text = data.getString("TEXT");
-                        time = data.getString("TIME");
+                        time = data.getLong("TIME");
                         day = data.getString("DAY");
 
                         Log.i("TEST", "push");
 
-                        bw = new BufferedWriter(new FileWriter("/data/data/jsc.cactus.com.weanimal/files/chat/" + day, true));
+                        Log.i("TEST", day.split(" ")[0]);
+                        Log.i("TEST", day.split(" ")[1]);
 
+//                        bw = new BufferedWriter(new FileWriter("/data/data/jsc.cactus.com.weanimal/files/chat/" + day.split(" ")[0] + ".txt", true));
+//
+//                        bw.append(" " + time + "|" + name + "|" + text);
+//                        bw.newLine();
+//
+//                        bw.close();
+//                        new User(id,name,Variable.user_birthday, UserGender.FEMALE);
+                        ChatManager.callChatEvent(new User(id, name, Variable.user_birthday, UserGender.FEMALE), text);
 
-                        bw.append(" " + time + "|" + name + "|" + text);
-                        bw.newLine();
-
-                        bw.close();
-
-                        // push(4, id + " \n " + text);
+                        chatPush(name, text, time);
                     } catch (Exception e) {
                     }
                 }
-            });
+            }).start();
+        }
+    };
 
+    //서버 다운
+    private Emitter.Listener ResetRecive = new Emitter.Listener() {
+        @Override
+        public void call(final Object... args) {
 
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    server_turn = false;
+                    Log.i("TEST", "SERVER DOWN");
+                }
+            }).start();
         }
     };
 

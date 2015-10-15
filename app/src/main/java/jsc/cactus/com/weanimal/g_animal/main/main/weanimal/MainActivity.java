@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -17,6 +18,7 @@ import java.util.Date;
 
 import io.socket.emitter.Emitter;
 import jsc.cactus.com.weanimal.MyService;
+import jsc.cactus.com.weanimal.OftenMethod;
 import jsc.cactus.com.weanimal.R;
 import jsc.cactus.com.weanimal.Variable;
 import jsc.cactus.com.weanimal.g_animal.main.animal.Animal;
@@ -66,6 +68,19 @@ public class MainActivity extends AppCompatActivity implements MissionListener {
         }
 
         init();
+    }
+
+    private boolean exit = false;
+
+    @Override
+    public void onBackPressed(){
+        if(exit){
+            super.onBackPressed();
+        }
+        else {
+            Toast.makeText(this, "백프레스", Toast.LENGTH_SHORT).show();
+            exit = true;
+        }
     }
 
     @Override

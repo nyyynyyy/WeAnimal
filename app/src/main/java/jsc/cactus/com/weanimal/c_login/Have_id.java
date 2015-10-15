@@ -25,6 +25,8 @@ import java.io.IOException;
 import io.socket.emitter.Emitter;
 import jsc.cactus.com.weanimal.FileMethod;
 import jsc.cactus.com.weanimal.MyService;
+import jsc.cactus.com.weanimal.e_set.Select_animal;
+import jsc.cactus.com.weanimal.e_set.Set_birthday_gender;
 import jsc.cactus.com.weanimal.f_list.View_family;
 import jsc.cactus.com.weanimal.OftenMethod;
 import jsc.cactus.com.weanimal.R;
@@ -152,6 +154,30 @@ public class Have_id extends AppCompatActivity {
                             case -4:
                                 OftenMethod.message(Have_id.this, "이미 접속종인 아이디입니다.");
                                 break;
+                            case -5:
+                                OftenMethod.message(Have_id.this, "성별과 생년월일을 모르겠습니다.");
+
+                                Variable.user_id = data.getString("id");
+                                Variable.user_name = data.getString("name");
+                                Variable.user_familycode= data.getInt("familycode");
+
+                                goin2();
+                                MyService.login = true;
+                                finish();
+
+                                break;
+                            case -6:
+                                OftenMethod.message(Have_id.this, "동물을 분양 받아주세요.");
+
+                                Variable.user_id = data.getString("id");
+                                Variable.user_name = data.getString("name");
+                                Variable.user_familycode= data.getInt("familycode");
+
+                                goin3();
+                                MyService.login = true;
+                                finish();
+
+                                break;
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -165,6 +191,18 @@ public class Have_id extends AppCompatActivity {
         Id_query act03 = (Id_query) Id_query.ac03;
         act03.finish();
         Intent intent = new Intent(this, View_family.class);
+        startActivity(intent);
+    }
+    void goin2() {
+        Id_query act03 = (Id_query) Id_query.ac03;
+        act03.finish();
+        Intent intent = new Intent(this, Set_birthday_gender.class);
+        startActivity(intent);
+    }
+    void goin3() {
+        Id_query act03 = (Id_query) Id_query.ac03;
+        act03.finish();
+        Intent intent = new Intent(this, Select_animal.class);
         startActivity(intent);
     }
 }
