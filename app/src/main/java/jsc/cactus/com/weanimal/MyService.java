@@ -10,9 +10,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.IBinder;
-import android.os.Message;
 import android.os.SystemClock;
-import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -22,18 +20,17 @@ import org.json.JSONObject;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
-import java.io.IOException;
 import java.net.URISyntaxException;
-import java.util.Date;
 
 import io.socket.client.IO;
 import io.socket.emitter.Emitter;
 import jsc.cactus.com.weanimal.g_animal.main.DateFormat;
 import jsc.cactus.com.weanimal.g_animal.main.animal.Animal;
-import jsc.cactus.com.weanimal.g_animal.main.animal.status.Share_status;
-import jsc.cactus.com.weanimal.g_animal.main.animal.status.Status;
 import jsc.cactus.com.weanimal.g_animal.main.animal.status.StatusType;
+<<<<<<< Updated upstream
 import jsc.cactus.com.weanimal.g_animal.main.familychat.ChatManager;
+=======
+>>>>>>> Stashed changes
 import jsc.cactus.com.weanimal.g_animal.main.main.weanimal.MainActivity;
 import jsc.cactus.com.weanimal.g_animal.main.users.User;
 import jsc.cactus.com.weanimal.g_animal.main.users.UserGender;

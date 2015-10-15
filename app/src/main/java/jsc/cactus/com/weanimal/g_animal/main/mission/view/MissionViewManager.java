@@ -27,7 +27,7 @@ public class MissionViewManager {
 
     private View.OnClickListener clickButton = new View.OnClickListener(){
         public void onClick(View v){
-            if(!missionDialog.isVisible())
+            if(!missionDialog.isAdded())
                 missionDialog.show(fragmentManager, "");
         }
     };

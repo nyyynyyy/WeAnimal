@@ -1,7 +1,5 @@
 package jsc.cactus.com.weanimal.g_animal.main.mission.view;
 
-import jsc.cactus.com.weanimal.g_animal.main.mission.Mission;
-
 /**
  * Created by INSI on 2015. 10. 7..
  */

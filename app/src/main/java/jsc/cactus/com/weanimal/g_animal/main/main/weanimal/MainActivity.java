@@ -26,7 +26,7 @@ import jsc.cactus.com.weanimal.g_animal.main.animal.AnimalType;
 import jsc.cactus.com.weanimal.g_animal.main.animal.status.Status;
 import jsc.cactus.com.weanimal.g_animal.main.animal.status.StatusType;
 import jsc.cactus.com.weanimal.g_animal.main.familychat.view.ChatViewManager;
-import jsc.cactus.com.weanimal.g_animal.main.mission.Mission;
+import jsc.cactus.com.weanimal.g_animal.main.mission.missions.Mission;
 import jsc.cactus.com.weanimal.g_animal.main.mission.MissionListener;
 import jsc.cactus.com.weanimal.g_animal.main.mission.MissionManager;
 import jsc.cactus.com.weanimal.g_animal.main.mission.view.MissionViewManager;

@@ -30,7 +30,7 @@ public class ChatViewManager {
 
     private View.OnClickListener clickSign = new View.OnClickListener(){
         public void onClick(View v){
-            if(!familyChatDialog.isVisible())
+            if(!familyChatDialog.isAdded())
                 familyChatDialog.show(fragmentManager, "");
         }
     };

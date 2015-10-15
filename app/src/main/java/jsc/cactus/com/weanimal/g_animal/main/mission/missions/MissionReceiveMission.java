@@ -1,6 +1,5 @@
 package jsc.cactus.com.weanimal.g_animal.main.mission.missions;
 
-import jsc.cactus.com.weanimal.g_animal.main.mission.Mission;
 import jsc.cactus.com.weanimal.g_animal.main.mission.MissionType;
 
 /**

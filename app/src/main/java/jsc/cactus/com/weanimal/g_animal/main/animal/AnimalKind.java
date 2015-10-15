@@ -25,16 +25,17 @@ public class AnimalKind {
         int get[] = {};
 
         switch (type) {
-            case CHICKEN:
+            default:
+            //case CHICKEN:
                 get = statusType == AnimalStatusType.DEFAULT ? CHICKEN_DEFAULT : statusType == AnimalStatusType.FLABBY ? CHICKEN_FLABBY : CHICKEN_WEAK;
-                break;
+                //break;
 //            case DOG:
 //                get = statusType == AnimalStatusType.DEFAULT ? DOG_DEFAULT : statusType == AnimalStatusType.FLABBY ? DOG_FLABBY : DOG_WEAK;
 //                break;
 //            case CAT:
 //                get = statusType == AnimalStatusType.DEFAULT ? CAT_DEFAULT : statusType == AnimalStatusType.FLABBY ? CAT_FLABBY : CAT_WEAK;
 //                break;
-            default:
+            //default:
         }
 
         return get[Math.min(age, get.length - 1)];

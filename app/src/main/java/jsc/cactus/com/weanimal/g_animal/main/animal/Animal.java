@@ -1,7 +1,10 @@
 package jsc.cactus.com.weanimal.g_animal.main.animal;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
@@ -12,6 +15,7 @@ import jsc.cactus.com.weanimal.g_animal.main.animal.status.Status;
 import jsc.cactus.com.weanimal.g_animal.main.animal.status.StatusChangeListener;
 import jsc.cactus.com.weanimal.g_animal.main.animal.status.StatusListenerManager;
 import jsc.cactus.com.weanimal.g_animal.main.animal.status.StatusType;
+import jsc.cactus.com.weanimal.g_animal.main.main.weanimal.MainActivity;
 
 
 /**
@@ -22,6 +26,7 @@ public class Animal implements StatusChangeListener {
     public static Animal animal;
 
     private ImageView animalView;
+    private Bitmap bitmap;
 
     private Status status;
 
@@ -31,6 +36,7 @@ public class Animal implements StatusChangeListener {
     private int age;
 
     private boolean ready;
+
     public Animal(Activity activity) {
 
         animal = this;
@@ -38,7 +44,6 @@ public class Animal implements StatusChangeListener {
         status = new Status(activity, this);
         StatusListenerManager.addStatusChangeListener(this);
         animalView = (ImageView) activity.findViewById(R.id.imageView2);
-        //reimage();
     }
 
     public int getAge() {
@@ -73,7 +78,7 @@ public class Animal implements StatusChangeListener {
     }
 
     public void setType(AnimalType type){
-        this.type =type;
+        this.type = type;
         reimage();
     }
 
@@ -95,14 +100,18 @@ public class Animal implements StatusChangeListener {
         reimage();
     }
 
-    Handler reimage = new Handler(){
+    private Handler reimage = new Handler(){
         @Override
         public void handleMessage(Message msg) {
             if(!ready)
                 return;
 
-            animalView.setImageResource(AnimalKind.getImageResource(type, AnimalStatusType.getStatusType((status.getStatus(StatusType.FOOD) + status.getStatus(StatusType.WATER))), age));
-            //((BitmapDrawable)animalView.getDrawable()).getBitmap().recycle();
+            try {
+                Bitmap bitmap = ((BitmapDrawable) animalView.getDrawable()).getBitmap();
+                bitmap.recycle();
+            }catch (Exception ex){}
+
+            animalView.setImageBitmap(BitmapFactory.decodeResource(MainActivity.mainActivity.getResources(), AnimalKind.getImageResource(type, AnimalStatusType.getStatusType((status.getStatus(StatusType.FOOD) + status.getStatus(StatusType.WATER))), age)));
         }
     };
 }
