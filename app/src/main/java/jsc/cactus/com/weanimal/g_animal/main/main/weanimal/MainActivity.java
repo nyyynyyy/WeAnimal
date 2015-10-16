@@ -9,8 +9,11 @@ import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+<<<<<<< HEAD
 import android.widget.Button;
 import android.widget.ImageView;
+=======
+>>>>>>> origin/master
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -72,6 +75,8 @@ public class MainActivity extends AppCompatActivity implements MissionListener {
 
         setContentView(R.layout.activity_main);
 
+
+
         // 시간에 따른 배경 설정
         animal_hill = (LinearLayout) findViewById(R.id.AnimalHill);
 
@@ -117,11 +122,10 @@ public class MainActivity extends AppCompatActivity implements MissionListener {
     }
 
     @Override
-    public void onBackPressed(){
-        if(exit){
+    public void onBackPressed() {
+        if (exit) {
             super.onBackPressed();
-        }
-        else {
+        } else {
             Toast.makeText(this, "백프레스", Toast.LENGTH_SHORT).show();
             exit = true;
         }
@@ -210,6 +214,8 @@ public class MainActivity extends AppCompatActivity implements MissionListener {
 
                         Log.i("TEST", AnimalType.valueOf(TYPE).toString());
 
+                        findViewById(R.id.AnimalHill).setVisibility(View.VISIBLE);
+
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -223,10 +229,10 @@ public class MainActivity extends AppCompatActivity implements MissionListener {
     public void init() {
 
         mainActivity = this;
+        new MissionManager(this);
         missionViewManager = new MissionViewManager(this);
         animal = new Animal(this);
         MyService.animal = true;
-        new MissionManager(this);
         userManager = new UserManager(new User(Variable.user_id, Variable.user_name, Variable.user_birthday, UserGender.MALE));
         familyChatViewManager = new ChatViewManager(this);
 
@@ -252,7 +258,12 @@ public class MainActivity extends AppCompatActivity implements MissionListener {
     }
 
     @Override
-    public void clearMission() {
+    public void clearMission(Mission mission) {
+
+    }
+
+    @Override
+    public void giveupMission(Mission mission) {
 
     }
 }

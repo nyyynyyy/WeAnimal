@@ -47,7 +47,13 @@ public class ChatMission implements ChatListener, MissionListener {
     }
 
     @Override
-    public void clearMission() {
+    public void clearMission(Mission mission) {
+        isMission = false;
+        mission = null;
+    }
+
+    @Override
+    public void giveupMission(Mission mission) {
         isMission = false;
         mission = null;
     }

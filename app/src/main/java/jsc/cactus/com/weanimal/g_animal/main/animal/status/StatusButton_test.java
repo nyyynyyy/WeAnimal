@@ -12,6 +12,7 @@ import android.widget.ImageView;
 
 import jsc.cactus.com.weanimal.R;
 import jsc.cactus.com.weanimal.g_animal.main.animal.Animal;
+import jsc.cactus.com.weanimal.g_animal.main.mission.view.MissionViewManager;
 
 
 /**
@@ -39,15 +40,17 @@ public class StatusButton_test {
     private View.OnClickListener buttontest = new View.OnClickListener() {
         //배고픔, 목마름, 애정 버튼을 누르면 각각 수치가 5 오름
         public void onClick(View view) {
+            if (view.getId() == bFood.getId())
+                MissionViewManager.missionViewManager.test();
             Animal.animal.getStatus().addStatus(view.getId() == R.id.bt_food ? StatusType.FOOD : view.getId() == R.id.bt_water ? StatusType.WATER : StatusType.LOVE, 5);
         }
     };
 
-    private ImageView.OnTouchListener buttontest1 = new ImageView.OnTouchListener(){
+    private ImageView.OnTouchListener buttontest1 = new ImageView.OnTouchListener() {
 
         @Override
         public boolean onTouch(View v, MotionEvent event) {
-            switch(event.getAction()) {
+            switch (event.getAction()) {
                 case MotionEvent.ACTION_DOWN:
                     v.setAlpha(0.7F);
                     break;
