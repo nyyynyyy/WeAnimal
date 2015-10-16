@@ -25,6 +25,8 @@ public class Have_family_2 extends AppCompatActivity {
 
     public static Activity ha_fa_2;
 
+    public static Boolean ha_fa_2_t = false;
+
     private EditText id_edit;
     private EditText name_edit;
 
@@ -34,6 +36,8 @@ public class Have_family_2 extends AppCompatActivity {
         setContentView(R.layout.have_family_2);
 
         ha_fa_2 = Have_family_2.this;
+
+        ha_fa_2_t = true;
 
         id_edit = (EditText) findViewById(R.id.a4_3_edit_id);
         name_edit = (EditText) findViewById(R.id.a4_3_edit_name);
@@ -62,9 +66,11 @@ public class Have_family_2 extends AppCompatActivity {
 
     @Override
     public void onStop() {
-        super.onStop();
+        ha_fa_2_t = false;
 
         MyService.mSocket.off("RESULT", registRecive);
+
+        super.onStop();
     }
 
     public void sendMessage() throws JSONException {

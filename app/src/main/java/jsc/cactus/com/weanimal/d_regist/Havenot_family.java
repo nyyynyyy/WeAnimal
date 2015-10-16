@@ -27,6 +27,8 @@ public class Havenot_family extends AppCompatActivity {
 
     public static Activity han_fa;
 
+    public static Boolean han_fa_t = false;
+
     private EditText name_ed;
     private EditText id_ed;
     private EditText fp_ed;
@@ -40,6 +42,8 @@ public class Havenot_family extends AppCompatActivity {
         setContentView(R.layout.havenot_family);
 
         han_fa = Havenot_family.this;
+
+        han_fa_t = true;
 
         name_ed = (EditText) findViewById(R.id.a4_1_edit_name);
         id_ed = (EditText) findViewById(R.id.a4_1_edit_id);
@@ -96,7 +100,10 @@ public class Havenot_family extends AppCompatActivity {
 
     @Override
     public void onStop() {
+        han_fa_t = false;
+
         MyService.mSocket.off("RESULT", fregistRecive);
+
         super.onStop();
     }
 

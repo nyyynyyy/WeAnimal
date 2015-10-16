@@ -1,5 +1,6 @@
 package jsc.cactus.com.weanimal.f_list;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -22,6 +23,9 @@ import jsc.cactus.com.weanimal.g_animal.main.main.weanimal.MainActivity;
 
 public class View_family extends AppCompatActivity {
 
+    public static Activity vi_f;
+    public static Boolean vi_f_t = false;
+
     private Family_ListViewAdapter Adapter;
 
     public int familyMember = 1;
@@ -35,6 +39,8 @@ public class View_family extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.view_family);
 
+        vi_f = this;
+        vi_f_t = true;
 
         try {
             codeSendMessage();
@@ -70,9 +76,11 @@ public class View_family extends AppCompatActivity {
 
     @Override
     public void onStop() {
-        super.onStop();
+        vi_f_t = false;
 
         MyService.mSocket.off("ME", memberRecive);
+
+        super.onStop();
     }
 
     public void codeSendMessage() throws JSONException {

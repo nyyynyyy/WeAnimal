@@ -14,12 +14,16 @@ public class Id_query extends AppCompatActivity {
 
     public static Activity id_q;
 
+    public static Boolean id_q_t = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.id_query);
 
         id_q = Id_query.this;
+
+        id_q_t = true;
 
         Button yesBtn = (Button) findViewById(R.id.a3_btn_yes);
         Button noBtn = (Button) findViewById(R.id.a3_btn_no);
@@ -47,5 +51,13 @@ public class Id_query extends AppCompatActivity {
     void goinNo() {
         Intent intent = new Intent(this, Family_query.class);
         startActivity(intent);
+    }
+
+    @Override
+    protected void onStop()
+    {
+        id_q_t = false;
+
+        super.onStop();
     }
 }

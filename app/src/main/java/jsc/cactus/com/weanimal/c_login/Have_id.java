@@ -37,6 +37,8 @@ public class Have_id extends AppCompatActivity {
 
     public static Activity ha_i;
 
+    public static Boolean ha_i_t = false;
+
     private EditText edit_id;
     private EditText edit_fc;
     private EditText edit_fp;
@@ -47,6 +49,8 @@ public class Have_id extends AppCompatActivity {
         setContentView(R.layout.have_id);
 
         ha_i = this;
+
+        ha_i_t = true;
 
         edit_id = (EditText) findViewById(R.id.a3_1_edit_id);
         edit_fc = (EditText) findViewById(R.id.a3_1_edit_familycode);
@@ -83,6 +87,8 @@ public class Have_id extends AppCompatActivity {
     @Override
     public void onStop() {
         super.onStop();
+
+        ha_i_t = false;
 
         MyService.mSocket.off("OK", loginRecive);
     }

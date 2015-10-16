@@ -1,6 +1,7 @@
 package jsc.cactus.com.weanimal.g_animal.main.main.weanimal;
 
 import android.animation.LayoutTransition;
+import android.app.Activity;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
@@ -46,6 +47,8 @@ import jsc.cactus.com.weanimal.g_animal.main.users.UserManager;
 public class MainActivity extends AppCompatActivity implements MissionListener {
 
     public static MainActivity mainActivity;
+    public static Activity animal_hill_a;
+    public static Boolean animal_hill_t = false;
 
     private ChatViewManager familyChatViewManager;
     private MissionViewManager missionViewManager;
@@ -62,6 +65,11 @@ public class MainActivity extends AppCompatActivity implements MissionListener {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        animal_hill_t = true;
+
+        animal_hill_a = this;
+
         setContentView(R.layout.activity_main);
 
         // 시간에 따른 배경 설정
@@ -121,8 +129,10 @@ public class MainActivity extends AppCompatActivity implements MissionListener {
 
     @Override
     public void onStop() {
-        super.onStop();
+        animal_hill_t = false;
+
         MyService.mSocket.off("RES_STATUS", statusRecive);
+        super.onStop();
     }
 
     private void getStatus() throws JSONException {

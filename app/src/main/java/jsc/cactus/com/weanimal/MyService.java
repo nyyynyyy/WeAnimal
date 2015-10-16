@@ -318,10 +318,8 @@ public class MyService extends Service {
     public void sendMessage() throws JSONException {
         JSONObject data = new JSONObject();
 
-        int msgfc = Variable.user_familycode;
         String msgid = Variable.user_id;
 
-        data.put("FC", msgfc);
         data.put("ID", msgid);
 
         MyService.mSocket.emit("AUTO_LOGIN", data);
@@ -390,12 +388,10 @@ public class MyService extends Service {
                         Log.i("TEST", Integer.toString(typeI));
                         switch (typeI) {
                             case 0:
-                                Log.i("TEST", "이게 출력되면 종현이 병신새끼");
                                 break;
                             case 1:
                                 typeII = "먹이를";
                                 statusPush(send_name, typeII, time);
-                                Log.i("TEST", "push");
                                 break;
                             case 2:
                                 typeII = "물을";
