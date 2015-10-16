@@ -12,23 +12,25 @@ import jsc.cactus.com.weanimal.R;
  */
 public class MissionViewManager {
 
+    public static MissionViewManager missionViewManager;
+
     private MissionDialog missionDialog;
-    private FragmentManager fragmentManager;
-    private Button button;
     private boolean isOnMission = false;
 
-    public MissionViewManager(Activity activity){
-        fragmentManager = activity.getFragmentManager();
-        missionDialog = new MissionDialog();
-        button = (Button) activity.findViewById(R.id.missionButton);
-
-        button.setOnClickListener(clickButton);
+    public MissionViewManager(Activity activity) {
+        missionViewManager = this;
+        missionDialog = new MissionDialog(activity);
     }
 
-    private View.OnClickListener clickButton = new View.OnClickListener(){
-        public void onClick(View v){
-            if(!missionDialog.isAdded())
-                missionDialog.show(fragmentManager, "");
+    public void test() {
+        if (!missionDialog.isShowing())
+            missionDialog.show();
+    }
+
+    private View.OnClickListener clickButton = new View.OnClickListener() {
+        public void onClick(View v) {
+            if (!missionDialog.isShowing())
+                missionDialog.show();
         }
     };
 }

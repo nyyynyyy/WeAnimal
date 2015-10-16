@@ -30,7 +30,7 @@ public class MissionManager {
     public void clearMission() {
         mission = null;
         for (MissionListener listener : missionListeners)
-            listener.clearMission();
+            listener.clearMission(mission);
     }
 
     public void addMissionListener(MissionListener listener) {
@@ -38,11 +38,15 @@ public class MissionManager {
             missionListeners.add(listener);
     }
 
+    public void giveupMission() {
+        mission = null;
+    }
+
     public void removeMissionListener(MissionListener listener) {
         missionListeners.remove(listener);
     }
 
-    public Mission getCurrentMission(){
+    public Mission getCurrentMission() {
         return mission;
     }
 

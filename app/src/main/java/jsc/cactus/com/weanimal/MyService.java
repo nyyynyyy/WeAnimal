@@ -27,10 +27,9 @@ import io.socket.emitter.Emitter;
 import jsc.cactus.com.weanimal.g_animal.main.DateFormat;
 import jsc.cactus.com.weanimal.g_animal.main.animal.Animal;
 import jsc.cactus.com.weanimal.g_animal.main.animal.status.StatusType;
-<<<<<<< Updated upstream
+
 import jsc.cactus.com.weanimal.g_animal.main.familychat.ChatManager;
-=======
->>>>>>> Stashed changes
+
 import jsc.cactus.com.weanimal.g_animal.main.main.weanimal.MainActivity;
 import jsc.cactus.com.weanimal.g_animal.main.users.User;
 import jsc.cactus.com.weanimal.g_animal.main.users.UserGender;

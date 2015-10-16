@@ -3,8 +3,6 @@ package jsc.cactus.com.weanimal.g_animal.main.animal;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
@@ -26,7 +24,6 @@ public class Animal implements StatusChangeListener {
     public static Animal animal;
 
     private ImageView animalView;
-    private Bitmap bitmap;
 
     private Status status;
 
@@ -36,6 +33,8 @@ public class Animal implements StatusChangeListener {
     private int age;
 
     private boolean ready;
+
+    private Bitmap bitmap;
 
     public Animal(Activity activity) {
 
@@ -64,6 +63,7 @@ public class Animal implements StatusChangeListener {
 
     public void addAge(int age) {
         this.age += age;
+        if(ready)
         reimage();
     }
 
@@ -79,6 +79,7 @@ public class Animal implements StatusChangeListener {
 
     public void setType(AnimalType type){
         this.type = type;
+        if(ready)
         reimage();
     }
 
@@ -88,6 +89,7 @@ public class Animal implements StatusChangeListener {
 
     public void setAge(int age){
         this.age = age;
+        if(ready)
         reimage();
     }
 
@@ -97,6 +99,7 @@ public class Animal implements StatusChangeListener {
 
     @Override
     public void StatusChangeEvent() {
+        if(ready)
         reimage();
     }
 
@@ -106,12 +109,16 @@ public class Animal implements StatusChangeListener {
             if(!ready)
                 return;
 
-            try {
-                Bitmap bitmap = ((BitmapDrawable) animalView.getDrawable()).getBitmap();
-                bitmap.recycle();
-            }catch (Exception ex){}
+            Log.i("jsc", "reimage");
 
-            animalView.setImageBitmap(BitmapFactory.decodeResource(MainActivity.mainActivity.getResources(), AnimalKind.getImageResource(type, AnimalStatusType.getStatusType((status.getStatus(StatusType.FOOD) + status.getStatus(StatusType.WATER))), age)));
+            if(bitmap != null) { bitmap.recycle(); bitmap = null; System.gc(); }
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inSampleSize = 2;
+            bitmap = BitmapFactory.decodeResource(MainActivity.mainActivity.getResources(), AnimalKind.getImageResource(type, AnimalStatusType.getStatusType((status.getStatus(StatusType.FOOD) + status.getStatus(StatusType.WATER))), age), options);
+            animalView.setImageBitmap(bitmap);
+
+            //animalView.setImageResource(AnimalKind.getImageResource(type, AnimalStatusType.getStatusType((status.getStatus(StatusType.FOOD) + status.getStatus(StatusType.WATER))), age));
+            //animalView.setImageBitmap(BitmapFactory.decodeResource(MainActivity.mainActivity.getResources(), AnimalKind.getImageResource(type, AnimalStatusType.getStatusType((status.getStatus(StatusType.FOOD) + status.getStatus(StatusType.WATER))), age)));
         }
     };
 }

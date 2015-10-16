@@ -1,5 +1,7 @@
 package jsc.cactus.com.weanimal.g_animal.main.mission.view;
 
+import android.app.Activity;
+import android.app.Dialog;
 import android.app.DialogFragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,9 +13,11 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import jsc.cactus.com.weanimal.R;
+import jsc.cactus.com.weanimal.g_animal.main.main.weanimal.MainActivity;
 import jsc.cactus.com.weanimal.g_animal.main.mission.missions.Mission;
 import jsc.cactus.com.weanimal.g_animal.main.mission.MissionListener;
 import jsc.cactus.com.weanimal.g_animal.main.mission.MissionManager;
@@ -23,75 +27,87 @@ import jsc.cactus.com.weanimal.g_animal.main.mission.missions.TelMission;
 /**
  * Created by INSI on 2015. 10. 7..
  */
-public class MissionDialog extends DialogFragment implements MissionListener {
+public class MissionDialog extends Dialog implements MissionListener {
 
     private ListView listView;
-    private Button button;
     private static MissionAdapter missionAdapter;
     private static List<MissionItem> items = new ArrayList<MissionItem>();
+    private boolean isMission = false;
 
+    private long missionTime;
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view  = inflater.inflate(R.layout.activity_mission, container, false);
-        getDialog().getWindow().getAttributes().windowAnimations = R.style.CustomDialogAnimation;
-        init(view);
-        setCancelable(false);
-        return view;
+    public MissionDialog(Activity activity) {
+        super(activity);
+        setContentView(R.layout.activity_mission);
+        getWindow().getAttributes().windowAnimations = R.style.CustomDialogAnimation;
+        setCanceledOnTouchOutside(true);
+        init();
     }
 
-    public void init(View view){
-        getDialog().setTitle("미션");
-        if(missionAdapter == null){
+    public void init() {
+        setTitle("미션");
+        if (missionAdapter == null) {
             MissionManager.instance.addMissionListener(this);
-            missionAdapter = new MissionAdapter(getActivity() ,R.layout.mission_item, items);
+            missionAdapter = new MissionAdapter(MainActivity.mainActivity, R.layout.mission_item, items);
             missionAdapter.add(new MissionItem(R.drawable.phoneicon, "전화 걸기"));
             missionAdapter.add(new MissionItem(R.drawable.post, "메세지 보내기"));
         }
 
-        button = (Button) view.findViewById(R.id.mission_cancle);
-        button.setOnClickListener(buttonClick);
-        listView = (ListView) view.findViewById(R.id.mission_listView);
+        listView = (ListView) findViewById(R.id.mission_listView);
         listView.setAdapter(missionAdapter);
 
         listView.setOnItemClickListener(itemClick);
     }
 
-    private View.OnClickListener buttonClick = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            dismiss();
-        }
-    };
-
     private AdapterView.OnItemClickListener itemClick = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            if(MissionManager.instance.getCurrentMission() != null){
-                Toast.makeText(getActivity(), "당신은 이미 미션 중 입니다.\n미션 : "+MissionManager.instance.getCurrentMission().missionType.name(), Toast.LENGTH_SHORT).show();
+            if (MissionManager.instance.getCurrentMission() != null) {
+                Toast.makeText(MainActivity.mainActivity, "당신은 이미 미션 중 입니다.\n미션 : " + MissionManager.instance.getCurrentMission().missionType.name(), Toast.LENGTH_SHORT).show();
                 return;
             }
             switch (position) {
                 case 0:
-                    MissionManager.instance.startMission(new TelMission(60));
+                    MissionManager.instance.startMission(new TelMission(6));
                     break;
                 case 1:
                     MissionManager.instance.startMission(new MessageSendMission("파이팅"));
                     break;
             }
 
-            Toast.makeText(getActivity(), missionAdapter.getItem(position).getText()+" 미션 시작!", Toast.LENGTH_SHORT).show();
-            getDialog().cancel();
+            Toast.makeText(MainActivity.mainActivity, missionAdapter.getItem(position).getText() + " 미션 시작!", Toast.LENGTH_SHORT).show();
+            cancel();
         }
     };
 
+//    @Override
+//    public void onResume() {
+//
+//        if(!isMission)
+//            return;
+//        if(missionTime - new Date().getTime() <= ((TelMission)MissionManager.instance.getCurrentMission()).second)
+//            MissionManager.instance.clearMission();
+//    }
+
     @Override
     public void startMission(Mission mission) {
-
+        if (!(mission instanceof TelMission))
+            return;
+        isMission = true;
+        missionTime = new Date().getTime();
     }
 
     @Override
-    public void clearMission() {
-
+    public void clearMission(Mission mission) {
+        if (!(mission instanceof TelMission))
+            return;
+        Toast.makeText(MainActivity.mainActivity, "미션 성공", Toast.LENGTH_SHORT);
     }
+
+    @Override
+    public void giveupMission(Mission mission) {
+        isMission = false;
+    }
+
+
 }

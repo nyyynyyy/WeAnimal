@@ -7,5 +7,6 @@ import jsc.cactus.com.weanimal.g_animal.main.mission.missions.Mission;
  */
 public interface MissionListener {
     public void startMission(Mission mission);
-    public void clearMission();
+    public void clearMission(Mission mission);
+    public void giveupMission(Mission mission);
 }

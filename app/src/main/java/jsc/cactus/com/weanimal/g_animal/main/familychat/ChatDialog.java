@@ -15,6 +15,7 @@ import android.widget.ListView;
 import org.json.JSONException;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import jsc.cactus.com.weanimal.R;
@@ -72,6 +73,7 @@ public class ChatDialog extends DialogFragment {
 
     private View.OnClickListener confirm = new View.OnClickListener() {
         public void onClick(View v) {
+
             ChatManager.callChatEvent(UserManager.getLocalUser(), textEdit.getText().toString());
             try {
                 ChatManager.sendMessage(Variable.user_id, textEdit.getText().toString());
