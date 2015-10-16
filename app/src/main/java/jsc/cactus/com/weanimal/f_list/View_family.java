@@ -1,15 +1,10 @@
 package jsc.cactus.com.weanimal.f_list;
 
-import android.app.NotificationManager;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
@@ -27,8 +22,6 @@ import jsc.cactus.com.weanimal.g_animal.main.main.weanimal.MainActivity;
 
 public class View_family extends AppCompatActivity {
 
-    public static boolean on_ac = false;
-
     private Family_ListViewAdapter Adapter;
 
     public int familyMember = 1;
@@ -42,7 +35,6 @@ public class View_family extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.view_family);
 
-        on_ac = true;
 
         try {
             codeSendMessage();
@@ -86,7 +78,6 @@ public class View_family extends AppCompatActivity {
     public void codeSendMessage() throws JSONException {
         JSONObject data = new JSONObject();
 
-        // perform the user login attempt.
         int msg = Variable.user_familycode;
 
         data.put("CO", msg);
@@ -137,7 +128,6 @@ public class View_family extends AppCompatActivity {
                             list.setAdapter(Adapter);
                         }
 
-                        Log.i("sss", "try!");
                         OftenMethod.message(View_family.this, "가족을 불러옵니다.");
 
                         MyService.mSocket.off("ME", memberRecive);

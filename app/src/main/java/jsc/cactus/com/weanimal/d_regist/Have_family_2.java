@@ -23,7 +23,7 @@ import jsc.cactus.com.weanimal.c_login.Id_query;
 
 public class Have_family_2 extends AppCompatActivity {
 
-    public static Activity ac04_3;
+    public static Activity ha_fa_2;
 
     private EditText id_edit;
     private EditText name_edit;
@@ -32,6 +32,8 @@ public class Have_family_2 extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.have_family_2);
+
+        ha_fa_2 = Have_family_2.this;
 
         id_edit = (EditText) findViewById(R.id.a4_3_edit_id);
         name_edit = (EditText) findViewById(R.id.a4_3_edit_name);
@@ -68,12 +70,9 @@ public class Have_family_2 extends AppCompatActivity {
     public void sendMessage() throws JSONException {
         JSONObject data = new JSONObject();
 
-        // perform the user login attempt.
         String msgid = id_edit.getText().toString();
         String msgname = name_edit.getText().toString();
         int msgco = Variable.user_familycode;
-
-        //OftenMethod.message(this, "ID : " + msgid + "\nNAME : " + msgname);
 
         data.put("ID", msgid);
         data.put("NA", msgname);
@@ -101,16 +100,10 @@ public class Have_family_2 extends AppCompatActivity {
                     try {
                         CH = data.getBoolean("success");
 
-
                         if (CH == true) {
-
-
-                            goin();
-                            //Log.i("error", "??");
+                            goin(Set_birthday_gender.class);
                             finish();
                             MyService.mSocket.off("RESULT", registRecive);
-
-
                         } else if (CH == false) {
                             OftenMethod.message(Have_family_2.this, "다른 사람이 사용하고 있는 아이디입니다. 다른 아이디를 사용해주세요.");
                         }
@@ -123,16 +116,16 @@ public class Have_family_2 extends AppCompatActivity {
         }
     };
 
-    void goin() {
-        Id_query act03 = (Id_query) Id_query.ac03;
-        Family_query act04 = (Family_query) Family_query.ac04;
-        Have_family_1 act04_2 = (Have_family_1) Have_family_1.ac04_2;
+    void goin(Class go) {
+        Id_query id_q_s = (Id_query) Id_query.id_q;
+        Family_query fa_q_s = (Family_query) Family_query.fa_q;
+        Have_family_1 ha_fa_1 = (Have_family_1) Have_family_1.ha_fa_1;
 
-        act03.finish();
-        act04.finish();
-        act04_2.finish();
+        id_q_s.finish();
+        fa_q_s.finish();
+        ha_fa_1.finish();
 
-        Intent intent = new Intent(this, Set_birthday_gender.class);
+        Intent intent = new Intent(this, go);
 
         startActivity(intent);
         finish();

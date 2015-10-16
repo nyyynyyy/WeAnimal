@@ -21,7 +21,7 @@ import jsc.cactus.com.weanimal.Variable;
 
 public class Have_family_1 extends AppCompatActivity {
 
-    public static Activity ac04_2;
+    public static Activity ha_fa_1;
 
     private EditText edit_code;
     private EditText edit_pass;
@@ -32,7 +32,7 @@ public class Have_family_1 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.have_family_1);
 
-        ac04_2 = Have_family_1.this;
+        ha_fa_1 = Have_family_1.this;
 
         edit_code = (EditText) findViewById(R.id.a4_2_edit_name);
         edit_pass = (EditText) findViewById(R.id.a4_2_edit_password);
@@ -73,12 +73,9 @@ public class Have_family_1 extends AppCompatActivity {
     public void sendMessage() throws JSONException {
         JSONObject data = new JSONObject();
 
-        // perform the user login attempt.
         int msgcode = Integer.valueOf(edit_code.getText().toString());
 
         String msgpass = edit_pass.getText().toString();
-
-        //OftenMethod.message(this, "CODE : " + msgcode + "\nPASS : " + msgpass);
 
         data.put("CO", msgcode);
         data.put("PA", msgpass);
@@ -116,10 +113,7 @@ public class Have_family_1 extends AppCompatActivity {
                                 break;
 
                             case 1:
-                                Family_query act03 = (Family_query) Family_query.ac04;
-                                act03.finish();
-                                goin();
-                                finish();
+                                goin(Have_family_2.class);
                                 break;
                         }
                     } catch (JSONException e) {
@@ -130,8 +124,11 @@ public class Have_family_1 extends AppCompatActivity {
         }
     };
 
-    void goin() {
-        Intent intent = new Intent(this, Have_family_2.class);
+    void goin(Class go) {
+        Family_query fa_q_s = (Family_query) Family_query.fa_q;
+        fa_q_s.finish();
+
+        Intent intent = new Intent(this, go);
 
         startActivity(intent);
         finish();

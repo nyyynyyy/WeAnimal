@@ -74,7 +74,7 @@ public class ChatDialog extends DialogFragment {
         public void onClick(View v) {
             ChatManager.callChatEvent(UserManager.getLocalUser(), textEdit.getText().toString());
             try {
-                ChatManager.sendMessage(Variable.user_id, textEdit.getText().toString());
+                ChatManager.sendMessage(textEdit.getText().toString());
             } catch (JSONException e) {
                 e.printStackTrace();
             }

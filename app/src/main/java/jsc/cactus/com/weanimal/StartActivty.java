@@ -36,6 +36,7 @@ public class StartActivty extends AppCompatActivity {
     protected void onRestart(){
         super.onRestart();
 
+        Logos.isTurn = false;
         finish();
     }
 
@@ -43,6 +44,7 @@ public class StartActivty extends AppCompatActivity {
     protected  void onDestroy(){
         OftenMethod.message(this, "이용해주셔서 감사합니다.");
 
+        Logos.isTurn = false;
         unregisterReceiver(receiver);
 
         super.onDestroy();

@@ -13,14 +13,14 @@ import jsc.cactus.com.weanimal.R;
 
 public class Family_query extends AppCompatActivity {
 
-    public static Activity ac04;
+    public static Activity fa_q;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.family_query);
 
-        ac04 = Family_query.this;
+        fa_q = Family_query.this;
 
         Button yesBtn = (Button) findViewById(R.id.a4_btn_yes);
         Button noBtn = (Button) findViewById(R.id.a4_btn_no);
@@ -28,27 +28,21 @@ public class Family_query extends AppCompatActivity {
         yesBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                goinII();
+                goin(Have_family_1.class);
             }
         });
 
         noBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //intent.putExtras(bundle);
-                goinI();
+                goin(Havenot_family.class);
             }
         });
 
     }
 
-    void goinI(){
+    void goin(Class go) {
         Intent intent = new Intent(this, Havenot_family.class);
-        startActivity(intent);
-    }
-
-    void goinII(){
-        Intent intent = new Intent(this, Have_family_1.class);
         startActivity(intent);
     }
 }

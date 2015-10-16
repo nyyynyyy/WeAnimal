@@ -17,6 +17,10 @@ public class FileMethod {
     private File folder;
     private File file;
 
+    public File getFile() {
+        return this.file;
+    }
+
     //FileMethod fm = new FileMethod(activity, new File(this.getFilesDir()+"/hi/"), "test.txt" )
 
     public FileMethod(File folder, String filename) {

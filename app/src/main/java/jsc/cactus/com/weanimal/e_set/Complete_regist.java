@@ -16,7 +16,6 @@ public class Complete_regist extends AppCompatActivity {
     private TextView txtfp;
     private TextView txtid;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,9 +28,7 @@ public class Complete_regist extends AppCompatActivity {
 
 
         Bundle bundle = getIntent().getExtras();
-//        String id = bundle.getString("ID");
         String pw = bundle.getString("PW");
-//        int fn = bundle.getInt("FN");
 
         String id = Variable.user_id;
         int fn = Variable.user_familycode;
@@ -43,14 +40,14 @@ public class Complete_regist extends AppCompatActivity {
         btn_acc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                goin();
+                goin(Set_birthday_gender.class);
             }
         });
 
     }
 
-    void goin() {
-        Intent intent = new Intent(this, Set_birthday_gender.class);
+    void goin(Class go) {
+        Intent intent = new Intent(this, go);
 
         startActivity(intent);
         finish();

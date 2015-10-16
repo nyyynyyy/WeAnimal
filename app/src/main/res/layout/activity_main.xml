@@ -19,17 +19,6 @@
         android:layout_height="wrap_content"
         android:layout_weight="0">
 
-        <View
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1" />
-
-        <ImageView
-            android:layout_width="110dp"
-            android:layout_height="match_parent"
-            android:id="@+id/statusImageView"
-           />
-
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="wrap_content"
@@ -71,6 +60,17 @@
                 android:layout_margin="10dp"
                 android:progressDrawable="@drawable/pb_love" />
         </LinearLayout>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:id="@+id/btn_setting"
+            android:src="@drawable/setting" />
 
     </LinearLayout>
 

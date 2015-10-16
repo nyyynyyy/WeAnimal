@@ -24,13 +24,12 @@ import java.net.URISyntaxException;
 
 import io.socket.client.IO;
 import io.socket.emitter.Emitter;
-import jsc.cactus.com.weanimal.g_animal.main.DateFormat;
+import jsc.cactus.com.weanimal.a_logo.Logos;
 import jsc.cactus.com.weanimal.g_animal.main.animal.Animal;
 import jsc.cactus.com.weanimal.g_animal.main.animal.status.StatusType;
-<<<<<<< Updated upstream
+
 import jsc.cactus.com.weanimal.g_animal.main.familychat.ChatManager;
-=======
->>>>>>> Stashed changes
+
 import jsc.cactus.com.weanimal.g_animal.main.main.weanimal.MainActivity;
 import jsc.cactus.com.weanimal.g_animal.main.users.User;
 import jsc.cactus.com.weanimal.g_animal.main.users.UserGender;
@@ -121,7 +120,6 @@ public class MyService extends Service {
     {
         try {
             mSocket = IO.socket("http://gondr.iptime.org:52273");
-            //OftenMethod.message(this,"CREATE SOCKET");
         } catch (URISyntaxException e) {
             throw new RuntimeException(e);
         }
@@ -180,10 +178,9 @@ public class MyService extends Service {
             @Override
             public void run() {
                 while (true) {
-                    if (!mSocket.connected()&&!connect_turn) {
+                    if (!mSocket.connected() && !connect_turn) {
                         server_turn = false;
                         Log.i("TEST", "SERVER DOWN");
-                        Log.i("TEST", "스레드는 과연 뒤졌을까? " + Boolean.toString(connect.isAlive()));
                         setupConnect();
                         connect.start();
                     }
@@ -205,15 +202,16 @@ public class MyService extends Service {
 
     }
 
-    public void setupConnect(){
+    public void setupConnect() {
         connect = new Thread(new Runnable() {
             @Override
             public void run() {
                 connect_turn = true;
                 do {
                     mSocket.connect();
-                    toast("연결시도");
-
+                    if (Logos.isTurn) {
+                        toast("연결시도");
+                    }
                     try {
                         Thread.sleep(5000L);
                     } catch (InterruptedException e) {
@@ -221,9 +219,13 @@ public class MyService extends Service {
                     }
 
                     if (!mSocket.connected()) {
-                        toast("연결실패");
+                        if (Logos.isTurn) {
+                            toast("연결실패");
+                        }
                     } else {
-                        toast("연결성공");
+                        if (Logos.isTurn) {
+                            toast("연결성공");
+                        }
                         Log.i("TEST", "Socket connect");
 
                         connect_turn = false;
@@ -306,7 +308,7 @@ public class MyService extends Service {
         mSocket.on("SEND_MSG", Recive);
         mSocket.on("RES_SET", StatusRecive);
         mSocket.on("RES_LEVEL", LevelRecive);
-        mSocket.on("RES_CHAT", ChatRecive);
+        mSocket.on("REF_CHAT", ChatRecive);
         mSocket.on("RESET", ResetRecive);
 
         Log.i("TEST", "ON SOCKET");
@@ -317,8 +319,10 @@ public class MyService extends Service {
         JSONObject data = new JSONObject();
 
         int msgfc = Variable.user_familycode;
+        String msgid = Variable.user_id;
 
         data.put("FC", msgfc);
+        data.put("ID", msgid);
 
         MyService.mSocket.emit("AUTO_LOGIN", data);
     }
@@ -484,13 +488,13 @@ public class MyService extends Service {
                         Log.i("TEST", day.split(" ")[0]);
                         Log.i("TEST", day.split(" ")[1]);
 
-//                        bw = new BufferedWriter(new FileWriter("/data/data/jsc.cactus.com.weanimal/files/chat/" + day.split(" ")[0] + ".txt", true));
-//
-//                        bw.append(" " + time + "|" + name + "|" + text);
-//                        bw.newLine();
-//
-//                        bw.close();
-//                        new User(id,name,Variable.user_birthday, UserGender.FEMALE);
+                        bw = new BufferedWriter(new FileWriter("/data/data/jsc.cactus.com.weanimal/files/chat/" + day.split(" ")[0] + ".txt", true));
+
+                        bw.append(" " + time + "|" + name + "|" + text);
+                        bw.newLine();
+
+                        bw.close();
+                        new User(id, name, Variable.user_birthday, UserGender.FEMALE);
                         ChatManager.callChatEvent(new User(id, name, Variable.user_birthday, UserGender.FEMALE), text);
 
                         chatPush(name, text, time);

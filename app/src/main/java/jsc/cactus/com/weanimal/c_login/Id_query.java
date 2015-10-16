@@ -12,14 +12,14 @@ import jsc.cactus.com.weanimal.R;
 
 public class Id_query extends AppCompatActivity {
 
-    public static Activity ac03;
+    public static Activity id_q;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.id_query);
 
-        ac03 = Id_query.this;
+        id_q = Id_query.this;
 
         Button yesBtn = (Button) findViewById(R.id.a3_btn_yes);
         Button noBtn = (Button) findViewById(R.id.a3_btn_no);

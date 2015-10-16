@@ -25,21 +25,21 @@ import jsc.cactus.com.weanimal.c_login.Id_query;
 
 public class Havenot_family extends AppCompatActivity {
 
-    public static Activity ac04_1;
+    public static Activity han_fa;
 
     private EditText name_ed;
     private EditText id_ed;
     private EditText fp_ed;
     private EditText fpt_ed;
 
-    private String nextID;
     private String nextPW;
-    private int nextFN;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.havenot_family);
+
+        han_fa = Havenot_family.this;
 
         name_ed = (EditText) findViewById(R.id.a4_1_edit_name);
         id_ed = (EditText) findViewById(R.id.a4_1_edit_id);
@@ -47,49 +47,49 @@ public class Havenot_family extends AppCompatActivity {
         fpt_ed = (EditText) findViewById(R.id.a4_1_edit_passwordcheck);
         Button resBtn = (Button) findViewById(R.id.a4_1_btn_regist);
 
-        resBtn.setOnClickListener(new View.OnClickListener() {
-                                      @Override
-                                      public void onClick(View view) {
-                                          if (name_ed.getText().toString().contains(" ")) {
-                                              OftenMethod.message(Havenot_family.this, "이름에 공백이 포함되어 있습니다.");
-                                          } else {
-                                              if (id_ed.getText().toString().contains(" ")) {
-                                                  OftenMethod.message(Havenot_family.this, "아이디에 공백이 포함되어 있습니다.");
-                                              } else {
-                                                  if (fp_ed.getText().toString().contains(" ")) {
-                                                      OftenMethod.message(Havenot_family.this, "비밀번호에 공백이 포함되어 있습니다.");
-                                                  } else {
-                                                      if (fp_ed.getText().toString().equals(fpt_ed.getText().toString())) {
-                                                          if (name_ed.getText().toString().equals("")) {
-                                                              OftenMethod.message(Havenot_family.this, "이름을 알려주세요.");
-                                                          } else {
-                                                              if (id_ed.getText().toString().equals("")) {
-                                                                  OftenMethod.message(Havenot_family.this, "아이디를 알려주세요.");
-                                                              } else {
-                                                                  if (fp_ed.getText().toString().equals("")) {
-                                                                      OftenMethod.message(Havenot_family.this, "비밀번호를 알려주세요.");
-                                                                  } else {
-                                                                      if(fp_ed.getText().length() >= 4) {
-                                                                          try {
-                                                                              sendMessage();
-                                                                          } catch (JSONException e) {
-                                                                              e.printStackTrace();
-                                                                          }
-                                                                      }
-                                                                      else{
-                                                                          OftenMethod.message(Havenot_family.this, "비밀번호가 너무 짧아요.");
-                                                                      }
-                                                                  }
-                                                              }
-                                                          }
-                                                      } else {
-                                                          OftenMethod.message(Havenot_family.this, "비밀번호가 다릅니다.");
-                                                      }
-                                                  }
-                                              }
-                                          }
-                                      }
-                                  }
+        resBtn.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (name_ed.getText().toString().contains(" ")) {
+                            OftenMethod.message(Havenot_family.this, "이름에 공백이 포함되어 있습니다.");
+                        } else {
+                            if (id_ed.getText().toString().contains(" ")) {
+                                OftenMethod.message(Havenot_family.this, "아이디에 공백이 포함되어 있습니다.");
+                            } else {
+                                if (fp_ed.getText().toString().contains(" ")) {
+                                    OftenMethod.message(Havenot_family.this, "비밀번호에 공백이 포함되어 있습니다.");
+                                } else {
+                                    if (fp_ed.getText().toString().equals(fpt_ed.getText().toString())) {
+                                        if (name_ed.getText().toString().equals("")) {
+                                            OftenMethod.message(Havenot_family.this, "이름을 알려주세요.");
+                                        } else {
+                                            if (id_ed.getText().toString().equals("")) {
+                                                OftenMethod.message(Havenot_family.this, "아이디를 알려주세요.");
+                                            } else {
+                                                if (fp_ed.getText().toString().equals("")) {
+                                                    OftenMethod.message(Havenot_family.this, "비밀번호를 알려주세요.");
+                                                } else {
+                                                    if (fp_ed.getText().length() >= 4) {
+                                                        try {
+                                                            sendMessage();
+                                                        } catch (JSONException e) {
+                                                            e.printStackTrace();
+                                                        }
+                                                    } else {
+                                                        OftenMethod.message(Havenot_family.this, "비밀번호가 너무 짧아요.");
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    } else {
+                                        OftenMethod.message(Havenot_family.this, "비밀번호가 다릅니다.");
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
 
         );
     }
@@ -100,13 +100,17 @@ public class Havenot_family extends AppCompatActivity {
         super.onStop();
     }
 
-    void goin() {
-        Intent intent = new Intent(this, Complete_regist.class);
+    void goin(Class go) {
+        Id_query id_q_s = (Id_query) Id_query.id_q;
+        Family_query fa_q_s = (Family_query) Family_query.fa_q;
+
+        id_q_s.finish();
+        fa_q_s.finish();
+
+        Intent intent = new Intent(this, go);
 
         Bundle bundle = new Bundle();
-        bundle.putString("ID", nextID);
         bundle.putString("PW", nextPW);
-        bundle.putInt("FN", nextFN);
 
         intent.putExtras(bundle);
 
@@ -122,7 +126,6 @@ public class Havenot_family extends AppCompatActivity {
         String msgname = name_ed.getText().toString();
         String msgfp = fp_ed.getText().toString();
 
-        nextID = msgId;
         nextPW = msgfp;
 
         data.put("ID", msgId);
@@ -147,24 +150,15 @@ public class Havenot_family extends AppCompatActivity {
                     boolean CH;
                     int FN;
 
-
                     try {
                         CH = data.getBoolean("success");
                         FN = data.getInt("familycode");
                         if (CH == true) {
                             Variable.user_familycode = FN;
 
-                            Id_query act03 = (Id_query) Id_query.ac03;
-                            Family_query act04 = (Family_query) Family_query.ac04;
-
-                            act03.finish();
-                            act04.finish();
-
-                            goin();
-                            finish();
-
+                            goin(Complete_regist.class);
                         } else {
-                            OftenMethod.message(Havenot_family.this,"누군가가 사용하고 있는 아이디입니다.");
+                            OftenMethod.message(Havenot_family.this, "누군가가 사용하고 있는 아이디입니다.");
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();

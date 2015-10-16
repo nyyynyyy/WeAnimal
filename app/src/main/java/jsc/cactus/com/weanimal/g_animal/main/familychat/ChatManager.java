@@ -17,6 +17,7 @@ import java.util.Date;
 import java.util.List;
 
 import jsc.cactus.com.weanimal.MyService;
+import jsc.cactus.com.weanimal.ServerTime;
 import jsc.cactus.com.weanimal.g_animal.main.DateFormat;
 import jsc.cactus.com.weanimal.g_animal.main.familychat.view.ChatItem;
 import jsc.cactus.com.weanimal.g_animal.main.main.weanimal.MainActivity;
@@ -69,20 +70,19 @@ public class ChatManager {
         }
     }
 
-    public static void sendMessage(String id ,String msg) throws JSONException {
+    public static void sendMessage(String msg) throws JSONException {
         JSONObject data = new JSONObject();
 
-        data.put("ID", id);
         data.put("MSG", msg);
 
-        MyService.mSocket.emit("CHAT", data);
+        MyService.mSocket.emit("UPLOAD_CHAT", data);
     }
 
     public static List<ChatItem> getChatData(int before) {
         try {
 
             Date day = new Date();
-            day.setTime(day.getTime() - (before*86400000));
+            day.setTime(ServerTime.getTime() - (before*86400000));
 
             File file = new File(MainActivity.mainActivity.getFilesDir()+"/chat/"+DateFormat.formatDate(day, DateFormat.Type.DAY)+".txt");
             BufferedReader br = new BufferedReader(new FileReader(file));

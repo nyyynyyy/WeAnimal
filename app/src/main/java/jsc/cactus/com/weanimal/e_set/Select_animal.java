@@ -81,9 +81,9 @@ public class Select_animal extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                type1Scale(1.5F);
-                type2Scale(1F);
-                type3Scale(1F);
+                typeScale(typeI, 1.5F);
+                typeScale(typeII, 1.0F);
+                typeScale(typeIII,1.0F);
 
                 animal_type = AnimalType.CHICKEN.toString();
 
@@ -94,9 +94,9 @@ public class Select_animal extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                type1Scale(1F);
-                type2Scale(1.5F);
-                type3Scale(1F);
+                typeScale(typeI, 1.0F);
+                typeScale(typeII, 1.5F);
+                typeScale(typeIII, 1.0F);
 
                 animal_type = AnimalType.CHICKEN.toString();
 
@@ -107,11 +107,11 @@ public class Select_animal extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                type1Scale(1F);
-                type2Scale(1F);
-                type3Scale(1.5F);
+                typeScale(typeI, 1.0F);
+                typeScale(typeII, 1.0F);
+                typeScale(typeIII, 1.5F);
 
-                animal_type = AnimalType.CHICKEN.toString();
+                animal_type = AnimalType.CAT.toString();
 
             }
 
@@ -121,13 +121,10 @@ public class Select_animal extends AppCompatActivity {
     public void sendMessage() throws JSONException {
         JSONObject data = new JSONObject();
 
-        // perform the user login attempt.
         int msgco = Variable.user_familycode;
         String msgname = animal_name;
         String msgtype = animal_type;
 
-
-        //OftenMethod.message(this, "ID : " + msgId + "\nNAME : " + msgname + "\nPASSWORD : " + msgfp);
 
         data.put("CO", msgco);
         data.put("TYPE", msgtype);
@@ -137,24 +134,16 @@ public class Select_animal extends AppCompatActivity {
 
         MyService.mSocket.emit("CREATE_ANIMAL", data);
 
-        goin();
+        goin(View_family.class);
     }
 
-    private void type1Scale(float x){
-        typeI.setScaleX(x);
-        typeI.setScaleY(x);
-    }
-    private void type2Scale(float x){
-        typeII.setScaleX(x);
-        typeII.setScaleY(x);
-    }
-    private void type3Scale(float x){
-        typeIII.setScaleX(x);
-        typeIII.setScaleY(x);
+    private void typeScale(ImageView type ,float x){
+        type.setScaleX(x);
+        type.setScaleY(x);
     }
 
-    void goin() {
-        Intent intent = new Intent(this, View_family.class);
+    void goin(Class go) {
+        Intent intent = new Intent(this, go);
 
         startActivity(intent);
         finish();

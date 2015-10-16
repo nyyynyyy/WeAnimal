@@ -1,5 +1,6 @@
 package jsc.cactus.com.weanimal.c_login;
 
+import android.app.Activity;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
@@ -34,6 +35,8 @@ import jsc.cactus.com.weanimal.Variable;
 
 public class Have_id extends AppCompatActivity {
 
+    public static Activity ha_i;
+
     private EditText edit_id;
     private EditText edit_fc;
     private EditText edit_fp;
@@ -42,6 +45,8 @@ public class Have_id extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.have_id);
+
+        ha_i = this;
 
         edit_id = (EditText) findViewById(R.id.a3_1_edit_id);
         edit_fc = (EditText) findViewById(R.id.a3_1_edit_familycode);
@@ -85,12 +90,9 @@ public class Have_id extends AppCompatActivity {
     public void sendMessage() throws JSONException {
         JSONObject data = new JSONObject();
 
-        // perform the user login attempt.
         String msgid = edit_id.getText().toString();
         int msgfc = Integer.valueOf(edit_fc.getText().toString());
         String msgfp = edit_fp.getText().toString();
-
-        // OftenMethod.message(this, "CODE : " + msgcode + "\nPASS : " + msgpass);
 
         data.put("ID", msgid);
         data.put("FC", msgfc);
@@ -112,32 +114,30 @@ public class Have_id extends AppCompatActivity {
                 public void run() {
                     JSONObject data = (JSONObject) args[0];
                     int CH;
-                    String test = "C" + "H";
 
                     try {
-                        CH = data.getInt(test);
+                        CH = data.getInt("CH");
                         switch (CH) {
                             case 1:
-                                if(!View_family.on_ac) {
-                                    Variable.user_id = data.getString("id");
-                                    Variable.user_name = data.getString("name");
-                                    Variable.user_familycode= data.getInt("familycode");
-                                    Variable.user_gender = data.getString("gender");
-                                    Variable.user_birthday = data.getString("birth");
+                                Variable.user_id = data.getString("id");
+                                Variable.user_name = data.getString("name");
+                                Variable.user_familycode = data.getInt("familycode");
+                                Variable.user_gender = data.getString("gender");
+                                Variable.user_birthday = data.getString("birth");
 
-                                    FileMethod file = new FileMethod(new File("/data/data/jsc.cactus.com.weanimal/files/login/"),"login.txt");
+                                FileMethod file = new FileMethod(new File("/data/data/jsc.cactus.com.weanimal/files/login/"), "login.txt");
 
-                                    file.writeFile("@" + Variable.user_id + "/" + Variable.user_name + "/" + Variable.user_familycode + "/" + Variable.user_birthday + "/" + Variable.user_gender);
-                                    Log.i("TEST", file.readFile());
+                                file.writeFile("@" + Variable.user_id + "/" + Variable.user_name + "/" + Variable.user_familycode + "/" + Variable.user_birthday + "/" + Variable.user_gender);
+                                Log.i("TEST", file.readFile());
 
-                                    Log.i("TEST", Have_id.this.getFilesDir().toString());
+                                Log.i("TEST", Have_id.this.getFilesDir().toString());
 
-                                    //  "/data/data/jsc.cactus.com.weanimal/files"
+                                //  "/data/data/jsc.cactus.com.weanimal/files"
 
-                                    goin();
-                                    MyService.login = true;
-                                    finish();
-                                }
+                                goin(View_family.class);
+                                MyService.login = true;
+                                finish();
+
                                 break;
                             case -3:
                                 OftenMethod.message(Have_id.this, "비밀번호를 다시 생각해보세요.");
@@ -159,9 +159,9 @@ public class Have_id extends AppCompatActivity {
 
                                 Variable.user_id = data.getString("id");
                                 Variable.user_name = data.getString("name");
-                                Variable.user_familycode= data.getInt("familycode");
+                                Variable.user_familycode = data.getInt("familycode");
 
-                                goin2();
+                                goin(Set_birthday_gender.class);
                                 MyService.login = true;
                                 finish();
 
@@ -171,9 +171,9 @@ public class Have_id extends AppCompatActivity {
 
                                 Variable.user_id = data.getString("id");
                                 Variable.user_name = data.getString("name");
-                                Variable.user_familycode= data.getInt("familycode");
+                                Variable.user_familycode = data.getInt("familycode");
 
-                                goin3();
+                                goin(Select_animal.class);
                                 MyService.login = true;
                                 finish();
 
@@ -187,22 +187,10 @@ public class Have_id extends AppCompatActivity {
         }
     };
 
-    void goin() {
-        Id_query act03 = (Id_query) Id_query.ac03;
-        act03.finish();
-        Intent intent = new Intent(this, View_family.class);
-        startActivity(intent);
-    }
-    void goin2() {
-        Id_query act03 = (Id_query) Id_query.ac03;
-        act03.finish();
-        Intent intent = new Intent(this, Set_birthday_gender.class);
-        startActivity(intent);
-    }
-    void goin3() {
-        Id_query act03 = (Id_query) Id_query.ac03;
-        act03.finish();
-        Intent intent = new Intent(this, Select_animal.class);
+    void goin(Class go) {
+        Id_query id_q_s = (Id_query) Id_query.id_q;
+        id_q_s.finish();
+        Intent intent = new Intent(this, go);
         startActivity(intent);
     }
 }

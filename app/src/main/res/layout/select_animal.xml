@@ -37,21 +37,21 @@
                 android:layout_height="100dp"
                 android:id="@+id/type_1"
                 android:layout_gravity="center_vertical"
-                android:src="@drawable/chicken_four_normal" />
+                android:src="@drawable/chicken_three_normal" />
 
             <ImageView
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:id="@+id/type_2"
                 android:layout_gravity="center_vertical"
-                android:src="@drawable/chicken_one_normal" />
+                android:src="@drawable/chicken_three_normal" />
 
             <ImageView
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:id="@+id/type_3"
                 android:layout_gravity="center_vertical"
-                android:src="@drawable/cat_one_normal" />
+                android:src="@drawable/cat_three_normal" />
         </LinearLayout>
 
         <TextView

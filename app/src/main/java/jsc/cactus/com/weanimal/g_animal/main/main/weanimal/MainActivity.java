@@ -7,6 +7,9 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -14,13 +17,16 @@ import android.widget.Toast;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.util.Date;
 
 import io.socket.emitter.Emitter;
+import jsc.cactus.com.weanimal.FileMethod;
 import jsc.cactus.com.weanimal.MyService;
 import jsc.cactus.com.weanimal.OftenMethod;
 import jsc.cactus.com.weanimal.R;
 import jsc.cactus.com.weanimal.Variable;
+import jsc.cactus.com.weanimal.f_list.View_family;
 import jsc.cactus.com.weanimal.g_animal.main.animal.Animal;
 import jsc.cactus.com.weanimal.g_animal.main.animal.AnimalType;
 import jsc.cactus.com.weanimal.g_animal.main.animal.status.Status;
@@ -47,6 +53,9 @@ public class MainActivity extends AppCompatActivity implements MissionListener {
     private UserManager userManager;
 
     private LinearLayout animal_hill;
+    private ImageView set;
+
+    private boolean exit = false;
 
     long missionTime = 0;
 
@@ -61,6 +70,8 @@ public class MainActivity extends AppCompatActivity implements MissionListener {
         setBackground();
         //
 
+        setting();
+
         try {
             getStatus();
         } catch (JSONException e) {
@@ -70,7 +81,32 @@ public class MainActivity extends AppCompatActivity implements MissionListener {
         init();
     }
 
-    private boolean exit = false;
+    private void setting(){
+        set = (ImageView) findViewById(R.id.btn_setting);
+
+        set.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sendLogout();
+                clearFile();
+                finish();
+                MyService.login = false;
+            }
+        });
+    }
+
+    public void sendLogout() {
+        MyService.mSocket.emit("LOGOUT");
+    }
+
+    public void clearFile(){
+        FileMethod file = new FileMethod(new File("/data/data/jsc.cactus.com.weanimal/files/login/"), "login.txt");
+
+        file.getFile().delete();
+        Log.i("TEST", "CLEAR FILE");
+
+        //  "/data/data/jsc.cactus.com.weanimal/files"
+    }
 
     @Override
     public void onBackPressed(){
