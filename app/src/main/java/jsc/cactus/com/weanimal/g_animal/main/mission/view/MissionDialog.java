@@ -2,7 +2,11 @@ package jsc.cactus.com.weanimal.g_animal.main.mission.view;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.app.DialogFragment;
+import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
@@ -23,11 +27,14 @@ import jsc.cactus.com.weanimal.g_animal.main.mission.missions.TelMission;
 /**
  * Created by INSI on 2015. 10. 7..
  */
-public class MissionDialog extends Dialog {
+public class MissionDialog extends Dialog implements MissionListener {
 
     private ListView listView;
     private static MissionAdapter missionAdapter;
     private static List<MissionItem> items = new ArrayList<MissionItem>();
+    private boolean isMission = false;
+
+    private long missionTime;
 
     public MissionDialog(Activity activity) {
         super(activity);
@@ -40,6 +47,7 @@ public class MissionDialog extends Dialog {
     public void init() {
         setTitle("미션");
         if (missionAdapter == null) {
+            MissionManager.instance.addMissionListener(this);
             missionAdapter = new MissionAdapter(MainActivity.mainActivity, R.layout.mission_item, items);
             missionAdapter.add(new MissionItem(R.drawable.phoneicon, "전화 걸기"));
             missionAdapter.add(new MissionItem(R.drawable.post, "메세지 보내기"));
@@ -60,7 +68,7 @@ public class MissionDialog extends Dialog {
             }
             switch (position) {
                 case 0:
-                    MissionManager.instance.startMission(new TelMission(60));
+                    MissionManager.instance.startMission(new TelMission(6));
                     break;
                 case 1:
                     MissionManager.instance.startMission(new MessageSendMission("파이팅"));
@@ -80,6 +88,26 @@ public class MissionDialog extends Dialog {
 //        if(missionTime - new Date().getTime() <= ((TelMission)MissionManager.instance.getCurrentMission()).second)
 //            MissionManager.instance.clearMission();
 //    }
+
+    @Override
+    public void startMission(Mission mission) {
+        if (!(mission instanceof TelMission))
+            return;
+        isMission = true;
+        missionTime = new Date().getTime();
+    }
+
+    @Override
+    public void clearMission(Mission mission) {
+        if (!(mission instanceof TelMission))
+            return;
+        Toast.makeText(MainActivity.mainActivity, "미션 성공", Toast.LENGTH_SHORT);
+    }
+
+    @Override
+    public void giveupMission(Mission mission) {
+        isMission = false;
+    }
 
 
 }

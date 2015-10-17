@@ -1,8 +1,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
@@ -17,9 +15,7 @@
         android:id="@+id/linearLayout"
         android:layout_alignParentStart="true">
 
-        <TextView
-            android:text="동물을 분양해주세요."
-            android:layout_width="match_parent"
+        <TextView android:text="동물을 분양해주세요." android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textColor="#fd6029"
@@ -34,7 +30,8 @@
             android:layout_height="150dp"
             android:layout_gravity="center_vertical"
             android:gravity="center_vertical|center|center_horizontal"
-            android:layout_marginTop="30dp">
+            android:layout_marginTop="30dp"
+            android:background="#fdec87">
 
             <ImageView
                 android:layout_width="100dp"
@@ -48,7 +45,7 @@
                 android:layout_height="100dp"
                 android:id="@+id/type_2"
                 android:layout_gravity="center_vertical"
-                android:src="@drawable/chicken_three_normal" />
+                android:src="@drawable/dog_three_normal" />
 
             <ImageView
                 android:layout_width="100dp"

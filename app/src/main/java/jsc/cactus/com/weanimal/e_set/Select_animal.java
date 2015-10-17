@@ -44,7 +44,7 @@ public class Select_animal extends AppCompatActivity {
         typeII = (ImageView) findViewById(R.id.type_2);
         typeIII = (ImageView) findViewById(R.id.type_3);
 
-        edit_animal_name = (EditText) findViewById(R.id.edit_animal_name);
+        edit_animal_name = (EditText)findViewById(R.id.edit_animal_name);
 
         Button button = (Button) findViewById(R.id.btn_adopt);
 
@@ -53,12 +53,17 @@ public class Select_animal extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                if (animal_type == null) {
+                if(animal_type == null)
+                {
                     OftenMethod.message(Select_animal.this, "동물을 골라주세요.");
-                } else {
-                    if (edit_animal_name.getText().toString().equals("")) {
+                }
+                else
+                {
+                    if(edit_animal_name.getText().toString().equals("")){
                         OftenMethod.message(Select_animal.this, "이름을 지어주세요.");
-                    } else {
+                    }
+                    else
+                    {
                         animal_name = edit_animal_name.getText().toString();
                         try {
                             sendMessage();
@@ -78,7 +83,7 @@ public class Select_animal extends AppCompatActivity {
 
                 typeScale(typeI, 1.5F);
                 typeScale(typeII, 1.0F);
-                typeScale(typeIII, 1.0F);
+                typeScale(typeIII,1.0F);
 
                 animal_type = AnimalType.CHICKEN.toString();
 
@@ -132,7 +137,7 @@ public class Select_animal extends AppCompatActivity {
         goin(View_family.class);
     }
 
-    private void typeScale(ImageView type, float x) {
+    private void typeScale(ImageView type ,float x){
         type.setScaleX(x);
         type.setScaleY(x);
     }

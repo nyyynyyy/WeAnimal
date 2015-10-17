@@ -46,12 +46,16 @@ public class Have_family_1 extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                if (edit_code.getText().toString().equals("")) {
-                    OftenMethod.message(Have_family_1.this, "가족코드를 알려주세요.");
-                } else {
-                    if (edit_pass.getText().toString().equals("")) {
-                        OftenMethod.message(Have_family_1.this, "비밀번호를 알려주세요.");
-                    } else {
+                if(edit_code.getText().toString().equals("")) {
+                OftenMethod.message(Have_family_1.this, "가족코드를 알려주세요.");
+                }
+                else
+                {
+                    if(edit_pass.getText().toString().equals("")){
+                        OftenMethod.message(Have_family_1.this , "비밀번호를 알려주세요.");
+                    }
+                    else
+                    {
                         try {
                             sendMessage();
                         } catch (JSONException e) {

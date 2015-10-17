@@ -1,8 +1,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
@@ -17,9 +15,7 @@
         android:layout_alignParentBottom="true"
         android:layout_marginTop="130dp">
 
-        <TextView
-            android:text="당신의 가족은"
-            android:layout_width="fill_parent"
+        <TextView android:text="당신의 가족은" android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:textColor="#fdf59f"
             android:textSize="35dp"

@@ -3,8 +3,8 @@ package jsc.cactus.com.weanimal.g_animal.main.animal.status;
 import android.app.Activity;
 import android.util.Log;
 
+import jsc.cactus.com.weanimal.OftenMethod;
 import jsc.cactus.com.weanimal.g_animal.main.animal.Animal;
-import jsc.cactus.com.weanimal.g_animal.main.animal.status.progress.StatusProgressBar;
 
 /**
  * Created by INSI on 15. 9. 27..

@@ -11,7 +11,7 @@ public class UserManager {
     private static List<User> users = new ArrayList<User>();
     private static String localUserId;
 
-    public UserManager(User localUser) {
+    public UserManager(User localUser){
         addUser(localUser);
         localUserId = localUser.getId();
     }
@@ -28,14 +28,14 @@ public class UserManager {
         return null;
     }
 
-    public static User getUserByName(String name) {
+    public static User getUserByName(String name){
         for (User user : users)
             if (user.getName().equals(name))
                 return user;
         return null;
     }
 
-    public static User getLocalUser() {
+    public static User getLocalUser(){
         return getUser(localUserId);
     }
 }

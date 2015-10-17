@@ -14,7 +14,7 @@ import jsc.cactus.com.weanimal.g_animal.main.animal.Animal;
  */
 public class Level_up {
 
-    public Level_up() {
+    public Level_up(){
         Animal.animal.addAge(1);
         try {
             sendMessage();

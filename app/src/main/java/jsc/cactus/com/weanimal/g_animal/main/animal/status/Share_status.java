@@ -18,7 +18,7 @@ public class Share_status {
     int WATER;
     int LOVE;
 
-    public Share_status(int food, int water, int love) {
+    public Share_status(int food,int water,int love) {
         FOOD = food;
         WATER = water;
         LOVE = love;
@@ -27,7 +27,7 @@ public class Share_status {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        Log.i("TEST", "SET");
+        Log.i("TEST","SET");
     }
 
     public void sendMessage() throws JSONException {
@@ -35,9 +35,9 @@ public class Share_status {
 
         data.put("FO", FOOD);
         data.put("WA", WATER);
-        data.put("LO", LOVE);
-        data.put("ID", Variable.user_id);
-        data.put("CO", Variable.user_familycode);
+        data.put("LO",LOVE);
+        data.put("ID",Variable.user_id);
+        data.put("CO",Variable.user_familycode);
 
         MyService.mSocket.emit("SETSTATUS", data);
     }

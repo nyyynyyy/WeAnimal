@@ -39,8 +39,10 @@ import jsc.cactus.com.weanimal.g_animal.main.users.UserGender;
  */
 public class MyService extends Service {
 
+    public static Boolean AppTurn = false;
+    public static Boolean push = false;
+
     private Handler toastHandler;
-//    private Handler pushHandler;
 
     private Thread connect;
 
@@ -65,7 +67,7 @@ public class MyService extends Service {
 
     //푸쉬-------------------------------------------------
     private void noti(int ID, String tickerText, String titleText, String mainText, long time) {
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, new Intent(this, MainActivity.class), PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, new Intent(this, StartActivty.class), PendingIntent.FLAG_UPDATE_CURRENT);
         Notification.Builder builder = new Notification.Builder(this);
         // 작은 아이콘 이미지.
         builder.setSmallIcon(R.mipmap.ic_launcher);
@@ -86,22 +88,28 @@ public class MyService extends Service {
         // 고유ID로 알림을 생성.
         NotificationManager nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         nm.notify(ID, builder.build());
+
+        push = true;
     }
 
     private void loginPush(String user_name, long time) {
-        noti(1, "누군가가 접속하였습니다.", user_name, "님이 접속하였습니다.", time);
+        if (!AppTurn)
+            noti(1, "누군가가 접속하였습니다.", user_name, "님이 접속하였습니다.", time);
     }
 
     private void statusPush(String user_name, String type, long time) {
-        noti(2, "동물의 상태가 변화하였습니다.", user_name, "님이 " + type + " 주셨습니다.", time);
+        if (!AppTurn)
+            noti(2, "동물의 상태가 변화하였습니다.", user_name, "님이 " + type + " 주셨습니다.", time);
     }
 
     private void levelupPush(String animal_name, long time) {
-        noti(3, "동물이 성장하였습니다.", animal_name, "이(가) 성장하였습니다.", time);
+        if (!AppTurn)
+            noti(3, "동물이 성장하였습니다.", animal_name, "이(가) 성장하였습니다.", time);
     }
 
     private void chatPush(String user_name, String msg, long time) {
-        noti(4, user_name + " : " + msg, user_name, msg, time);
+        if (!AppTurn)
+            noti(4, user_name + " : " + msg, user_name, msg, time);
     }
     //--------------------------------------------------------
 
@@ -479,7 +487,7 @@ public class MyService extends Service {
                         time = data.getLong("TIME");
                         day = data.getString("DAY");
 
-                        Log.i("TEST", "push");
+                        Log.i("TEST", name + " : " + text);
 
                         Log.i("TEST", day.split(" ")[0]);
                         Log.i("TEST", day.split(" ")[1]);

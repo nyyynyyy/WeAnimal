@@ -12,16 +12,12 @@ import io.socket.emitter.Emitter;
  */
 public class ServerTime {
 
-    public static long time = 0;
+    public static long time;
 
     public static long getTime() {
         MyService.mSocket.emit("GETTIME");
         MyService.mSocket.on("TIME", Recive);
 
-        while(time == 0)
-        {
-
-        }
         return time;
     }
 
@@ -33,7 +29,7 @@ public class ServerTime {
             try {
                 time = data.getLong("time");
 
-                Log.i("TEST", "Server: "+Long.toString(time));
+                Log.i("TEST", Long.toString(time));
 
             } catch (JSONException e) {
                 e.printStackTrace();

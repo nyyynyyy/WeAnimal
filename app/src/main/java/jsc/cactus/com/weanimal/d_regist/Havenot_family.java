@@ -94,12 +94,11 @@ public class Havenot_family extends AppCompatActivity {
                         }
                     }
                 }
-
         );
     }
 
     @Override
-    public void onStop() {
+    protected void onStop() {
         han_fa_t = false;
 
         MyService.mSocket.off("RESULT", fregistRecive);

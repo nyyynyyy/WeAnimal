@@ -12,24 +12,38 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 
+import android.widget.Button;
+import android.widget.ImageView;
+
+
 import android.widget.ImageView;
 
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import io.socket.emitter.Emitter;
 import jsc.cactus.com.weanimal.FileMethod;
 import jsc.cactus.com.weanimal.MyService;
 import jsc.cactus.com.weanimal.R;
 import jsc.cactus.com.weanimal.Variable;
-import jsc.cactus.com.weanimal.g_animal.main.SoundUtil;
+import jsc.cactus.com.weanimal.f_list.View_family;
+import jsc.cactus.com.weanimal.g_animal.main.DateFormat;
+
 import jsc.cactus.com.weanimal.g_animal.main.animal.Animal;
 import jsc.cactus.com.weanimal.g_animal.main.animal.AnimalType;
 import jsc.cactus.com.weanimal.g_animal.main.animal.status.Status;
@@ -49,7 +63,9 @@ import jsc.cactus.com.weanimal.g_animal.main.users.UserManager;
  * Created by INSI on 15. 9. 23..
  */
 public class MainActivity extends AppCompatActivity implements MissionListener {
-//
+
+    private FileMethod file;
+
     public static MainActivity mainActivity;
     public static Activity animal_hill_a;
     public static Boolean animal_hill_t = false;
@@ -95,7 +111,9 @@ public class MainActivity extends AppCompatActivity implements MissionListener {
         init();
     }
 
+   // private void setting() {
     /*private void setting() {
+>>>>>>> origin/master
         set = (ImageView) findViewById(R.id.btn_setting);
 
         set.setOnClickListener(new View.OnClickListener() {
@@ -114,12 +132,53 @@ public class MainActivity extends AppCompatActivity implements MissionListener {
     }
 
     public void clearFile() {
+        file = new FileMethod(new File("/data/data/jsc.cactus.com.weanimal/files/login/"), "login.txt");
         FileMethod file = new FileMethod(new File("/data/data/jsc.cactus.com.weanimal/files/login/"), "login.txt");
 
         file.getFile().delete();
         Log.i("TEST", "CLEAR FILE");
 
         //  "/data/data/jsc.cactus.com.weanimal/files"
+    }
+
+    public long getLastTime() {
+
+        long time = 0;
+        String day = null;
+
+        File files[] = new File("/data/data/jsc.cactus.com.weanimal/files/chat/").listFiles();
+
+        for (File fList : files) {
+
+            Log.i("TEST", fList.getName().replace(".txt", ""));
+        }
+
+        File f = files[files.length - 1];
+
+        Log.i("TEST", "LAST:" + f.getName().replace(".txt", ""));
+        day = f.getName();
+
+        file = new FileMethod(new File("/data/data/jsc.cactus.com.weanimal/files/chat/"), day);
+
+        String lastLine = null;
+
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(f));
+
+            List<String> stringList = new ArrayList<String>();
+
+            while (br.readLine() != null) {
+                stringList.add(br.readLine());
+            }
+
+            lastLine = stringList.get(stringList.size() - 2);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        time = DateFormat.parseDate(lastLine.split("\\|")[0], DateFormat.Type.SECOND).getTime();
+
+        return time;
     }
 
     @Override
@@ -171,6 +230,17 @@ public class MainActivity extends AppCompatActivity implements MissionListener {
         MyService.mSocket.on("RES_STATUS", statusRecive);
     }
 
+    public void sendTime() throws JSONException {
+        JSONObject data = new JSONObject();
+
+        long time = getLastTime();
+
+        data.put("LAST_TIME", time);
+
+        MyService.mSocket.emit("UPDATE_CHAT", data);
+        MyService.mSocket.on("RES_UPDATE_CHAT", chRecive);
+    }
+
     private Emitter.Listener statusRecive = new Emitter.Listener() {
         @Override
         public void call(final Object... args) {
@@ -216,6 +286,34 @@ public class MainActivity extends AppCompatActivity implements MissionListener {
                         Log.i("TEST", AnimalType.valueOf(TYPE).toString());
 
                         findViewById(R.id.AnimalHill).setVisibility(View.VISIBLE);
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+
+                }
+            });
+        }
+    };
+
+    private Emitter.Listener chRecive = new Emitter.Listener() {
+        @Override
+        public void call(final Object... args) {
+
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    JSONObject data = (JSONObject) args[0];
+
+                    JSONArray chat_logs;
+                    int length;
+
+                    try {
+                        chat_logs = data.getJSONArray("chat_logs");
+                        length = data.getInt("length");
+
+
 
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -283,7 +381,7 @@ public class MainActivity extends AppCompatActivity implements MissionListener {
 
         boolean b = ((new Date().getTime() - missionTime) / 1000) < ((TelMission) mission).second;
         Toast.makeText(MainActivity.mainActivity, b ? "전화 미션 실패.." : "전화 미션 성공 !!", Toast.LENGTH_SHORT).show();
-        SoundUtil.playSound(b ? R.raw.bass : R.raw.pong);
+        //SoundUtil.playSound(b ? R.raw.bass : R.raw.pong);
         if (!b)
             Animal.animal.getStatus().addStatus(StatusType.LOVE, 100);
         missionTime = null;

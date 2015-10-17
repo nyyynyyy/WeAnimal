@@ -3,6 +3,7 @@ package jsc.cactus.com.weanimal.a_logo;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 
 import jsc.cactus.com.weanimal.MyService;
 import jsc.cactus.com.weanimal.R;
@@ -71,30 +72,32 @@ public class Logos extends AppCompatActivity {
         final Thread serveron = new Thread(new Runnable() {
             @Override
             public void run() {
+                Log.i("TEST", "SERVERON");
                 if (MyService.server_turn) {
                     Intent intent = new Intent(Logos.this, Loding.class);
                     startActivity(intent);
                     finish();
-                }
-                do {
-                    try {
-                        Thread.sleep(5000L);
-                        if (!isTurn) {
-                            break;
+                } else {
+                    do {
+                        try {
+                            Thread.sleep(5000L);
+                            if (!isTurn) {
+                                break;
+                            }
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
                         }
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+                    } while (!MyService.server_turn);
                     if (MyService.server_turn) {
                         Intent intent = new Intent(Logos.this, Loding.class);
                         startActivity(intent);
                         finish();
-                        break;
                     }
-                } while (!MyService.server_turn);
+                }
                 serveroff.start();
             }
         });
+
         if (isTurn)
             serveron.start();
     }
@@ -108,7 +111,6 @@ public class Logos extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-        //isTurn = false;
 
         super.onDestroy();
     }

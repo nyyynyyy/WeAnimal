@@ -49,13 +49,13 @@ public class ChatListViewAdapter extends ArrayAdapter<ChatItem> {
         ImageView cicon = (ImageView) item.findViewById(R.id.item_icon);
         TextView ctext = (TextView) item.findViewById(R.id.item_text), cinfo = (TextView) item.findViewById(R.id.item_info);
 
-        if (citem.getUser().getName().equals(UserManager.getLocalUser().getName()))
-            cardview.setCardBackgroundColor(Color.argb(255, 235, 215, 0));
+        if(citem.getUser().getName().equals(UserManager.getLocalUser().getName()))
+            cardview.setCardBackgroundColor(Color.argb(255,235,215,0));
 
-        if (citem.getIconId() != null) {
+        if(citem.getIconId()!=null){
             cicon.setImageResource(citem.getIconId());
             cicon.setVisibility(View.VISIBLE);
-        } else
+        }else
             cicon.setVisibility(View.GONE);
 
         ctext.setText(citem.getText());

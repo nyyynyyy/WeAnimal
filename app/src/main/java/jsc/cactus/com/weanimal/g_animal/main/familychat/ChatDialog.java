@@ -1,11 +1,13 @@
 package jsc.cactus.com.weanimal.g_animal.main.familychat;
 
-import android.app.Activity;
-import android.app.Dialog;
+import android.app.DialogFragment;
+import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -13,18 +15,19 @@ import android.widget.ListView;
 import org.json.JSONException;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import jsc.cactus.com.weanimal.R;
+import jsc.cactus.com.weanimal.Variable;
 import jsc.cactus.com.weanimal.g_animal.main.familychat.view.ChatItem;
 import jsc.cactus.com.weanimal.g_animal.main.familychat.view.ChatListViewAdapter;
-import jsc.cactus.com.weanimal.g_animal.main.main.weanimal.MainActivity;
 import jsc.cactus.com.weanimal.g_animal.main.users.UserManager;
 
 /**
  * Created by INSI on 15. 9. 28..
  */
-public class ChatDialog extends Dialog {
+public class ChatDialog extends DialogFragment {
 
     private static ChatListViewAdapter chatListViewAdapter;
     private ListView listView;
@@ -34,21 +37,24 @@ public class ChatDialog extends Dialog {
 
     private static List<ChatItem> items = new ArrayList<ChatItem>();
 
-    public ChatDialog(Activity activity) {
-        super(activity);
-        setContentView(R.layout.activity_familychat);
-        init();
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.activity_familychat, container, false);
+
+        init(view);
+
+        return view;
     }
 
-    private void init() {
+    private void init(View view) {
         Log.i("jsc", "ChatDialog init");
-        setTitle("Family Chat");
-        textEdit = (EditText) findViewById(R.id.familychat_editText);
-        acceptButton = (Button) findViewById(R.id.familychat_acceptButton);
-        listView = (ListView) findViewById(R.id.family_listView);
+        getDialog().setTitle("Family Chat");
+        textEdit = (EditText) view.findViewById(R.id.familychat_editText);
+        acceptButton = (Button) view.findViewById(R.id.familychat_acceptButton);
+        listView = (ListView) view.findViewById(R.id.family_listView);
 
-        if (chatListViewAdapter == null) {
-            chatListViewAdapter = new ChatListViewAdapter(MainActivity.mainActivity, R.layout.familychat_item, items);
+        if(chatListViewAdapter==null) {
+            chatListViewAdapter = new ChatListViewAdapter(getActivity(), R.layout.familychat_item, items);
 
             new ChatManager();
         }
@@ -61,7 +67,7 @@ public class ChatDialog extends Dialog {
         acceptButton.setEnabled(false);
     }
 
-    public static ChatListViewAdapter getChatListViewAdapter() {
+    public static ChatListViewAdapter getChatListViewAdapter(){
         return chatListViewAdapter;
     }
 

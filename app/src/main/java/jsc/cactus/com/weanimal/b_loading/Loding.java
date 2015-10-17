@@ -21,19 +21,20 @@ public class Loding extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.loading);
 
-        Intent intent = null;
-
+        Intent intent;
         if (MyService.login) {
             if (!View_family.vi_f_t) {
                 intent = new Intent(this, View_family.class);
+                startActivity(intent);
+                finish();
             }
         } else {
             if (!Id_query.id_q_t) {
                 intent = new Intent(this, Id_query.class);
+                startActivity(intent);
                 Log.i("TEST", "START LOGIN");
+                finish();
             }
         }
-        startActivity(intent);
-        finish();
     }
 }

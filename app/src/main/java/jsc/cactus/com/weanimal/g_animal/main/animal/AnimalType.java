@@ -6,8 +6,8 @@ package jsc.cactus.com.weanimal.g_animal.main.animal;
 public enum AnimalType {
     CHICKEN, DOG, CAT;
 
-    public static AnimalType getType(String type) {
-        switch (type) {
+    public static AnimalType getType(String type){
+        switch (type){
             case "CHICKEN":
                 return CHICKEN;
             case "DOG":

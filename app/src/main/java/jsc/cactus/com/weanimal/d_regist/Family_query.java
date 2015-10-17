@@ -46,14 +46,14 @@ public class Family_query extends AppCompatActivity {
     }
 
     @Override
-    protected void onStop() {
+    protected void onStop(){
         fa_q_t = false;
 
         super.onStop();
     }
 
     void goin(Class go) {
-        Intent intent = new Intent(this, Havenot_family.class);
+        Intent intent = new Intent(this, go);
         startActivity(intent);
     }
 }
