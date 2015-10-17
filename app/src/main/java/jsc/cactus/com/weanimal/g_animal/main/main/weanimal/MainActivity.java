@@ -1,19 +1,19 @@
 package jsc.cactus.com.weanimal.g_animal.main.main.weanimal;
 
-import android.animation.LayoutTransition;
+import android.Manifest;
 import android.app.Activity;
-import android.graphics.drawable.Drawable;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-<<<<<<< HEAD
-import android.widget.Button;
+
 import android.widget.ImageView;
-=======
->>>>>>> origin/master
+
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,10 +27,9 @@ import java.util.Date;
 import io.socket.emitter.Emitter;
 import jsc.cactus.com.weanimal.FileMethod;
 import jsc.cactus.com.weanimal.MyService;
-import jsc.cactus.com.weanimal.OftenMethod;
 import jsc.cactus.com.weanimal.R;
 import jsc.cactus.com.weanimal.Variable;
-import jsc.cactus.com.weanimal.f_list.View_family;
+import jsc.cactus.com.weanimal.g_animal.main.SoundUtil;
 import jsc.cactus.com.weanimal.g_animal.main.animal.Animal;
 import jsc.cactus.com.weanimal.g_animal.main.animal.AnimalType;
 import jsc.cactus.com.weanimal.g_animal.main.animal.status.Status;
@@ -39,7 +38,9 @@ import jsc.cactus.com.weanimal.g_animal.main.familychat.view.ChatViewManager;
 import jsc.cactus.com.weanimal.g_animal.main.mission.missions.Mission;
 import jsc.cactus.com.weanimal.g_animal.main.mission.MissionListener;
 import jsc.cactus.com.weanimal.g_animal.main.mission.MissionManager;
+import jsc.cactus.com.weanimal.g_animal.main.mission.missions.TelMission;
 import jsc.cactus.com.weanimal.g_animal.main.mission.view.MissionViewManager;
+import jsc.cactus.com.weanimal.g_animal.main.settting.SettingManager;
 import jsc.cactus.com.weanimal.g_animal.main.users.User;
 import jsc.cactus.com.weanimal.g_animal.main.users.UserGender;
 import jsc.cactus.com.weanimal.g_animal.main.users.UserManager;
@@ -57,13 +58,14 @@ public class MainActivity extends AppCompatActivity implements MissionListener {
     private MissionViewManager missionViewManager;
     private Animal animal;
     private UserManager userManager;
+    private SettingManager settingManager;
 
     private LinearLayout animal_hill;
     private ImageView set;
 
     private boolean exit = false;
 
-    long missionTime = 0;
+    private Long missionTime = 0L;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -76,14 +78,13 @@ public class MainActivity extends AppCompatActivity implements MissionListener {
         setContentView(R.layout.activity_main);
 
 
-
         // 시간에 따른 배경 설정
         animal_hill = (LinearLayout) findViewById(R.id.AnimalHill);
 
         setBackground();
         //
 
-        setting();
+        //setting();
 
         try {
             getStatus();
@@ -94,7 +95,7 @@ public class MainActivity extends AppCompatActivity implements MissionListener {
         init();
     }
 
-    private void setting(){
+    /*private void setting() {
         set = (ImageView) findViewById(R.id.btn_setting);
 
         set.setOnClickListener(new View.OnClickListener() {
@@ -106,13 +107,13 @@ public class MainActivity extends AppCompatActivity implements MissionListener {
                 MyService.login = false;
             }
         });
-    }
+    }*/
 
     public void sendLogout() {
         MyService.mSocket.emit("LOGOUT");
     }
 
-    public void clearFile(){
+    public void clearFile() {
         FileMethod file = new FileMethod(new File("/data/data/jsc.cactus.com.weanimal/files/login/"), "login.txt");
 
         file.getFile().delete();
@@ -235,6 +236,7 @@ public class MainActivity extends AppCompatActivity implements MissionListener {
         MyService.animal = true;
         userManager = new UserManager(new User(Variable.user_id, Variable.user_name, Variable.user_birthday, UserGender.MALE));
         familyChatViewManager = new ChatViewManager(this);
+        settingManager = new SettingManager(this);
 
         MissionManager.instance.addMissionListener(this);
 
@@ -252,18 +254,43 @@ public class MainActivity extends AppCompatActivity implements MissionListener {
 
     //미션에 대한 이벤트
 
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (missionTime != null) {
+            MissionManager.instance.clearMission();
+        }
+    }
+
+
     @Override
     public void startMission(Mission mission) {
-
+        if (!(mission instanceof TelMission))
+            return;
+        Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:010-2975-7544"));
+        try {
+            startActivity(intent);
+        } catch (Exception ex) {
+        }
+        missionTime = new Date().getTime();
     }
 
     @Override
     public void clearMission(Mission mission) {
+        if (!(mission instanceof TelMission))
+            return;
 
+        boolean b = ((new Date().getTime() - missionTime) / 1000) < ((TelMission) mission).second;
+        Toast.makeText(MainActivity.mainActivity, b ? "전화 미션 실패.." : "전화 미션 성공 !!", Toast.LENGTH_SHORT).show();
+        SoundUtil.playSound(b ? R.raw.bass : R.raw.pong);
+        if (!b)
+            Animal.animal.getStatus().addStatus(StatusType.LOVE, 100);
+        missionTime = null;
     }
 
     @Override
     public void giveupMission(Mission mission) {
-
+        missionTime = null;
     }
 }

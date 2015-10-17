@@ -7,7 +7,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import jsc.cactus.com.weanimal.R;
@@ -20,7 +19,7 @@ public class MissionAdapter extends ArrayAdapter<MissionItem> {
     private Activity activity;
     private List<MissionItem> items;
 
-    public MissionAdapter(Activity activity, int resource, List<MissionItem> objects){
+    public MissionAdapter(Activity activity, int resource, List<MissionItem> objects) {
         super(activity, resource, objects);
 
         this.activity = activity;

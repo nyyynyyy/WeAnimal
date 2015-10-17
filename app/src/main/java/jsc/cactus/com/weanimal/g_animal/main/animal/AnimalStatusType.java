@@ -13,7 +13,7 @@ public enum AnimalStatusType {
             return WEAK;
         if (totally <= 150)
             return FLABBY;
-        Log.i("jsc", "totally: "+totally);
+        Log.i("jsc", "totally: " + totally);
         return DEFAULT;
     }
 }

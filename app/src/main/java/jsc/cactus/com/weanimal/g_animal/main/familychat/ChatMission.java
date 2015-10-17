@@ -2,6 +2,8 @@ package jsc.cactus.com.weanimal.g_animal.main.familychat;
 
 import android.widget.Toast;
 
+import jsc.cactus.com.weanimal.R;
+import jsc.cactus.com.weanimal.g_animal.main.SoundUtil;
 import jsc.cactus.com.weanimal.g_animal.main.animal.Animal;
 import jsc.cactus.com.weanimal.g_animal.main.animal.status.StatusType;
 import jsc.cactus.com.weanimal.g_animal.main.main.weanimal.MainActivity;
@@ -20,18 +22,19 @@ public class ChatMission implements ChatListener, MissionListener {
     private boolean isMission = false;
     private MessageSendMission mission;
 
-    public ChatMission(){
+    public ChatMission() {
         ChatManager.addChatListener(this);
         MissionManager.instance.addMissionListener(this);
     }
 
     @Override
     public void UserChatEvent(User user, String text) {
-        if(!isMission)
+        if (!isMission)
             return;
-        if(user.getId().equals(UserManager.getLocalUser().getId())){
-            if(text.contains(mission.message)){
+        if (user.getId().equals(UserManager.getLocalUser().getId())) {
+            if (text.contains(mission.message)) {
                 MissionManager.instance.clearMission();
+                SoundUtil.playSound(R.raw.pong);
                 Toast.makeText(MainActivity.mainActivity, "문자 메세지 전송 미션 성공 !!", Toast.LENGTH_SHORT).show();
                 Animal.animal.getStatus().addStatus(StatusType.LOVE, 40);
             }
@@ -40,7 +43,7 @@ public class ChatMission implements ChatListener, MissionListener {
 
     @Override
     public void startMission(Mission mission) {
-        if(mission instanceof MessageSendMission){
+        if (mission instanceof MessageSendMission) {
             this.mission = (MessageSendMission) mission;
             isMission = true;
         }

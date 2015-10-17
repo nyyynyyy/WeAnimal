@@ -17,9 +17,9 @@ public class AnimalKind {
 //    private static final int DOG_FLABBY[] = {};
 //    private static final int DOG_WEAK[] = {};
 
-    private static final int CAT_DEFAULT[] = {R.drawable.cat_one_normal,R.drawable.cat_two_normal,R.drawable.cat_three_normal};
-    private static final int CAT_FLABBY[] = {R.drawable.cat_one_normal,R.drawable.cat_two_normal,R.drawable.cat_three_normal};
-    private static final int CAT_WEAK[] = {R.drawable.cat_one_normal,R.drawable.cat_two_normal,R.drawable.cat_three_normal};
+    private static final int CAT_DEFAULT[] = {R.drawable.cat_one_normal, R.drawable.cat_two_normal, R.drawable.cat_three_normal};
+    private static final int CAT_FLABBY[] = {R.drawable.cat_one_normal, R.drawable.cat_two_normal, R.drawable.cat_three_normal};
+    private static final int CAT_WEAK[] = {R.drawable.cat_one_normal, R.drawable.cat_two_normal, R.drawable.cat_three_normal};
 
     public static int getImageResource(AnimalType type, AnimalStatusType statusType, int age) {
         int get[] = {};

@@ -9,7 +9,7 @@ public class MessageSendMission extends Mission {
 
     public String message;
 
-    public MessageSendMission(String message){
+    public MessageSendMission(String message) {
         this.message = message;
         missionType = MissionType.문자보내기;
     }

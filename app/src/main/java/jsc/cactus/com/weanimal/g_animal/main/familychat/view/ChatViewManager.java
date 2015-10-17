@@ -19,19 +19,19 @@ public class ChatViewManager {
     private ImageView signImageView;
     private boolean isOnMission = false;
 
-    public ChatViewManager(Activity activity){
+    public ChatViewManager(Activity activity) {
         fragmentManager = activity.getFragmentManager();
         signImageView = (ImageView) activity.findViewById(R.id.imageView);
-        familyChatDialog = new ChatDialog();
+        familyChatDialog = new ChatDialog(activity);
         new ChatMission();
 
         signImageView.setOnClickListener(clickSign);
     }
 
-    private View.OnClickListener clickSign = new View.OnClickListener(){
-        public void onClick(View v){
-            if(!familyChatDialog.isAdded())
-                familyChatDialog.show(fragmentManager, "");
+    private View.OnClickListener clickSign = new View.OnClickListener() {
+        public void onClick(View v) {
+            if (!familyChatDialog.isShowing())
+                familyChatDialog.show();
         }
     };
 }

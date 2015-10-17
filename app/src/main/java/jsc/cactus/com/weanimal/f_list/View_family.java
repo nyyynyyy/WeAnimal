@@ -57,10 +57,9 @@ public class View_family extends AppCompatActivity {
 
         list.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 
-        list.setDivider(new ColorDrawable(Color.argb(255,253,96,41)));
+        list.setDivider(new ColorDrawable(Color.argb(255, 253, 96, 41)));
 
         list.setDividerHeight(2);
-
 
 
         acceptButton.setOnClickListener(new View.OnClickListener() {
@@ -129,9 +128,8 @@ public class View_family extends AppCompatActivity {
 
                             if (!(fid.equals(OI))) {
                                 Adapter.add(new Family_Item(fna, fid + "\n" + fge + "\n" + fbd));
-                            }
-                            else {
-                                Adapter.insert(new Family_Item("[가장] " + fna,fid + "\n" + fge + "\n" + fbd),0);
+                            } else {
+                                Adapter.insert(new Family_Item("[가장] " + fna, fid + "\n" + fge + "\n" + fbd), 0);
                             }
                             list.setAdapter(Adapter);
                         }

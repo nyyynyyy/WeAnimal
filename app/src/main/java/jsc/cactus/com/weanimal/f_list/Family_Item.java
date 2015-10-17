@@ -5,16 +5,17 @@ package jsc.cactus.com.weanimal.f_list;
  */
 public class Family_Item {
     private String title, subtitle;
-    public Family_Item(String Title, String SubTitle){
+
+    public Family_Item(String Title, String SubTitle) {
         title = Title;
         subtitle = SubTitle;
     }
 
-    public String getTitle(){
+    public String getTitle() {
         return title;
     }
 
-    public String getSubtitle(){
+    public String getSubtitle() {
         return subtitle;
     }
 

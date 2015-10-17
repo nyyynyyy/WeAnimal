@@ -46,7 +46,7 @@ public class Family_query extends AppCompatActivity {
     }
 
     @Override
-    protected void onStop(){
+    protected void onStop() {
         fa_q_t = false;
 
         super.onStop();

@@ -20,7 +20,7 @@ public class User {
         this.gender = gender;
     }
 
-    public void setProfileImage(Integer profileImageId){
+    public void setProfileImage(Integer profileImageId) {
         this.profileImage = profileImageId;
     }
 
@@ -36,7 +36,7 @@ public class User {
         return gender;
     }
 
-    public Integer getProfileImageId(){
+    public Integer getProfileImageId() {
         return profileImage;
     }
 

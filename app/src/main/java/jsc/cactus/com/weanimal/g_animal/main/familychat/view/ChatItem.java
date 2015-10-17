@@ -30,16 +30,16 @@ public class ChatItem {
         return text;
     }
 
-    public User getUser(){
+    public User getUser() {
         return user;
     }
 
-    public Date getDate(){
+    public Date getDate() {
         return date;
     }
 
     public String getInfo() {
         Date currentDate = new Date();
-        return user.getName() + " - " + new SimpleDateFormat(((currentDate.getTime() / 1000 / 86400) - (date.getTime() / 1000 / 86400) >= 1 ? "yy년 MM월 dd일 " : "" )+ "a hh:mm").format(date).replace("AM", "오전").replace("PM", "오후");
+        return user.getName() + " - " + new SimpleDateFormat(((currentDate.getTime() / 1000 / 86400) - (date.getTime() / 1000 / 86400) >= 1 ? "yy년 MM월 dd일 " : "") + "a hh:mm").format(date).replace("AM", "오전").replace("PM", "오후");
     }
 }

@@ -7,16 +7,16 @@ public class MissionItem {
     private Integer imageId;
     private String text;
 
-    public MissionItem(Integer imageId, String text){
+    public MissionItem(Integer imageId, String text) {
         this.imageId = imageId;
         this.text = text;
     }
 
-    public Integer getImageId(){
+    public Integer getImageId() {
         return imageId;
     }
 
-    public String getText(){
+    public String getText() {
         return text;
     }
 }

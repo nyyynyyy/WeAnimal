@@ -54,8 +54,7 @@ public class Id_query extends AppCompatActivity {
     }
 
     @Override
-    protected void onStop()
-    {
+    protected void onStop() {
         id_q_t = false;
 
         super.onStop();

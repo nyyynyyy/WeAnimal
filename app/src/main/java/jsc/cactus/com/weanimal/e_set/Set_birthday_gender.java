@@ -120,7 +120,7 @@ public class Set_birthday_gender extends AppCompatActivity {
 
             owner = (Boolean) args[0];
 
-            Log.i("TEST","Owner check" + Boolean.toString(owner));
+            Log.i("TEST", "Owner check" + Boolean.toString(owner));
 
             if (owner)
                 goin(Select_animal.class);

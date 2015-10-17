@@ -57,40 +57,40 @@ public class Animal implements StatusChangeListener {
         return name;
     }
 
-    public Status getStatus(){
+    public Status getStatus() {
         return status;
     }
 
     public void addAge(int age) {
         this.age += age;
-        if(ready)
-        reimage();
-    }
-
-    public void setReady(boolean bool){
-        ready = true;
-        if(ready)
+        if (ready)
             reimage();
     }
 
-    public void setName(String name){
+    public void setReady(boolean bool) {
+        ready = true;
+        if (ready)
+            reimage();
+    }
+
+    public void setName(String name) {
         this.name = name;
     }
 
-    public void setType(AnimalType type){
+    public void setType(AnimalType type) {
         this.type = type;
-        if(ready)
-        reimage();
+        if (ready)
+            reimage();
     }
 
-    public void setAnimalCode(int animalCode){
+    public void setAnimalCode(int animalCode) {
         this.animalCode = animalCode;
     }
 
-    public void setAge(int age){
+    public void setAge(int age) {
         this.age = age;
-        if(ready)
-        reimage();
+        if (ready)
+            reimage();
     }
 
     public void reimage() {
@@ -99,19 +99,23 @@ public class Animal implements StatusChangeListener {
 
     @Override
     public void StatusChangeEvent() {
-        if(ready)
-        reimage();
+        if (ready)
+            reimage();
     }
 
-    private Handler reimage = new Handler(){
+    private Handler reimage = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-            if(!ready)
+            if (!ready)
                 return;
 
             Log.i("jsc", "reimage");
 
-            if(bitmap != null) { bitmap.recycle(); bitmap = null; System.gc(); }
+            if (bitmap != null) {
+                bitmap.recycle();
+                bitmap = null;
+                System.gc();
+            }
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inSampleSize = 2;
             bitmap = BitmapFactory.decodeResource(MainActivity.mainActivity.getResources(), AnimalKind.getImageResource(type, AnimalStatusType.getStatusType((status.getStatus(StatusType.FOOD) + status.getStatus(StatusType.WATER))), age), options);
