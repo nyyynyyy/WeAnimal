@@ -12,7 +12,8 @@
         app:cardCornerRadius="12dp"
         app:cardBackgroundColor="#FFFF9C11"
         android:clickable="false"
-        android:id="@+id/item_cardview">
+        android:id="@+id/item_cardview"
+        android:layout_gravity="left">
         android:id="@+id/item_cardview"
         android:layout_gravity="left">
 
