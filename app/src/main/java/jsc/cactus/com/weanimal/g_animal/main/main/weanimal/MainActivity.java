@@ -49,7 +49,7 @@ import jsc.cactus.com.weanimal.g_animal.main.users.UserManager;
  * Created by INSI on 15. 9. 23..
  */
 public class MainActivity extends AppCompatActivity implements MissionListener {
-
+//
     public static MainActivity mainActivity;
     public static Activity animal_hill_a;
     public static Boolean animal_hill_t = false;
