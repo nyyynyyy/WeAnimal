@@ -1,7 +1,7 @@
 package jsc.cactus.com.weanimal.g_animal.main;
 
 import android.media.AudioManager;
-import android.media.MediaPlayer;
+import android.media.SoundPool;
 
 import jsc.cactus.com.weanimal.g_animal.main.main.weanimal.MainActivity;
 
@@ -9,11 +9,11 @@ import jsc.cactus.com.weanimal.g_animal.main.main.weanimal.MainActivity;
  * Created by INSI on 2015. 10. 16..
  */
 public class SoundUtil {
-    private static MediaPlayer mp;
+    //private MediaPlayer mp;
 
     public static void playSound(int rawFileSound) {
-        mp = MediaPlayer.create(MainActivity.mainActivity, rawFileSound);
-        mp.start();
+        SoundPool soundPool = new SoundPool(5, AudioManager.STREAM_SYSTEM, 0);
+        soundPool.play(soundPool.load(MainActivity.mainActivity.getApplicationContext(), rawFileSound, 1), 1f, 1f, 1, 0, 1f);
     }
 
 }
