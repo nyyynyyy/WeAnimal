@@ -17,6 +17,7 @@ import java.util.Date;
 import java.util.List;
 
 import jsc.cactus.com.weanimal.R;
+import jsc.cactus.com.weanimal.g_animal.main.SoundUtil;
 import jsc.cactus.com.weanimal.g_animal.main.main.weanimal.MainActivity;
 import jsc.cactus.com.weanimal.g_animal.main.mission.missions.Mission;
 import jsc.cactus.com.weanimal.g_animal.main.mission.MissionListener;
@@ -101,6 +102,7 @@ public class MissionDialog extends Dialog implements MissionListener {
     public void clearMission(Mission mission) {
         if (!(mission instanceof TelMission))
             return;
+        SoundUtil.playSound(R.raw.pong);
         Toast.makeText(MainActivity.mainActivity, "미션 성공", Toast.LENGTH_SHORT);
     }
 

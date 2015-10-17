@@ -12,10 +12,9 @@ public class SoundUtil {
     private static SoundPool soundPool;
 
     public static void playSound(int rawFileSound) {
-        soundPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
-        int sound = soundPool.load(MainActivity.mainActivity, rawFileSound, 1);
+        soundPool = new SoundPool(5, AudioManager.STREAM_MUSIC, 0);
 
-        soundPool.play(sound, 1, 1, 1, 0, 1);
+        soundPool.play(soundPool.load(MainActivity.mainActivity, rawFileSound, 1), 1, 1, 0, 0, 1);
     }
 
 }
