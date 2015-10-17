@@ -44,6 +44,7 @@ import jsc.cactus.com.weanimal.Variable;
 import jsc.cactus.com.weanimal.f_list.View_family;
 import jsc.cactus.com.weanimal.g_animal.main.DateFormat;
 
+import jsc.cactus.com.weanimal.g_animal.main.SoundUtil;
 import jsc.cactus.com.weanimal.g_animal.main.animal.Animal;
 import jsc.cactus.com.weanimal.g_animal.main.animal.AnimalType;
 import jsc.cactus.com.weanimal.g_animal.main.animal.status.Status;
@@ -381,7 +382,7 @@ public class MainActivity extends AppCompatActivity implements MissionListener {
 
         boolean b = ((new Date().getTime() - missionTime) / 1000) < ((TelMission) mission).second;
         Toast.makeText(MainActivity.mainActivity, b ? "전화 미션 실패.." : "전화 미션 성공 !!", Toast.LENGTH_SHORT).show();
-        //SoundUtil.playSound(b ? R.raw.bass : R.raw.pong);
+        SoundUtil.playSound(b ? R.raw.bass : R.raw.pong);
         if (!b)
             Animal.animal.getStatus().addStatus(StatusType.LOVE, 100);
         missionTime = null;
