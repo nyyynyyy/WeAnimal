@@ -1,4 +1,4 @@
-package jsc.cactus.com.weanimal.g_animal.main.animal.status;
+package jsc.cactus.com.weanimal.g_animal.main.animal.status.progress;
 
 import android.app.Activity;
 import android.os.Handler;
@@ -7,6 +7,8 @@ import android.widget.ProgressBar;
 
 import jsc.cactus.com.weanimal.R;
 import jsc.cactus.com.weanimal.g_animal.main.animal.Animal;
+import jsc.cactus.com.weanimal.g_animal.main.animal.status.Status;
+import jsc.cactus.com.weanimal.g_animal.main.animal.status.StatusType;
 
 /**
  * Created by INSI on 2015. 10. 2..
@@ -28,10 +30,15 @@ public class StatusProgressBar {
         @Override
         public synchronized void handleMessage(Message msg) {
             Status status = Animal.animal.getStatus();
-            pbFood.setProgress(status.getStatus(StatusType.FOOD));
-            pbWater.setProgress(status.getStatus(StatusType.WATER));
-            pbLove.setProgress(status.getStatus(StatusType.LOVE));
+            progressAnim(pbFood, status.getStatus(StatusType.FOOD));
+            progressAnim(pbWater, status.getStatus(StatusType.WATER));
+            progressAnim(pbLove, status.getStatus(StatusType.LOVE));
         }
     };
+
+    private void progressAnim(ProgressBar pb, int progress){
+        ProgressBarAnimation anim = new ProgressBarAnimation(pb, 600);
+        anim.setProgress(progress);
+    }
 
 }
