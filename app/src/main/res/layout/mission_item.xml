@@ -9,7 +9,6 @@
         android:layout_height="100dp"
         android:id="@+id/mission_item_img"
         android:src="@drawable/phoneicon"
-        android:layout_weight="1"
         android:layout_gravity="center_horizontal" />
 
     <TextView

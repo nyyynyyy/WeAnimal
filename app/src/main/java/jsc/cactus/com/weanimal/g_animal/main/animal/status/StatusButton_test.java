@@ -42,7 +42,7 @@ public class StatusButton_test {
         public void onClick(View view) {
             if (view.getId() == bFood.getId())
                 MissionViewManager.missionViewManager.test();
-            Animal.animal.getStatus().addStatus(view.getId() == R.id.bt_food ? StatusType.FOOD : view.getId() == R.id.bt_water ? StatusType.WATER : StatusType.LOVE, 5);
+            Animal.animal.getStatus().addStatus(view.getId() == R.id.bt_food ? StatusType.FOOD : view.getId() == R.id.bt_water ? StatusType.WATER : StatusType.LOVE, 50);
         }
     };
 

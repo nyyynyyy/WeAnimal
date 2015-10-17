@@ -28,9 +28,9 @@ public class MissionManager {
     }
 
     public void clearMission() {
-        mission = null;
         for (MissionListener listener : missionListeners)
             listener.clearMission(mission);
+        mission = null;
     }
 
     public void addMissionListener(MissionListener listener) {
