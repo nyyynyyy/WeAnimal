@@ -142,43 +142,29 @@ public class MainActivity extends AppCompatActivity implements MissionListener {
     }
 
     public long getLastTime() {
-
-        long time = 0;
         String day = null;
 
         File files[] = new File("/data/data/jsc.cactus.com.weanimal/files/chat/").listFiles();
-
-        for (File fList : files) {
-
-            Log.i("TEST", fList.getName().replace(".txt", ""));
-        }
-
         File f = files[files.length - 1];
 
-        Log.i("TEST", "LAST:" + f.getName().replace(".txt", ""));
         day = f.getName();
 
         file = new FileMethod(new File("/data/data/jsc.cactus.com.weanimal/files/chat/"), day);
 
         String lastLine = null;
-
         try {
             BufferedReader br = new BufferedReader(new FileReader(f));
-
             List<String> stringList = new ArrayList<String>();
 
-            while (br.readLine() != null) {
+            while (br.readLine() != null)
                 stringList.add(br.readLine());
-            }
 
             lastLine = stringList.get(stringList.size() - 2);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        time = DateFormat.parseDate(lastLine.split("\\|")[0], DateFormat.Type.SECOND).getTime();
-
-        return time;
+        return DateFormat.parseDate(lastLine.split("\\|")[0], DateFormat.Type.SECOND).getTime();
     }
 
     @Override
