@@ -95,7 +95,7 @@ public class ChatDialog extends DialogFragment {
 
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
-            acceptButton.setEnabled(textEdit.getText().toString().replace(" ", "").equalsIgnoreCase("") ? false : true);
+            acceptButton.setEnabled(textEdit.getText().toString().replace(" ", "").replace("\n", "").equalsIgnoreCase("") ? false : true);
         }
 
         @Override

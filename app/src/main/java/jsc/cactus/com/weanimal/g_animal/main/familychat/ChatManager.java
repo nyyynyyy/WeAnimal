@@ -47,7 +47,7 @@ public class ChatManager {
     public static void callChatEvent(User user, String text) {
         for (ChatListener listener : listeners)
             listener.UserChatEvent(user, text);
-        ChatItem chatItem = new ChatItem(user.getProfileImageId(), text, user, new Date());
+        ChatItem chatItem = new ChatItem(user.getProfileImageId(), text, user, new Date(ServerTime.getTime()));
         ChatDialog.getChatListViewAdapter().add(chatItem);
         try {
             File file = new File(MainActivity.mainActivity.getFilesDir()+"/chat/"+ DateFormat.formatDate(chatItem.getDate(), DateFormat.Type.DAY)+".txt");
@@ -59,7 +59,8 @@ public class ChatManager {
 
             BufferedWriter bw = new BufferedWriter(new FileWriter(file, true));
 
-            CharSequence test = " " + DateFormat.formatDate(chatItem.getDate(), DateFormat.Type.SECOND) + "|" + chatItem.getUser().getName() + "|" + chatItem.getText();
+            CharSequence test = " " + DateFormat.formatDate(chatItem.getDate(), DateFormat.Type.SECOND) + "|" + chatItem.getUser().getName() + "|" + chatItem.getText().replace("\n", "</n>");
+
             bw.append(test);
             bw.newLine();
 
@@ -82,7 +83,7 @@ public class ChatManager {
         try {
 
             Date day = new Date();
-            day.setTime(ServerTime.getTime() - (before*86400000));
+            day.setTime(ServerTime.getTime() - (before * 86400000));
 
             File file = new File(MainActivity.mainActivity.getFilesDir()+"/chat/"+DateFormat.formatDate(day, DateFormat.Type.DAY)+".txt");
             BufferedReader br = new BufferedReader(new FileReader(file));
@@ -92,10 +93,11 @@ public class ChatManager {
 
             while (br.read() != -1) {
                 str = br.readLine().split("\\|");
-                chatItems.add(new ChatItem(UserManager.getUserByName(str[1]).getProfileImageId(), str[2], UserManager.getUserByName(str[1]), DateFormat.parseDate(str[0], DateFormat.Type.SECOND)));
+                chatItems.add(new ChatItem(UserManager.getUserByName(str[1]).getProfileImageId(), str[2].replace("</n>", "\n"), UserManager.getUserByName(str[1]), DateFormat.parseDate(str[0], DateFormat.Type.SECOND)));
             }
 
             br.close();
+
 
             return chatItems;
 
