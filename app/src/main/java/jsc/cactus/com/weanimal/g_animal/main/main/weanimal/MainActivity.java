@@ -27,9 +27,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -49,6 +51,7 @@ import jsc.cactus.com.weanimal.g_animal.main.animal.Animal;
 import jsc.cactus.com.weanimal.g_animal.main.animal.AnimalType;
 import jsc.cactus.com.weanimal.g_animal.main.animal.status.Status;
 import jsc.cactus.com.weanimal.g_animal.main.animal.status.StatusType;
+import jsc.cactus.com.weanimal.g_animal.main.familychat.ChatManager;
 import jsc.cactus.com.weanimal.g_animal.main.familychat.view.ChatViewManager;
 import jsc.cactus.com.weanimal.g_animal.main.mission.missions.Mission;
 import jsc.cactus.com.weanimal.g_animal.main.mission.MissionListener;
@@ -81,6 +84,7 @@ public class MainActivity extends AppCompatActivity implements MissionListener {
     private ImageView set;
 
     private boolean exit = false;
+    private boolean run = false;
 
     private Long missionTime = 0L;
 
@@ -103,16 +107,22 @@ public class MainActivity extends AppCompatActivity implements MissionListener {
 
         //setting();
 
+        init();
+
         try {
             getStatus();
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        init();
+        try {
+            sendTime();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
-   // private void setting() {
+    // private void setting() {
     /*private void setting() {
 >>>>>>> origin/master
         set = (ImageView) findViewById(R.id.btn_setting);
@@ -142,6 +152,7 @@ public class MainActivity extends AppCompatActivity implements MissionListener {
         //  "/data/data/jsc.cactus.com.weanimal/files"
     }
 
+
     public long getLastTime() {
         String day = null;
 
@@ -157,10 +168,17 @@ public class MainActivity extends AppCompatActivity implements MissionListener {
             BufferedReader br = new BufferedReader(new FileReader(f));
             List<String> stringList = new ArrayList<String>();
 
-            while (br.readLine() != null)
-                stringList.add(br.readLine());
+//            Log.i("TEST", "fdsf" + br.readLine());
 
-            lastLine = stringList.get(stringList.size() - 2);
+            String s;
+            while ((s = br.readLine()) != null) {
+                Log.i("TEST", "enter while: " + s);
+                stringList.add(s);
+            }
+
+            Log.i("TEST", "시발: " + stringList.get(0));
+
+            lastLine = stringList.get(stringList.size() - 1);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -220,7 +238,13 @@ public class MainActivity extends AppCompatActivity implements MissionListener {
     public void sendTime() throws JSONException {
         JSONObject data = new JSONObject();
 
-        long time = getLastTime();
+        long time;
+
+        if (new File("/data/data/jsc.cactus.com.weanimal/files/chat/").listFiles() != null) {
+            time = getLastTime();
+        } else {
+            time = -1;
+        }
 
         data.put("LAST_TIME", time);
 
@@ -294,12 +318,52 @@ public class MainActivity extends AppCompatActivity implements MissionListener {
                     JSONObject data = (JSONObject) args[0];
 
                     JSONArray chat_logs;
-                    int length;
 
                     try {
                         chat_logs = data.getJSONArray("chat_logs");
-                        length = data.getInt("length");
 
+                        Log.i("TEST", "" + chat_logs.length());
+
+                        for (int i = 0; i < chat_logs.length(); i++) {
+                           // Log.i("TEST", "인덱스 " + i);
+                            JSONObject chatObject = chat_logs.getJSONObject(i);
+
+                            try {
+                                Date date = new Date();
+                                date.setTime(chatObject.getLong("time"));
+
+                                DateFormat.formatDate(date, DateFormat.Type.DAY);
+
+                                File file = new File("/data/data/jsc.cactus.com.weanimal/files/chat/" + DateFormat.formatDate(date, DateFormat.Type.DAY) + ".txt");
+                                Log.i("TEST", "filename: " + "/data/data/jsc.cactus.com.weanimal/files/chat/" + DateFormat.formatDate(date, DateFormat.Type.DAY) + ".txt");
+                                if (!file.exists()) {
+                                    Log.i("TEST", "파일 없음 \n생성함");
+                                    new File("/data/data/jsc.cactus.com.weanimal/files/chat/").mkdirs();
+                                    file.createNewFile();
+                                }
+
+                                Log.i("TEST", "Filename: " + "/data/data/jsc.cactus.com.weanimal/files/chat/" + DateFormat.formatDate(date, DateFormat.Type.DAY) + ".txt");
+//                                BufferedWriter bw = new BufferedWriter(new FileWriter("/data/data/jsc.cactus.com.weanimal/files/chat/" + DateFormat.formatDate(date, DateFormat.Type.DAY) + ".txt", true));
+
+                                Log.i("TEST", "들어온 채팅내역: " + DateFormat.formatDate(date, DateFormat.Type.SECOND) + "|" + chatObject.getString("username") + "|" + chatObject.getString("msg"));
+
+//                                bw.append(" " + DateFormat.formatDate(date, DateFormat.Type.SECOND) + "|" + chatObject.getString("username") + "|" + chatObject.getString("msg"));
+//                                bw.newLine();
+
+//                                bw.close();
+
+                                ChatManager.callChatEvent(new User(chatObject.getString("userid"), chatObject.getString("username"), Variable.user_birthday, UserGender.FEMALE), chatObject.getString("msg"));
+
+//                                BufferedReader br = new BufferedReader(new FileReader())
+
+                            } catch (IOException ioex) {
+                                ioex.printStackTrace();
+                            }
+                        }
+
+                        Log.i("TEST", "for문 끝남");
+                        run = true;
+                        //MyService.mSocket.off("RES_UPDATE_CHAT", chRecive);
 
 
                     } catch (JSONException e) {
@@ -309,6 +373,8 @@ public class MainActivity extends AppCompatActivity implements MissionListener {
 
                 }
             });
+//            while (!run) {
+//            }
         }
     };
 
@@ -378,4 +444,50 @@ public class MainActivity extends AppCompatActivity implements MissionListener {
     public void giveupMission(Mission mission) {
         missionTime = null;
     }
+
+    /*public class ChatData {
+        private int familyCode;
+        private String userid;
+        private long time;
+        private String msg;
+
+        public ChatData(int familyCode, String userid, long time, String msg) {
+            this.familyCode = familyCode;
+            this.userid = userid;
+            this.time = time;
+            this.msg = msg;
+        }
+
+        public int getFamilyCode() {
+            return this.familyCode;
+        }
+
+        public String getUserId() {
+            return this.userid;
+        }
+
+        public long getTime() {
+            return this.time;
+        }
+
+        public String getMSG() {
+            return this.msg;
+        }
+
+        public void setFamilyCode(int familyCode) {
+            this.familyCode = familyCode;
+        }
+
+        public void setUserid(String userid) {
+            this.userid = userid;
+        }
+
+        public void setTime(long time) {
+            this.time = time;
+        }
+
+        public void setMSG(String msg) {
+            this.msg = msg;
+        }
+    }*/
 }

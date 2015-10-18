@@ -45,8 +45,12 @@ public class ChatManager {
     }
 
     public static void callChatEvent(User user, String text) {
-        for (ChatListener listener : listeners)
+        Log.i("TEST", "진입");
+        Log.i("TEST", ServerTime.getTime()+" 서버타임");
+        for (ChatListener listener : listeners) {
             listener.UserChatEvent(user, text);
+            Log.i("TEST", "for 문");
+        }
         ChatItem chatItem = new ChatItem(user.getProfileImageId(), text, user, new Date(ServerTime.getTime()));
         ChatDialog.getChatListViewAdapter().add(chatItem);
         try {
@@ -69,6 +73,7 @@ public class ChatManager {
         } catch (IOException e) {
             Log.i("jsc", "chat writer failed: " + e.getMessage());
         }
+        Log.i("TEST", "끝남");
     }
 
     public static void sendMessage(String msg) throws JSONException {

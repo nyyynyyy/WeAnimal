@@ -1,5 +1,6 @@
 package jsc.cactus.com.weanimal;
 
+import android.graphics.drawable.AnimationDrawable;
 import android.util.Log;
 
 import org.json.JSONException;
@@ -13,28 +14,31 @@ import io.socket.emitter.Emitter;
 public class ServerTime {
 
     public static long time = 0;
+    private static boolean isEnd = false;
 
     public static long getTime() {
-        MyService.mSocket.emit("GETTIME");
+        MyService.mSocket.emit("ST");
+        Log.i("TEST", "에밋끝");
         MyService.mSocket.on("TIME", Recive);
 
-        while(time == 0)
-        {
+        while (!isEnd) {}
+        isEnd = false;
 
-        }
         return time;
     }
+
+
 
     //로그인
     private static Emitter.Listener Recive = new Emitter.Listener() {
         @Override
         public void call(final Object... args) {
-            JSONObject data = (JSONObject) args[0];
             try {
+                Log.i("TEST", "리시브드감");
+                JSONObject data = (JSONObject) args[0];
                 time = data.getLong("time");
-
-                Log.i("TEST", "Server: "+Long.toString(time));
-
+                Log.i("TEST", "Server: " + Long.toString(time));
+                isEnd = true;
             } catch (JSONException e) {
                 e.printStackTrace();
             }

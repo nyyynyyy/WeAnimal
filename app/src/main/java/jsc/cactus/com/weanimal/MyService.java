@@ -498,7 +498,6 @@ public class MyService extends Service {
                         bw.newLine();
 
                         bw.close();
-                        new User(id, name, Variable.user_birthday, UserGender.FEMALE);
                         ChatManager.callChatEvent(new User(id, name, Variable.user_birthday, UserGender.FEMALE), text);
 
                         chatPush(name, text, time);
