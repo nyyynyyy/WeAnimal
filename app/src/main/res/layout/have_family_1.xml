@@ -5,7 +5,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="jsc.cactus.com.weanimal.d_regist.Have_family_1"
-    android:background="#76ff00">
+    android:background="@drawable/background_green">
 
     <LinearLayout
         android:orientation="vertical"

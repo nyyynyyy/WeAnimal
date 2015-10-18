@@ -4,7 +4,7 @@
     tools:context="jsc.cactus.com.weanimal.e_set.Complete_regist"
     android:orientation="vertical"
     android:gravity="center_horizontal"
-    android:background="#fdc600">
+    android:background="@drawable/background_orange">
 
     <View android:layout_height="0dp"
         android:layout_width="match_parent"
@@ -14,10 +14,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="당신이 가족의 대표입니다."
+        android:text="당신이 가족의 대표입니다.2"
         android:id="@+id/textView"
         android:layout_gravity="center_horizontal"
-        android:textColor="#fd6029" />
+        android:textColor="#fd6029"
+        android:textSize="25dp" />
 
     <View android:layout_height="0dp"
         android:layout_width="match_parent"
