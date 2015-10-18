@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import jsc.cactus.com.weanimal.R;
@@ -42,29 +43,44 @@ public class ChatListViewAdapter extends ArrayAdapter<ChatItem> {
         super.notifyDataSetChanged();
     }
 
+    private boolean isSame(Date date, Date date2) {
+        long dateT = date.getTime(), date2T = date2.getTime();
+        dateT = dateT - (dateT % (60 * 1000));
+        date2T = date2T - (date2T % (60 * 1000));
+        return dateT == date2T;
+    }
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        View item = activity.getLayoutInflater().inflate(R.layout.familychat_item, null);
 
-        ChatItem citem = list.get(position);
-        CardView cardview = (CardView) item.findViewById(R.id.item_cardview);
+        ChatItem citem = list.get(position), past_citem;
+        View item = activity.getLayoutInflater().inflate(UserManager.getLocalUser().getId() == citem.getUser().getId() ? R.layout.familychat_item_me : R.layout.familychat_item_you, null);
+
         ImageView cicon = (ImageView) item.findViewById(R.id.item_icon);
-        TextView ctext = (TextView) item.findViewById(R.id.item_text), cinfo = (TextView) item.findViewById(R.id.item_info);
+        TextView ctext = (TextView) item.findViewById(R.id.item_text), cinfo = (TextView) item.findViewById(R.id.item_info), cname = (TextView) item.findViewById(R.id.item_name);
 
-        if (citem.getUser().getName().equals(UserManager.getLocalUser().getName())) {
-            cardview.setCardBackgroundColor(Color.argb(255, 235, 215, 0));
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            params.gravity  = Gravity.RIGHT;
-            cardview.setLayoutParams(params);
-        }
 
-        if(citem.getIconId()!=null){
-            cicon.setImageResource(citem.getIconId());
-            cicon.setVisibility(View.VISIBLE);
-        }else
-            cicon.setVisibility(View.GONE);
+//        if(citem.getIconId()!= null) {
+//            cicon.setImageResource(citem.getIconId());
+//            cicon.setVisibility(View.VISIBLE);
+//        }
 
         ctext.setText(citem.getText());
+
+        if (list.size() >= position - 1 && list.size() != 0 && position - 1 != -1) {
+            past_citem = list.get(position - 1);
+            if (past_citem.getUser().getId() != citem.getUser().getId()) {
+                if (citem.getIconId() != null) {
+                    cicon.setImageResource(citem.getIconId());
+                    cicon.setVisibility(View.VISIBLE);
+                    cname.setText(citem.getUser().getName());
+                }
+            }
+
+            if (!isSame(past_citem.getDate(), citem.getDate()))
+                cinfo.setText(citem.getInfo());
+
+        }
         cinfo.setText(citem.getInfo());
 
         //Animation animationY = new TranslateAnimation(0, 0, new Holder().llParent.getHeight()/4, 0);

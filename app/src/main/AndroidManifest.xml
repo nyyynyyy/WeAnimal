@@ -21,8 +21,8 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity
+    </activity>
+    <activity
             android:name=".a_logo.Logos"
             android:label="@string/title_activity_01" >
         </activity>
