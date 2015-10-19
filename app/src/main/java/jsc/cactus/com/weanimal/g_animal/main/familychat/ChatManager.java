@@ -30,8 +30,8 @@ import jsc.cactus.com.weanimal.g_animal.main.users.UserManager;
 public class ChatManager {
 
     private static List<ChatListener> listeners = new ArrayList<ChatListener>();
-    private final String filePath = MainActivity.mainActivity.getFilesDir().getPath()+"/";// + "/chatData/";
-    private static final File folder = new File(MainActivity.mainActivity.getFilesDir()+"/chat/");
+    private final String filePath = MainActivity.mainActivity.getFilesDir().getPath() + "/";// + "/chatData/";
+    private static final File folder = new File(MainActivity.mainActivity.getFilesDir() + "/chat/");
 
     public static void addChatListener(ChatListener listener) {
         listeners.add(listener);
@@ -44,18 +44,20 @@ public class ChatManager {
 
         try {
             ChatDialog.getChatListViewAdapter().add(chatItem);
-        }catch (Exception ex){}
+        } catch (Exception ex) {
+        }
 
         for (ChatListener listener : listeners) {
             listener.UserChatEvent(user, text);
         }
     }
 
-    public static void chatSave(ChatItem chatItem){
+    public static void chatSave(ChatItem chatItem) {
         try {
-            File file = new File(MainActivity.mainActivity.getFilesDir()+"/chat/"+ DateFormat.formatDate(chatItem.getDate(), DateFormat.Type.DAY)+".txt");
+            File file = new File(MainActivity.mainActivity.getFilesDir() + "/chat/" + DateFormat.formatDate(chatItem.getDate(), DateFormat.Type.DAY) + ".txt");
 
             if (!file.exists()) {
+                Log.i("jsc", "파일 없음");
                 folder.mkdir();
                 file.createNewFile();
             }
@@ -85,10 +87,10 @@ public class ChatManager {
     public static List<ChatItem> getChatData(int before) {
         try {
 
-            Date day = new Date();
-            day.setTime(ServerTime.getTime() - (before * 86400000));
+//            Date day = new Date();
+//            day.setTime(ServerTime.getTime() - (before * 86400000));
 
-            File file = new File(MainActivity.mainActivity.getFilesDir()+"/chat/"+DateFormat.formatDate(day, DateFormat.Type.DAY)+".txt");
+            File file = new File(MainActivity.mainActivity.getFilesDir() + "/chat/" + DateFormat.formatDate(new Date(ServerTime.getTime() - (before * 86400000)), DateFormat.Type.DAY) + ".txt");
             BufferedReader br = new BufferedReader(new FileReader(file));
 
             List<ChatItem> chatItems = new ArrayList<ChatItem>();

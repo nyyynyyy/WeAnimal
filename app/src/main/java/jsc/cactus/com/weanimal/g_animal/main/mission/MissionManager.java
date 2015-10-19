@@ -5,6 +5,7 @@ import android.app.Activity;
 import java.util.ArrayList;
 import java.util.List;
 
+import jsc.cactus.com.weanimal.g_animal.main.animal.status.StatusType;
 import jsc.cactus.com.weanimal.g_animal.main.mission.missions.Mission;
 
 /**
@@ -14,6 +15,7 @@ public class MissionManager {
 
     public static MissionManager instance;
     private static Mission mission;
+    private static StatusType missionType;
 
     private List<MissionListener> missionListeners = new ArrayList<MissionListener>();
 
@@ -21,15 +23,16 @@ public class MissionManager {
         instance = this;
     }
 
-    public void startMission(Mission mission) {
+    public void startMission(Mission mission, StatusType missionType) {
         this.mission = mission;
+        this.missionType = missionType;
         for (MissionListener listener : missionListeners)
-            listener.startMission(mission);
+            listener.startMission(mission, missionType);
     }
 
     public void clearMission() {
         for (MissionListener listener : missionListeners)
-            listener.clearMission(mission);
+            listener.clearMission(mission, missionType);
         mission = null;
     }
 

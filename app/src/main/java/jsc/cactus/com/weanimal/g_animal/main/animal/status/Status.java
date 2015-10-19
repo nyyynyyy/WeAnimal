@@ -16,7 +16,7 @@ public class Status {
 
     private int food, water, love;
     private StatusProgressBar statusProgressBar;
-    private StatusButton_test statusButton_test;
+   // private StatusButton_test statusButton_test;
     private StatusListenerManager statusListenerManager;
 
     public Status(Activity activity, Animal animal) {
@@ -24,7 +24,7 @@ public class Status {
         this.animal = animal;
 
         statusProgressBar = new StatusProgressBar(activity);
-        statusButton_test = new StatusButton_test(activity);
+        //statusButton_test = new StatusButton_test(activity);
         statusListenerManager = new StatusListenerManager();
 
         food = statusProgressBar.pbFood.getMax();

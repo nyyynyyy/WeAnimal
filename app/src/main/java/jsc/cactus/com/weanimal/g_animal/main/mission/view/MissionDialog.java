@@ -18,6 +18,7 @@ import java.util.List;
 
 import jsc.cactus.com.weanimal.R;
 import jsc.cactus.com.weanimal.g_animal.main.SoundUtil;
+import jsc.cactus.com.weanimal.g_animal.main.animal.status.StatusType;
 import jsc.cactus.com.weanimal.g_animal.main.main.weanimal.MainActivity;
 import jsc.cactus.com.weanimal.g_animal.main.mission.missions.Mission;
 import jsc.cactus.com.weanimal.g_animal.main.mission.MissionListener;
@@ -35,6 +36,8 @@ public class MissionDialog extends Dialog implements MissionListener {
     private static List<MissionItem> items = new ArrayList<MissionItem>();
     private boolean isMission = false;
 
+    private StatusType type;
+
     private long missionTime;
 
     public MissionDialog(Activity activity) {
@@ -46,7 +49,6 @@ public class MissionDialog extends Dialog implements MissionListener {
     }
 
     public void init() {
-        setTitle("미션");
         if (missionAdapter == null) {
             MissionManager.instance.addMissionListener(this);
             missionAdapter = new MissionAdapter(MainActivity.mainActivity, R.layout.mission_item, items);
@@ -60,6 +62,13 @@ public class MissionDialog extends Dialog implements MissionListener {
         listView.setOnItemClickListener(itemClick);
     }
 
+
+    public void show(StatusType type) {
+        super.show();
+        this.type = type;
+        setTitle((type==StatusType.FOOD?"먹이":type==StatusType.WATER?"물":"애정")+" 미션");
+    }
+
     private AdapterView.OnItemClickListener itemClick = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -69,10 +78,13 @@ public class MissionDialog extends Dialog implements MissionListener {
             }
             switch (position) {
                 case 0:
-                    MissionManager.instance.startMission(new TelMission(6));
+                    MissionManager.instance.startMission(new TelMission(6), type);
                     break;
                 case 1:
-                    MissionManager.instance.startMission(new MessageSendMission("파이팅"));
+                    MissionManager.instance.startMission(new MessageSendMission("파이팅"), type);
+                    break;
+                case 2:
+                    MissionManager.instance.startMission(new MessageSendMission("파이팅"), type);
                     break;
             }
 
@@ -91,7 +103,7 @@ public class MissionDialog extends Dialog implements MissionListener {
 //    }
 
     @Override
-    public void startMission(Mission mission) {
+    public void startMission(Mission mission, StatusType type) {
         if (!(mission instanceof TelMission))
             return;
         isMission = true;
@@ -99,11 +111,11 @@ public class MissionDialog extends Dialog implements MissionListener {
     }
 
     @Override
-    public void clearMission(Mission mission) {
+    public void clearMission(Mission mission, StatusType type) {
         if (!(mission instanceof TelMission))
             return;
         SoundUtil.playSound(R.raw.pong);
-        Toast.makeText(MainActivity.mainActivity, "미션 성공", Toast.LENGTH_SHORT);
+        //Toast.makeText(MainActivity.mainActivity, "미션 성공", Toast.LENGTH_SHORT);
     }
 
     @Override

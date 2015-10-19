@@ -32,14 +32,12 @@ public class ChatMission implements ChatListener, MissionListener {
         if(user.getId().equals(UserManager.getLocalUser().getId())){
             if(text.contains(mission.message)){
                 MissionManager.instance.clearMission();
-                Toast.makeText(MainActivity.mainActivity, "문자 메세지 전송 미션 성공 !!", Toast.LENGTH_SHORT).show();
-                Animal.animal.getStatus().addStatus(StatusType.LOVE, 40);
             }
         }
     }
 
     @Override
-    public void startMission(Mission mission) {
+    public void startMission(Mission mission, StatusType type) {
         if(mission instanceof MessageSendMission){
             this.mission = (MessageSendMission) mission;
             isMission = true;
@@ -47,9 +45,13 @@ public class ChatMission implements ChatListener, MissionListener {
     }
 
     @Override
-    public void clearMission(Mission mission) {
-        isMission = false;
-        mission = null;
+    public void clearMission(Mission mission, StatusType type) {
+        if(mission instanceof  MessageSendMission) {
+            isMission = false;
+            this.mission = null;
+            Toast.makeText(MainActivity.mainActivity, type.toKoreanString()+" 주기\n문자 메세지 전송 미션 성공 !!", Toast.LENGTH_SHORT).show();
+            Animal.animal.getStatus().addStatus(type, 40);
+        }
     }
 
     @Override

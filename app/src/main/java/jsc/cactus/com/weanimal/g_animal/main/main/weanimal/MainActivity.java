@@ -124,6 +124,7 @@ public class MainActivity extends AppCompatActivity implements MissionListener {
 
         day = f.getName();
 
+        Log.i("jsc", day);
         file = new FileMethod(new File(filesDir+"/chat/"), day);
 
         String lastLine = null;
@@ -360,7 +361,7 @@ public class MainActivity extends AppCompatActivity implements MissionListener {
 
 
     @Override
-    public void startMission(Mission mission) {
+    public void startMission(Mission mission, StatusType type) {
         if (!(mission instanceof TelMission))
             return;
         Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:010-2975-7544"));
@@ -372,15 +373,15 @@ public class MainActivity extends AppCompatActivity implements MissionListener {
     }
 
     @Override
-    public void clearMission(Mission mission) {
+    public void clearMission(Mission mission, StatusType type) {
         if (!(mission instanceof TelMission))
             return;
 
         boolean b = ((new Date().getTime() - missionTime) / 1000) < ((TelMission) mission).second;
-        Toast.makeText(MainActivity.mainActivity, b ? "전화 미션 실패.." : "전화 미션 성공 !!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(MainActivity.mainActivity, type.toKoreanString() +" 주기\n" + (b ? "전화 미션 실패.." : "전화 미션 성공 !!"), Toast.LENGTH_SHORT).show();
         SoundUtil.playSound(b ? R.raw.bass : R.raw.pong);
         if (!b)
-            Animal.animal.getStatus().addStatus(StatusType.LOVE, 100);
+            Animal.animal.getStatus().addStatus(type, 100);
         missionTime = null;
     }
 
