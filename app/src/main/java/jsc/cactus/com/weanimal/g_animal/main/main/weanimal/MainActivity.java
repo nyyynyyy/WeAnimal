@@ -125,7 +125,7 @@ public class MainActivity extends AppCompatActivity implements MissionListener {
         day = f.getName();
 
         Log.i("jsc", day);
-        file = new FileMethod(new File(filesDir+"/chat/"), day);
+        //file = new FileMethod(new File(filesDir+"/chat/"), day);
 
         String lastLine = null;
         try {
@@ -141,9 +141,10 @@ public class MainActivity extends AppCompatActivity implements MissionListener {
             lastLine = stringList.get(stringList.size() - 1);
         } catch (Exception e) {
             Log.i("jsc", e.getMessage());
+            return -1;
         }
 
-        return DateFormat.parseDate(lastLine.split("\\|")[0], DateFormat.Type.SECOND).getTime();
+        return Long.parseLong(lastLine.split("\\|")[0].replace(" ", ""));
     }
 
     @Override
@@ -151,7 +152,7 @@ public class MainActivity extends AppCompatActivity implements MissionListener {
         if (exit) {
             super.onBackPressed();
         } else {
-            Toast.makeText(this, "백프레스", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "한번 더 누르시면 종료됩니다.", Toast.LENGTH_SHORT).show();
             exit = true;
         }
     }
@@ -299,7 +300,7 @@ public class MainActivity extends AppCompatActivity implements MissionListener {
 
                                 Log.i("TEST", "들어온 채팅내역: " + DateFormat.formatDate(date, DateFormat.Type.SECOND) + "|" + chatObject.getString("username") + "|" + chatObject.getString("msg"));
 
-                                ChatManager.callChatEvent(new User(chatObject.getString("userid"), chatObject.getString("username"), Variable.user_birthday, UserGender.FEMALE), chatObject.getString("msg"),new Date(chatObject.getLong("time")));
+                                ChatManager.callChatEvent(UserManager.getUser(chatObject.getString("userid")), chatObject.getString("msg"),new Date(chatObject.getLong("time")));
 
                             } catch (Exception ioex) {
                                 ioex.printStackTrace();
@@ -326,6 +327,7 @@ public class MainActivity extends AppCompatActivity implements MissionListener {
         missionViewManager = new MissionViewManager(this);
         animal = new Animal(this);
         MyService.animal = true;
+        Log.i("jsc", "베이어블 :"+Variable.user_name);
         userManager = new UserManager(new User(Variable.user_id, Variable.user_name, Variable.user_birthday, UserGender.MALE));
         familyChatViewManager = new ChatViewManager(this);
         settingManager = new SettingManager(this);

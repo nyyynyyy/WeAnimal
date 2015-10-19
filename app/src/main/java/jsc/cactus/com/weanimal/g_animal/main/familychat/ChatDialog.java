@@ -6,18 +6,21 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
 import org.json.JSONException;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import jsc.cactus.com.weanimal.R;
 import jsc.cactus.com.weanimal.ServerTime;
+import jsc.cactus.com.weanimal.g_animal.main.DateFormat;
 import jsc.cactus.com.weanimal.g_animal.main.familychat.view.ChatItem;
 import jsc.cactus.com.weanimal.g_animal.main.familychat.view.ChatListViewAdapter;
 import jsc.cactus.com.weanimal.g_animal.main.main.weanimal.MainActivity;
@@ -48,13 +51,50 @@ public class ChatDialog extends Dialog implements ChatListener {
         MainActivity.mainActivity.init2();
         List<ChatItem> chatItems = ChatManager.getChatData(0);
         if (chatItems != null)
-            for (ChatItem chatItem : chatItems)
+            for (ChatItem chatItem : chatItems) {
+                Log.i("jsc", "chatitem add");
                 chatListViewAdapter.add(chatItem);
+            }
+        listView.setOnScrollListener(scrollListener);
+    }
+
+    public AbsListView.OnScrollListener scrollListener = new AbsListView.OnScrollListener() {
+        @Override
+        public void onScrollStateChanged(AbsListView view, int scrollState) {
+            if (listView.isShown()) {
+                if (scrollState == SCROLL_STATE_IDLE) {
+                    if (view.getFirstVisiblePosition() == 0) {
+                        //List<ChatItem> currentChatItems = chatListViewAdapter.getChatItems();
+                        Log.i("jsc", "채팅 로드 !");
+                    }
+                }
+            }
+        }
+
+        @Override
+        public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+
+        }
+    };
+
+    public List<ChatItem> getPreviousChatItems() {
+        File file = new File(MainActivity.mainActivity.getFilesDir() + "/chat/");
+        File[] files = file.listFiles();
+
+        if (files.length <= 1)
+            return null;
+
+        for (int i = files.length - 1; i >= 0; i--) {
+            if (files[i].getName().replace(".txt", "").equals(DateFormat.formatDate(chatListViewAdapter.getItem(0).getDate(), DateFormat.Type.DAY)))
+                return ChatManager.getChatData(DateFormat.parseDate(files[i - 1].getName().replace(".txt", ""), DateFormat.Type.DAY));
+        }
+
+        return null;
     }
 
     private void init() {
         Log.i("jsc", "ChatDialog init");
-        setTitle("에니멀톡");
+        setTitle("애니멀톡");
         textEdit = (EditText) findViewById(R.id.familychat_editText);
         acceptButton = (Button) findViewById(R.id.familychat_acceptButton);
         listView = (ListView) findViewById(R.id.family_listView);

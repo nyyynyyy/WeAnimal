@@ -45,6 +45,10 @@ public class ChatListViewAdapter extends ArrayAdapter<ChatItem> {
         notifyDataSetChanged();
     }
 
+    public List<ChatItem> getChatItems(){
+        return list;
+    }
+
     private boolean isSame(Date date, Date date2) {
         return date.getTime() / (60 * 1000) == date2.getTime() / (60 * 1000);
     }
@@ -53,6 +57,8 @@ public class ChatListViewAdapter extends ArrayAdapter<ChatItem> {
     public View getView(int position, View convertView, ViewGroup parent) {
 
         ChatItem citem = list.get(position);
+        UserManager.getLocalUser().getId();
+        citem.getUser().getId();
         boolean isLocalUser = UserManager.getLocalUser().getId() == citem.getUser().getId();
         View item = activity.getLayoutInflater().inflate(isLocalUser ? R.layout.familychat_item_me : R.layout.familychat_item_you, null);
 

@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
@@ -20,6 +21,9 @@ import jsc.cactus.com.weanimal.OftenMethod;
 import jsc.cactus.com.weanimal.R;
 import jsc.cactus.com.weanimal.Variable;
 import jsc.cactus.com.weanimal.g_animal.main.main.weanimal.MainActivity;
+import jsc.cactus.com.weanimal.g_animal.main.users.User;
+import jsc.cactus.com.weanimal.g_animal.main.users.UserGender;
+import jsc.cactus.com.weanimal.g_animal.main.users.UserManager;
 
 public class View_family extends AppCompatActivity {
 
@@ -57,10 +61,9 @@ public class View_family extends AppCompatActivity {
 
         list.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 
-        list.setDivider(new ColorDrawable(Color.argb(255,253,96,41)));
+        list.setDivider(new ColorDrawable(Color.argb(255, 253, 96, 41)));
 
         list.setDividerHeight(2);
-
 
 
         acceptButton.setOnClickListener(new View.OnClickListener() {
@@ -129,11 +132,19 @@ public class View_family extends AppCompatActivity {
 
                             if (!(fid.equals(OI))) {
                                 Adapter.add(new Family_Item(fna, fid + "\n" + fge + "\n" + fbd));
-                            }
-                            else {
-                                Adapter.insert(new Family_Item("[가장] " + fna,fid + "\n" + fge + "\n" + fbd),0);
+                            } else {
+                                Adapter.insert(new Family_Item("[가장] " + fna, fid + "\n" + fge + "\n" + fbd), 0);
                             }
                             list.setAdapter(Adapter);
+
+                            if (fid != Variable.user_id) {
+                                if (fge.equals("male"))
+                                    UserManager.addUser(new User(fid, fna, fbd, UserGender.MALE));
+                                else if (fge.equals("female"))
+                                    UserManager.addUser(new User(fid, fna, fbd, UserGender.FEMALE));
+
+                                Log.i("TEST","유저 생성 시도 : " + UserManager.getUser(fid).getName());
+                            }
                         }
 
                         OftenMethod.message(View_family.this, "가족을 불러옵니다.");

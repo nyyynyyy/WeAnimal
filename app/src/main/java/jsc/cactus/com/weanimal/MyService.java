@@ -486,12 +486,6 @@ public class MyService extends Service {
                         Log.i("TEST", day.split(" ")[0]);
                         Log.i("TEST", day.split(" ")[1]);
 
-//                        bw = new BufferedWriter(new FileWriter("/data/data/jsc.cactus.com.weanimal/files/chat/" + day.split(" ")[0] + ".txt", true));
-//
-//                        bw.append(" " + time + "|" + name + "|" + text);
-//                        bw.newLine();
-//
-//                        bw.close();
                         ChatManager.callChatEvent(new User(id, name, Variable.user_birthday, UserGender.FEMALE), text, new Date(time));
                         Log.i("jsc", "채팅 옴");
                         chatPush(name, text, time);

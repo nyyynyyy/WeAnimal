@@ -11,7 +11,7 @@ public class UserManager {
     private static List<User> users = new ArrayList<User>();
     private static String localUserId;
 
-    public UserManager(User localUser){
+    public UserManager(User localUser) {
         addUser(localUser);
         localUserId = localUser.getId();
     }
