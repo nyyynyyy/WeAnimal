@@ -417,9 +417,7 @@ public class MyService extends Service {
                         Log.i("TEST", Integer.toString(family_food));
 
                         if (animal) {
-                            Animal.animal.getStatus().setStatus(StatusType.FOOD, family_food);
-                            Animal.animal.getStatus().setStatus(StatusType.LOVE, family_love);
-                            Animal.animal.getStatus().setStatus(StatusType.WATER, family_water);
+                            Animal.animal.getStatus().setStatus( family_food, family_water, family_love);
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -478,8 +476,6 @@ public class MyService extends Service {
                     Long time;
                     String day;
 
-                    BufferedWriter bw;
-
                     try {
                         id = data.getString("ID");
                         name = data.getString("NAME");
@@ -492,14 +488,14 @@ public class MyService extends Service {
                         Log.i("TEST", day.split(" ")[0]);
                         Log.i("TEST", day.split(" ")[1]);
 
-                        bw = new BufferedWriter(new FileWriter("/data/data/jsc.cactus.com.weanimal/files/chat/" + day.split(" ")[0] + ".txt", true));
-
-                        bw.append(" " + time + "|" + name + "|" + text);
-                        bw.newLine();
-
-                        bw.close();
+//                        bw = new BufferedWriter(new FileWriter("/data/data/jsc.cactus.com.weanimal/files/chat/" + day.split(" ")[0] + ".txt", true));
+//
+//                        bw.append(" " + time + "|" + name + "|" + text);
+//                        bw.newLine();
+//
+//                        bw.close();
                         ChatManager.callChatEvent(new User(id, name, Variable.user_birthday, UserGender.FEMALE), text);
-
+                        Log.i("jsc", "채팅 옴");
                         chatPush(name, text, time);
                     } catch (Exception e) {
                     }

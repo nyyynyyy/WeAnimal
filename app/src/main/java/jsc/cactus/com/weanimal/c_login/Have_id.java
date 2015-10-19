@@ -33,7 +33,7 @@ import jsc.cactus.com.weanimal.OftenMethod;
 import jsc.cactus.com.weanimal.R;
 import jsc.cactus.com.weanimal.Variable;
 
-public class Have_id extends AppCompatActivity {
+public class Have_id extends Activity {
 
     public static Activity ha_i;
 

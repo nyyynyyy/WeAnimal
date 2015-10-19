@@ -19,7 +19,7 @@ import jsc.cactus.com.weanimal.OftenMethod;
 import jsc.cactus.com.weanimal.R;
 import jsc.cactus.com.weanimal.Variable;
 
-public class Have_family_1 extends AppCompatActivity {
+public class Have_family_1 extends Activity {
 
     public static Activity ha_fa_1;
 

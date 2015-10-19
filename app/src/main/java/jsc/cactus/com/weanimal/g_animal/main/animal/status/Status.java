@@ -65,6 +65,15 @@ public class Status {
         statusListenerManager.StatusChangeEventCall();
     }
 
+    public void setStatus(int food, int water, int love){
+        this.food = food;
+        this.water = water;
+        this.love = love;
+        resize();
+        statusProgressBar.notifyDataChanged();
+        statusListenerManager.StatusChangeEventCall();
+    }
+
     public void addStatus(StatusType type, int value) {
         switch (type) {
             case FOOD:

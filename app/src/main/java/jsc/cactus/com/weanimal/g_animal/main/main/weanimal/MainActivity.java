@@ -1,9 +1,7 @@
 package jsc.cactus.com.weanimal.g_animal.main.main.weanimal;
 
-import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -12,11 +10,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 
-import android.widget.Button;
 import android.widget.ImageView;
 
-
-import android.widget.ImageView;
 
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -27,13 +22,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -43,7 +34,6 @@ import jsc.cactus.com.weanimal.FileMethod;
 import jsc.cactus.com.weanimal.MyService;
 import jsc.cactus.com.weanimal.R;
 import jsc.cactus.com.weanimal.Variable;
-import jsc.cactus.com.weanimal.f_list.View_family;
 import jsc.cactus.com.weanimal.g_animal.main.DateFormat;
 
 import jsc.cactus.com.weanimal.g_animal.main.SoundUtil;
@@ -81,6 +71,7 @@ public class MainActivity extends AppCompatActivity implements MissionListener {
     private SettingManager settingManager;
 
     private LinearLayout animal_hill;
+    private ImageView sign;
     private ImageView set;
 
     private boolean exit = false;
@@ -101,42 +92,13 @@ public class MainActivity extends AppCompatActivity implements MissionListener {
 
         // 시간에 따른 배경 설정
         animal_hill = (LinearLayout) findViewById(R.id.AnimalHill);
+        sign = (ImageView) findViewById(R.id.imageView);
 
         setBackground();
-        //
-
-        //setting();
-
+        
         init();
 
-        try {
-            getStatus();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            sendTime();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
     }
-
-    // private void setting() {
-    /*private void setting() {
->>>>>>> origin/master
-        set = (ImageView) findViewById(R.id.btn_setting);
-
-        set.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                sendLogout();
-                clearFile();
-                finish();
-                MyService.login = false;
-            }
-        });
-    }*/
 
     public void sendLogout() {
         MyService.mSocket.emit("LOGOUT");
@@ -168,19 +130,16 @@ public class MainActivity extends AppCompatActivity implements MissionListener {
             BufferedReader br = new BufferedReader(new FileReader(f));
             List<String> stringList = new ArrayList<String>();
 
-//            Log.i("TEST", "fdsf" + br.readLine());
-
             String s;
             while ((s = br.readLine()) != null) {
                 Log.i("TEST", "enter while: " + s);
                 stringList.add(s);
             }
 
-            Log.i("TEST", "시발: " + stringList.get(0));
-
             lastLine = stringList.get(stringList.size() - 1);
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
+            return 0;
         }
 
         return DateFormat.parseDate(lastLine.split("\\|")[0], DateFormat.Type.SECOND).getTime();
@@ -211,14 +170,19 @@ public class MainActivity extends AppCompatActivity implements MissionListener {
     private void setBackground() {
         int hour = new Date().getHours();
 
-        if (Variable.morning(hour))
+        if (Variable.morning(hour)) {
             animal_hill.setBackgroundResource(R.drawable.background_evening);
-        if (Variable.daytime(hour))
+            sign.setImageResource(R.drawable.sign_evening);
+        } else if (Variable.daytime(hour)) {
             animal_hill.setBackgroundResource(R.drawable.background_morning);
-        if (Variable.evening(hour))
+            sign.setImageResource(R.drawable.sign_day);
+        } else if (Variable.evening(hour)) {
             animal_hill.setBackgroundResource(R.drawable.background_evening);
-        if (Variable.night(hour))
+            sign.setImageResource(R.drawable.sign_evening);
+        } else if (Variable.night(hour)) {
             animal_hill.setBackgroundResource(R.drawable.background_night);
+            sign.setImageResource(R.drawable.sign_night);
+        }
     }
 
     public void sendMessage() throws JSONException {
@@ -288,9 +252,7 @@ public class MainActivity extends AppCompatActivity implements MissionListener {
                         animal.setType(AnimalType.valueOf(TYPE));
 
                         Status status = Animal.animal.getStatus();
-                        status.setStatus(StatusType.FOOD, FOOD);
-                        status.setStatus(StatusType.WATER, WATER);
-                        status.setStatus(StatusType.LOVE, LOVE);
+                        status.setStatus(FOOD, WATER, LOVE);
 
                         animal.setReady(true);
 
@@ -325,46 +287,36 @@ public class MainActivity extends AppCompatActivity implements MissionListener {
                         Log.i("TEST", "" + chat_logs.length());
 
                         for (int i = 0; i < chat_logs.length(); i++) {
-                           // Log.i("TEST", "인덱스 " + i);
+                            // Log.i("TEST", "인덱스 " + i);
                             JSONObject chatObject = chat_logs.getJSONObject(i);
 
                             try {
                                 Date date = new Date();
                                 date.setTime(chatObject.getLong("time"));
-
-                                DateFormat.formatDate(date, DateFormat.Type.DAY);
-
-                                File file = new File("/data/data/jsc.cactus.com.weanimal/files/chat/" + DateFormat.formatDate(date, DateFormat.Type.DAY) + ".txt");
-                                Log.i("TEST", "filename: " + "/data/data/jsc.cactus.com.weanimal/files/chat/" + DateFormat.formatDate(date, DateFormat.Type.DAY) + ".txt");
-                                if (!file.exists()) {
-                                    Log.i("TEST", "파일 없음 \n생성함");
-                                    new File("/data/data/jsc.cactus.com.weanimal/files/chat/").mkdirs();
-                                    file.createNewFile();
-                                }
+//
+//                                DateFormat.formatDate(date, DateFormat.Type.DAY);
+//
+//                                File file = new File("/data/data/jsc.cactus.com.weanimal/files/chat/" + DateFormat.formatDate(date, DateFormat.Type.DAY) + ".txt");
+//                                Log.i("TEST", "filename: " + "/data/data/jsc.cactus.com.weanimal/files/chat/" + DateFormat.formatDate(date, DateFormat.Type.DAY) + ".txt");
+//                                if (!file.exists()) {
+//                                    Log.i("TEST", "파일 없음 \n생성함");
+//                                    new File("/data/data/jsc.cactus.com.weanimal/files/chat/").mkdirs();
+//                                    file.createNewFile();
+//                                }
 
                                 Log.i("TEST", "Filename: " + "/data/data/jsc.cactus.com.weanimal/files/chat/" + DateFormat.formatDate(date, DateFormat.Type.DAY) + ".txt");
-//                                BufferedWriter bw = new BufferedWriter(new FileWriter("/data/data/jsc.cactus.com.weanimal/files/chat/" + DateFormat.formatDate(date, DateFormat.Type.DAY) + ".txt", true));
 
                                 Log.i("TEST", "들어온 채팅내역: " + DateFormat.formatDate(date, DateFormat.Type.SECOND) + "|" + chatObject.getString("username") + "|" + chatObject.getString("msg"));
 
-//                                bw.append(" " + DateFormat.formatDate(date, DateFormat.Type.SECOND) + "|" + chatObject.getString("username") + "|" + chatObject.getString("msg"));
-//                                bw.newLine();
-
-//                                bw.close();
-
                                 ChatManager.callChatEvent(new User(chatObject.getString("userid"), chatObject.getString("username"), Variable.user_birthday, UserGender.FEMALE), chatObject.getString("msg"));
 
-//                                BufferedReader br = new BufferedReader(new FileReader())
-
-                            } catch (IOException ioex) {
+                            } catch (Exception ioex) {
                                 ioex.printStackTrace();
                             }
                         }
 
                         Log.i("TEST", "for문 끝남");
                         run = true;
-                        //MyService.mSocket.off("RES_UPDATE_CHAT", chRecive);
-
 
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -373,8 +325,6 @@ public class MainActivity extends AppCompatActivity implements MissionListener {
 
                 }
             });
-//            while (!run) {
-//            }
         }
     };
 
@@ -391,7 +341,20 @@ public class MainActivity extends AppCompatActivity implements MissionListener {
 
         MissionManager.instance.addMissionListener(this);
 
+    }
 
+    public void init2() {
+        try {
+            getStatus();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            sendTime();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     private Handler handler = new Handler() {

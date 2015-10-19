@@ -10,7 +10,7 @@ import android.widget.Button;
 import jsc.cactus.com.weanimal.d_regist.Family_query;
 import jsc.cactus.com.weanimal.R;
 
-public class Id_query extends AppCompatActivity {
+public class Id_query extends Activity {
 
     public static Activity id_q;
 

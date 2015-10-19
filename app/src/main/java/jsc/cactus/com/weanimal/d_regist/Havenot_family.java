@@ -23,7 +23,7 @@ import jsc.cactus.com.weanimal.R;
 import jsc.cactus.com.weanimal.Variable;
 import jsc.cactus.com.weanimal.c_login.Id_query;
 
-public class Havenot_family extends AppCompatActivity {
+public class Havenot_family extends Activity {
 
     public static Activity han_fa;
 

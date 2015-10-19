@@ -21,7 +21,7 @@ import jsc.cactus.com.weanimal.R;
 import jsc.cactus.com.weanimal.Variable;
 import jsc.cactus.com.weanimal.c_login.Id_query;
 
-public class Have_family_2 extends AppCompatActivity {
+public class Have_family_2 extends Activity {
 
     public static Activity ha_fa_2;
 

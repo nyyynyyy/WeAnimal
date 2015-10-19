@@ -45,14 +45,18 @@ public class ChatManager {
     }
 
     public static void callChatEvent(User user, String text) {
-        Log.i("TEST", "진입");
-        Log.i("TEST", ServerTime.getTime()+" 서버타임");
         for (ChatListener listener : listeners) {
             listener.UserChatEvent(user, text);
-            Log.i("TEST", "for 문");
         }
         ChatItem chatItem = new ChatItem(user.getProfileImageId(), text, user, new Date(ServerTime.getTime()));
-        ChatDialog.getChatListViewAdapter().add(chatItem);
+        chatSave(chatItem);
+
+        try {
+            ChatDialog.getChatListViewAdapter().add(chatItem);
+        }catch (Exception ex){}
+    }
+
+    public static void chatSave(ChatItem chatItem){
         try {
             File file = new File(MainActivity.mainActivity.getFilesDir()+"/chat/"+ DateFormat.formatDate(chatItem.getDate(), DateFormat.Type.DAY)+".txt");
 
@@ -73,7 +77,6 @@ public class ChatManager {
         } catch (IOException e) {
             Log.i("jsc", "chat writer failed: " + e.getMessage());
         }
-        Log.i("TEST", "끝남");
     }
 
     public static void sendMessage(String msg) throws JSONException {

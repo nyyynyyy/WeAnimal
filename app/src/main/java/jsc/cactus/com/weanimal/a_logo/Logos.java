@@ -1,9 +1,12 @@
 package jsc.cactus.com.weanimal.a_logo;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.graphics.drawable.BitmapDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.RelativeLayout;
 
 import jsc.cactus.com.weanimal.MyService;
 import jsc.cactus.com.weanimal.R;
@@ -17,7 +20,7 @@ import jsc.cactus.com.weanimal.d_regist.Havenot_family;
 import jsc.cactus.com.weanimal.f_list.View_family;
 import jsc.cactus.com.weanimal.g_animal.main.main.weanimal.MainActivity;
 
-public class Logos extends AppCompatActivity {
+public class Logos extends Activity {
 
     public static Boolean isTurn = false;
     public static Boolean isStop = false;
@@ -110,8 +113,9 @@ public class Logos extends AppCompatActivity {
     }
 
     @Override
-    protected void onDestroy() {
-
+    public void onDestroy() {
+        //RelativeLayout ll = (RelativeLayout) findViewById(R.id.logos_RelativeLayout);
+        //((BitmapDrawable)ll.getBackground()).getBitmap().recycle();
         super.onDestroy();
     }
 }

@@ -4,14 +4,12 @@ import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
 import jsc.cactus.com.weanimal.R;
 
-public class Family_query extends AppCompatActivity {
+public class Family_query extends Activity {
 
     public static Activity fa_q;
 

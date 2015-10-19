@@ -14,15 +14,17 @@ import jsc.cactus.com.weanimal.g_animal.main.familychat.ChatMission;
  */
 public class ChatViewManager {
 
+    public static ChatViewManager chatViewManager;
+
     private ChatDialog familyChatDialog;
     private FragmentManager fragmentManager;
     private ImageView signImageView;
-    private boolean isOnMission = false;
 
     public ChatViewManager(Activity activity){
+        chatViewManager = this;
         fragmentManager = activity.getFragmentManager();
         signImageView = (ImageView) activity.findViewById(R.id.imageView);
-        familyChatDialog = new ChatDialog();
+        familyChatDialog = new ChatDialog(activity);
         new ChatMission();
 
         signImageView.setOnClickListener(clickSign);
@@ -34,4 +36,8 @@ public class ChatViewManager {
                 familyChatDialog.show(fragmentManager, "");
         }
     };
+
+    public ChatDialog getChatDialog(){
+        return familyChatDialog;
+    }
 }

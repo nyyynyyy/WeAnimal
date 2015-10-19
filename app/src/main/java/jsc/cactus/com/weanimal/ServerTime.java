@@ -1,6 +1,5 @@
 package jsc.cactus.com.weanimal;
 
-import android.graphics.drawable.AnimationDrawable;
 import android.util.Log;
 
 import org.json.JSONException;
@@ -34,11 +33,13 @@ public class ServerTime {
         @Override
         public void call(final Object... args) {
             try {
-                Log.i("TEST", "리시브드감");
                 JSONObject data = (JSONObject) args[0];
                 time = data.getLong("time");
+
                 Log.i("TEST", "Server: " + Long.toString(time));
                 isEnd = true;
+
+             Log.i("TEST", "Server: "+Long.toString(time));
             } catch (JSONException e) {
                 e.printStackTrace();
             }

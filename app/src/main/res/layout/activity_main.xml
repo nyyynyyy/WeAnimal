@@ -6,9 +6,8 @@
     android:paddingBottom="0dp"
     android:padding="20dp"
     android:focusableInTouchMode="true"
-    android:background="@drawable/background_morning"
     android:id="@+id/AnimalHill"
-    android:visibility="gone">
+    android:visibility="visible">
 
     <!--View
         android:layout_width="match_parent"
@@ -91,7 +90,6 @@
             android:layout_height="150dp"
             android:id="@+id/imageView"
             android:layout_gravity="bottom"
-            android:src="@drawable/sign"
             android:paddingBottom="0dp"
             android:layout_marginBottom="20dp" />
 
