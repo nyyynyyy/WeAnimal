@@ -21,6 +21,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.net.URISyntaxException;
+import java.util.Date;
 
 import io.socket.client.IO;
 import io.socket.emitter.Emitter;
@@ -417,7 +418,7 @@ public class MyService extends Service {
                         Log.i("TEST", Integer.toString(family_food));
 
                         if (animal) {
-                            Animal.animal.getStatus().setStatus( family_food, family_water, family_love);
+                            Animal.animal.getStatus().setStatus(family_food, family_water, family_love);
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -464,8 +465,7 @@ public class MyService extends Service {
     private Emitter.Listener ChatRecive = new Emitter.Listener() {
         @Override
         public void call(final Object... args) {
-
-            new Thread(new Runnable() {
+            MainActivity.mainActivity.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
                     JSONObject data = (JSONObject) args[0];
@@ -494,13 +494,14 @@ public class MyService extends Service {
 //                        bw.newLine();
 //
 //                        bw.close();
-                        ChatManager.callChatEvent(new User(id, name, Variable.user_birthday, UserGender.FEMALE), text);
+                        ChatManager.callChatEvent(new User(id, name, Variable.user_birthday, UserGender.FEMALE), text, new Date(time));
                         Log.i("jsc", "채팅 옴");
                         chatPush(name, text, time);
                     } catch (Exception e) {
                     }
                 }
-            }).start();
+            });
+
         }
     };
 

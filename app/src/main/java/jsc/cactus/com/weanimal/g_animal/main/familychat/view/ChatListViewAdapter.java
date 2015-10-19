@@ -1,6 +1,8 @@
 package jsc.cactus.com.weanimal.g_animal.main.familychat.view;
 
 import android.app.Activity;
+import android.database.DataSetObservable;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -12,6 +14,8 @@ import java.util.Date;
 import java.util.List;
 
 import jsc.cactus.com.weanimal.R;
+import jsc.cactus.com.weanimal.g_animal.main.DateFormat;
+import jsc.cactus.com.weanimal.g_animal.main.familychat.ChatDialog;
 import jsc.cactus.com.weanimal.g_animal.main.users.UserManager;
 
 /**
@@ -21,6 +25,7 @@ public class ChatListViewAdapter extends ArrayAdapter<ChatItem> {
 
     List<ChatItem> list = new ArrayList<ChatItem>();
     Activity activity;
+
 
     public ChatListViewAdapter(Activity activity, int resource, List<ChatItem> objects) {
         super(activity, resource, objects);
@@ -36,8 +41,8 @@ public class ChatListViewAdapter extends ArrayAdapter<ChatItem> {
     @Override
     public void add(ChatItem object) {
         super.add(object);
-        super.notifyDataSetChanged();
-        ChatViewManager.chatViewManager.getChatDialog().setSelectionEnd();
+
+        notifyDataSetChanged();
     }
 
     private boolean isSame(Date date, Date date2) {
@@ -54,6 +59,8 @@ public class ChatListViewAdapter extends ArrayAdapter<ChatItem> {
         TextView ctext = (TextView) item.findViewById(R.id.item_text), cinfo = (TextView) item.findViewById(R.id.item_info);
 
         ctext.setText(citem.getText());
+
+        Log.i("jsc", "id: "+citem.getUser().getId() +" name: " +citem.getUser().getName()+" text: "+citem.getText()+" date: "+ DateFormat.formatDate(citem.getDate(), DateFormat.Type.SECOND));
 
         if (list.size() >= position - 1 && list.size() != 0 && position - 1 != -1) {
             ChatItem previous_citem = list.get(position - 1);

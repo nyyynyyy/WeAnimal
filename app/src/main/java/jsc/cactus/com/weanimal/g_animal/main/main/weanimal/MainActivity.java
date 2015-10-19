@@ -59,6 +59,7 @@ import jsc.cactus.com.weanimal.g_animal.main.users.UserManager;
 public class MainActivity extends AppCompatActivity implements MissionListener {
 
     private FileMethod file;
+    private File filesDir;
 
     public static MainActivity mainActivity;
     public static Activity animal_hill_a;
@@ -82,7 +83,7 @@ public class MainActivity extends AppCompatActivity implements MissionListener {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        filesDir = getFilesDir();
         animal_hill_t = true;
 
         animal_hill_a = this;
@@ -105,8 +106,8 @@ public class MainActivity extends AppCompatActivity implements MissionListener {
     }
 
     public void clearFile() {
-        file = new FileMethod(new File("/data/data/jsc.cactus.com.weanimal/files/login/"), "login.txt");
-        FileMethod file = new FileMethod(new File("/data/data/jsc.cactus.com.weanimal/files/login/"), "login.txt");
+        file = new FileMethod(new File(filesDir+"/login/"), "login.txt");
+        FileMethod file = new FileMethod(new File(filesDir+"/login/"), "login.txt");
 
         file.getFile().delete();
         Log.i("TEST", "CLEAR FILE");
@@ -118,12 +119,12 @@ public class MainActivity extends AppCompatActivity implements MissionListener {
     public long getLastTime() {
         String day = null;
 
-        File files[] = new File("/data/data/jsc.cactus.com.weanimal/files/chat/").listFiles();
+        File files[] = new File(filesDir+"/chat/").listFiles();
         File f = files[files.length - 1];
 
         day = f.getName();
 
-        file = new FileMethod(new File("/data/data/jsc.cactus.com.weanimal/files/chat/"), day);
+        file = new FileMethod(new File(filesDir+"/chat/"), day);
 
         String lastLine = null;
         try {
@@ -138,8 +139,7 @@ public class MainActivity extends AppCompatActivity implements MissionListener {
 
             lastLine = stringList.get(stringList.size() - 1);
         } catch (Exception e) {
-            e.printStackTrace();
-            return 0;
+            Log.i("jsc", e.getMessage());
         }
 
         return DateFormat.parseDate(lastLine.split("\\|")[0], DateFormat.Type.SECOND).getTime();
@@ -204,7 +204,7 @@ public class MainActivity extends AppCompatActivity implements MissionListener {
 
         long time;
 
-        if (new File("/data/data/jsc.cactus.com.weanimal/files/chat/").listFiles() != null) {
+        if (new File(filesDir+"/chat/").listFiles() != null) {
             time = getLastTime();
         } else {
             time = -1;
@@ -293,22 +293,12 @@ public class MainActivity extends AppCompatActivity implements MissionListener {
                             try {
                                 Date date = new Date();
                                 date.setTime(chatObject.getLong("time"));
-//
-//                                DateFormat.formatDate(date, DateFormat.Type.DAY);
-//
-//                                File file = new File("/data/data/jsc.cactus.com.weanimal/files/chat/" + DateFormat.formatDate(date, DateFormat.Type.DAY) + ".txt");
-//                                Log.i("TEST", "filename: " + "/data/data/jsc.cactus.com.weanimal/files/chat/" + DateFormat.formatDate(date, DateFormat.Type.DAY) + ".txt");
-//                                if (!file.exists()) {
-//                                    Log.i("TEST", "파일 없음 \n생성함");
-//                                    new File("/data/data/jsc.cactus.com.weanimal/files/chat/").mkdirs();
-//                                    file.createNewFile();
-//                                }
 
-                                Log.i("TEST", "Filename: " + "/data/data/jsc.cactus.com.weanimal/files/chat/" + DateFormat.formatDate(date, DateFormat.Type.DAY) + ".txt");
+                                Log.i("TEST", "Filename: " + filesDir+"/chat/" + DateFormat.formatDate(date, DateFormat.Type.DAY) + ".txt");
 
                                 Log.i("TEST", "들어온 채팅내역: " + DateFormat.formatDate(date, DateFormat.Type.SECOND) + "|" + chatObject.getString("username") + "|" + chatObject.getString("msg"));
 
-                                ChatManager.callChatEvent(new User(chatObject.getString("userid"), chatObject.getString("username"), Variable.user_birthday, UserGender.FEMALE), chatObject.getString("msg"));
+                                ChatManager.callChatEvent(new User(chatObject.getString("userid"), chatObject.getString("username"), Variable.user_birthday, UserGender.FEMALE), chatObject.getString("msg"),new Date(chatObject.getLong("time")));
 
                             } catch (Exception ioex) {
                                 ioex.printStackTrace();
@@ -356,15 +346,6 @@ public class MainActivity extends AppCompatActivity implements MissionListener {
             e.printStackTrace();
         }
     }
-
-    private Handler handler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            TextView textView = (TextView) findViewById(R.id.textView);
-            textView.setText(String.format("Time : %.2f", (float) ((float) (System.currentTimeMillis() - missionTime) / 1000F)));
-        }
-    };
 
     //미션에 대한 이벤트
 

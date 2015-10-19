@@ -1,6 +1,7 @@
 package jsc.cactus.com.weanimal.g_animal.main.familychat;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.DialogFragment;
 import android.os.Bundle;
 import android.text.Editable;
@@ -16,9 +17,11 @@ import android.widget.ListView;
 import org.json.JSONException;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import jsc.cactus.com.weanimal.R;
+import jsc.cactus.com.weanimal.ServerTime;
 import jsc.cactus.com.weanimal.g_animal.main.familychat.view.ChatItem;
 import jsc.cactus.com.weanimal.g_animal.main.familychat.view.ChatListViewAdapter;
 import jsc.cactus.com.weanimal.g_animal.main.main.weanimal.MainActivity;
@@ -28,73 +31,66 @@ import jsc.cactus.com.weanimal.g_animal.main.users.UserManager;
 /**
  * Created by INSI on 15. 9. 28..
  */
-public class ChatDialog extends DialogFragment implements ChatListener{
+public class ChatDialog extends Dialog implements ChatListener {
 
     private static ChatListViewAdapter chatListViewAdapter;
-    private ListView listView;
+    private static ListView listView;
     private EditText textEdit;
     private Button acceptButton;
     private boolean isOnMission = false;
 
     private static List<ChatItem> items = new ArrayList<ChatItem>();
 
-    public ChatDialog(Activity activity){
-        if(chatListViewAdapter==null) {
-            ChatManager.addChatListener(this);
-            chatListViewAdapter = new ChatListViewAdapter(activity, R.layout.familychat_item, items);
-            MainActivity.mainActivity.init2();
-            new ChatManager();
-        }
+    public ChatDialog(Activity activity) {
+        super(activity);
+        setContentView(R.layout.activity_familychat);
+        chatListViewAdapter = new ChatListViewAdapter(activity, R.layout.familychat_item_you, items);
+        if (chatListViewAdapter == null)
+            Log.i("jsc", "챗 리스트 뷰 어뎁터 ");
+        ChatManager.addChatListener(this);
+        init();
+        MainActivity.mainActivity.init2();
+        List<ChatItem> chatItems = ChatManager.getChatData(0);
+        if (chatItems != null)
+            for (ChatItem chatItem : chatItems)
+                chatListViewAdapter.add(chatItem);
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.activity_familychat, container, false);
-
-        init(view);
-
-        return view;
-    }
-
-    private void init(View view) {
+    private void init() {
         Log.i("jsc", "ChatDialog init");
-        getDialog().setTitle("에니멀톡");
-        textEdit = (EditText) view.findViewById(R.id.familychat_editText);
-        acceptButton = (Button) view.findViewById(R.id.familychat_acceptButton);
-        listView = (ListView) view.findViewById(R.id.family_listView);
+        setTitle("에니멀톡");
+        textEdit = (EditText) findViewById(R.id.familychat_editText);
+        acceptButton = (Button) findViewById(R.id.familychat_acceptButton);
+        listView = (ListView) findViewById(R.id.family_listView);
 
         listView.setAdapter(chatListViewAdapter);
-        setSelectionEnd();
+        //setSelectionEnd();
 
         textEdit.addTextChangedListener(edit);
         acceptButton.setOnClickListener(confirm);
         acceptButton.setEnabled(false);
     }
 
-    public static ChatListViewAdapter getChatListViewAdapter(){
+    public static ChatListViewAdapter getChatListViewAdapter() {
         return chatListViewAdapter;
     }
 
     private View.OnClickListener confirm = new View.OnClickListener() {
         public void onClick(View v) {
 
-            ChatManager.callChatEvent(UserManager.getLocalUser(), textEdit.getText().toString());
+            ChatManager.callChatEvent(UserManager.getLocalUser(), textEdit.getText().toString(), new Date(ServerTime.getTime()));
+
             try {
                 ChatManager.sendMessage(textEdit.getText().toString());
             } catch (JSONException e) {
+                Log.i("jsc", "채팅 보내는 중 오류 발생");
                 e.printStackTrace();
             }
-            setSelectionEnd();
             textEdit.setText("");
             acceptButton.setEnabled(false);
         }
     };
 
-    public void setSelectionEnd(){
-        listView.setSelection(listView.getCount() - 1);
-    }
-
-    //
     private TextWatcher edit = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -114,7 +110,7 @@ public class ChatDialog extends DialogFragment implements ChatListener{
 
     @Override
     public void UserChatEvent(User user, String text) {
-        if(listView != null)
-        listView.setSelection(listView.getCount() - 1);
+        if (listView != null)
+            listView.smoothScrollToPosition(listView.getAdapter().getCount() - 1);
     }
 }

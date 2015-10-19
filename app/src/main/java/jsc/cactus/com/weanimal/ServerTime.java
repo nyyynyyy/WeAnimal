@@ -36,10 +36,10 @@ public class ServerTime {
                 JSONObject data = (JSONObject) args[0];
                 time = data.getLong("time");
 
-                Log.i("TEST", "Server: " + Long.toString(time));
+                //Log.i("TEST", "Server: " + Long.toString(time));
                 isEnd = true;
 
-             Log.i("TEST", "Server: "+Long.toString(time));
+             //Log.i("TEST", "Server: "+Long.toString(time));
             } catch (JSONException e) {
                 e.printStackTrace();
             }

@@ -26,13 +26,13 @@ public class Variable {
             return false;
     }
     public static boolean daytime(int hour) {
-        if (hour >= 10 && hour < 16)
+        if (hour >= 9 && hour < 16)
             return true;
         else
             return false;
     }
     public static boolean evening(int hour) {
-        if (hour >= 18 && hour < 21)
+        if (hour >= 16 && hour < 21)
             return true;
         else
             return false;

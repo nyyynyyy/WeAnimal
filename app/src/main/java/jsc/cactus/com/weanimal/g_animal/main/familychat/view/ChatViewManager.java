@@ -17,12 +17,10 @@ public class ChatViewManager {
     public static ChatViewManager chatViewManager;
 
     private ChatDialog familyChatDialog;
-    private FragmentManager fragmentManager;
     private ImageView signImageView;
 
     public ChatViewManager(Activity activity){
         chatViewManager = this;
-        fragmentManager = activity.getFragmentManager();
         signImageView = (ImageView) activity.findViewById(R.id.imageView);
         familyChatDialog = new ChatDialog(activity);
         new ChatMission();
@@ -32,8 +30,8 @@ public class ChatViewManager {
 
     private View.OnClickListener clickSign = new View.OnClickListener(){
         public void onClick(View v){
-            if(!familyChatDialog.isAdded())
-                familyChatDialog.show(fragmentManager, "");
+            if(!familyChatDialog.isShowing())
+                familyChatDialog.show();
         }
     };
 

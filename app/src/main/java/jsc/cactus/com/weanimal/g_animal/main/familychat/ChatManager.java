@@ -33,27 +33,22 @@ public class ChatManager {
     private final String filePath = MainActivity.mainActivity.getFilesDir().getPath()+"/";// + "/chatData/";
     private static final File folder = new File(MainActivity.mainActivity.getFilesDir()+"/chat/");
 
-    public ChatManager() {
-        List<ChatItem> chatItems = getChatData(0);
-        if (chatItems != null)
-            for (ChatItem chatItem : chatItems)
-                ChatDialog.getChatListViewAdapter().add(chatItem);
-    }
-
     public static void addChatListener(ChatListener listener) {
         listeners.add(listener);
     }
 
-    public static void callChatEvent(User user, String text) {
-        for (ChatListener listener : listeners) {
-            listener.UserChatEvent(user, text);
-        }
-        ChatItem chatItem = new ChatItem(user.getProfileImageId(), text, user, new Date(ServerTime.getTime()));
+    public static void callChatEvent(User user, String text, Date time) {
+
+        ChatItem chatItem = new ChatItem(user.getProfileImageId(), text, user, time);
         chatSave(chatItem);
 
         try {
             ChatDialog.getChatListViewAdapter().add(chatItem);
         }catch (Exception ex){}
+
+        for (ChatListener listener : listeners) {
+            listener.UserChatEvent(user, text);
+        }
     }
 
     public static void chatSave(ChatItem chatItem){
