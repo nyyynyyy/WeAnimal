@@ -18,32 +18,35 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_weight="0">
+        android:layout_weight="0"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="가족번호"
+            android:id="@+id/textView13"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Large Text"
+            android:text="이름"
             android:id="@+id/textView12"
-            android:layout_gravity="left|center_vertical"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:gravity="center" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="New Text"
-            android:id="@+id/textView13"
-            android:layout_gravity="center"
-            android:layout_weight="1" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="New Text"
+            android:text="아이디"
             android:id="@+id/textView14"
             android:layout_gravity="center_vertical|right"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:gravity="center" />
     </LinearLayout>
 
     <LinearLayout
