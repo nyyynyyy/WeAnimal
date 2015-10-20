@@ -1,49 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/background_white">
+    android:layout_height="match_parent">
 
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="270dp"
-        android:id="@+id/scrollView"
-        android:layout_gravity="center_horizontal"
-        android:fillViewport="true">
-
-        <ListView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/family_listView"
-            android:smoothScrollbar="true"
-            android:divider="#00000000"
-            android:contextClickable="false"
-            android:listSelector="#00000000"
-            android:clickable="false"
-            android:dividerHeight="5dp" />
-    </ScrollView>
 
     <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal">
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="350dp"
+        android:background="@drawable/background_white">
 
-        <EditText
-            android:layout_width="wrap_content"
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/scrollView"
+            android:layout_gravity="center_horizontal"
+            android:fillViewport="true"
+            android:layout_weight="1">
+
+            <ListView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/family_listView"
+                android:smoothScrollbar="true"
+                android:divider="#00000000"
+                android:contextClickable="false"
+                android:listSelector="#00000000"
+                android:clickable="false"
+                android:dividerHeight="5dp" />
+        </ScrollView>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/familychat_editText"
-            android:layout_weight="1"
-            android:allowUndo="false"
-            android:maxWidth="15dp"
-            android:maxLines="6" />
+            android:layout_gravity="center_horizontal">
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="확인"
-            android:id="@+id/familychat_acceptButton" />
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/familychat_editText"
+                android:layout_weight="1"
+                android:allowUndo="false"
+                android:maxWidth="15dp"
+                android:minLines="3"
+                android:maxLines="3"/>
 
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="확인"
+                android:id="@+id/familychat_acceptButton" />
+
+        </LinearLayout>
     </LinearLayout>
 </LinearLayout>

@@ -1,6 +1,7 @@
 package jsc.cactus.com.weanimal.g_animal.main.settting;
 
 import android.app.Activity;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -21,7 +22,26 @@ public class SettingManager {
 
         button = (ImageView) activity.findViewById(R.id.btn_setting);
         button.setOnClickListener(clickListener);
+        button.setOnTouchListener(buttontest1);
     }
+
+    private ImageView.OnTouchListener buttontest1 = new ImageView.OnTouchListener() {
+
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    v.setAlpha(0.7F);
+                    break;
+                case MotionEvent.ACTION_UP:
+                case MotionEvent.ACTION_CANCEL:
+                    v.setAlpha(1F);
+                    break;
+            }
+
+            return false;
+        }
+    };
 
     private View.OnClickListener clickListener = new View.OnClickListener() {
         @Override

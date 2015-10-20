@@ -20,11 +20,13 @@ import jsc.cactus.com.weanimal.R;
 import jsc.cactus.com.weanimal.g_animal.main.SoundUtil;
 import jsc.cactus.com.weanimal.g_animal.main.animal.status.StatusType;
 import jsc.cactus.com.weanimal.g_animal.main.main.weanimal.MainActivity;
+import jsc.cactus.com.weanimal.g_animal.main.mission.missions.MessageReceiveMission;
 import jsc.cactus.com.weanimal.g_animal.main.mission.missions.Mission;
 import jsc.cactus.com.weanimal.g_animal.main.mission.MissionListener;
 import jsc.cactus.com.weanimal.g_animal.main.mission.MissionManager;
 import jsc.cactus.com.weanimal.g_animal.main.mission.missions.MessageSendMission;
 import jsc.cactus.com.weanimal.g_animal.main.mission.missions.TelMission;
+import jsc.cactus.com.weanimal.g_animal.main.users.UserManager;
 
 /**
  * Created by INSI on 2015. 10. 7..
@@ -52,8 +54,9 @@ public class MissionDialog extends Dialog implements MissionListener {
         if (missionAdapter == null) {
             MissionManager.instance.addMissionListener(this);
             missionAdapter = new MissionAdapter(MainActivity.mainActivity, R.layout.mission_item, items);
-            missionAdapter.add(new MissionItem(R.drawable.phoneicon, "전화 걸기"));
-            missionAdapter.add(new MissionItem(R.drawable.post, "메세지 보내기"));
+            missionAdapter.add(new MissionItem(new TelMission(3, UserManager.getUserByName("서재원"))));
+            missionAdapter.add(new MissionItem(new MessageSendMission("사랑해", UserManager.getUserByName("서재원"))));
+            missionAdapter.add(new MissionItem(new MessageReceiveMission("고마워", UserManager.getUserByName("서재원"))));
         }
 
         listView = (ListView) findViewById(R.id.mission_listView);
@@ -66,7 +69,7 @@ public class MissionDialog extends Dialog implements MissionListener {
     public void show(StatusType type) {
         super.show();
         this.type = type;
-        setTitle((type==StatusType.FOOD?"먹이":type==StatusType.WATER?"물":"애정")+" 미션");
+        setTitle((type == StatusType.FOOD ? "먹이" : type == StatusType.WATER ? "물" : "애정") + " 미션");
     }
 
     private AdapterView.OnItemClickListener itemClick = new AdapterView.OnItemClickListener() {
@@ -76,17 +79,8 @@ public class MissionDialog extends Dialog implements MissionListener {
                 Toast.makeText(MainActivity.mainActivity, "당신은 이미 미션 중 입니다.\n미션 : " + MissionManager.instance.getCurrentMission().missionType.name(), Toast.LENGTH_SHORT).show();
                 return;
             }
-            switch (position) {
-                case 0:
-                    MissionManager.instance.startMission(new TelMission(6), type);
-                    break;
-                case 1:
-                    MissionManager.instance.startMission(new MessageSendMission("파이팅"), type);
-                    break;
-                case 2:
-                    MissionManager.instance.startMission(new MessageSendMission("파이팅"), type);
-                    break;
-            }
+            MissionManager.instance.startMission(items.get(position).getMission(), type);
+
 
             Toast.makeText(MainActivity.mainActivity, missionAdapter.getItem(position).getText() + " 미션 시작!", Toast.LENGTH_SHORT).show();
             cancel();

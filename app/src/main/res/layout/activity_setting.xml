@@ -2,59 +2,21 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="배경음"
-        android:layout_gravity="center_horizontal"
-        android:textSize="30dp" />
-
-    <SeekBar
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/soundSeekbar"
-        android:layout_gravity="center_horizontal"
-        android:mirrorForRtl="false"
-        android:minHeight="40dp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="효과음"
-        android:layout_gravity="center_horizontal"
-        android:textSize="30dp" />
-
-    <SeekBar
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/soundSeekbar2"
-        android:layout_gravity="center_horizontal"
-        android:minHeight="40dp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="푸쉬 알림"
-        android:layout_gravity="center_horizontal"
-        android:textSize="30dp"
-        android:layout_marginTop="50dp" />
+    android:layout_height="match_parent"
+    android:clickable="false"
+    android:measureWithLargestChild="false"
+    android:longClickable="false">
 
     <Switch
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/switch1"
-        android:layout_gravity="center_horizontal"
-        android:switchMinWidth="70dp"
-        android:splitTrack="false"
-        android:showText="true"
+        android:id="@+id/settingSwitch"
+        android:layout_gravity="center"
+        android:text="푸쉬 알림"
         android:textOff="끔"
         android:textOn="킴"
-        android:textSize="40dp"
-        android:textColor="#4f4f4f"
-        android:textStyle="bold"
-        android:width="100dp" />
+        android:textSize="20dp"
+        android:layout_marginTop="20dp" />
 
     <Button
         android:layout_width="wrap_content"
