@@ -15,6 +15,8 @@ import java.util.List;
 
 import jsc.cactus.com.weanimal.R;
 import jsc.cactus.com.weanimal.g_animal.main.DateFormat;
+import jsc.cactus.com.weanimal.g_animal.main.animal.Animal;
+import jsc.cactus.com.weanimal.g_animal.main.animal.AnimalType;
 import jsc.cactus.com.weanimal.g_animal.main.familychat.ChatDialog;
 import jsc.cactus.com.weanimal.g_animal.main.users.UserManager;
 
@@ -45,7 +47,7 @@ public class ChatListViewAdapter extends ArrayAdapter<ChatItem> {
         notifyDataSetChanged();
     }
 
-    public List<ChatItem> getChatItems(){
+    public List<ChatItem> getChatItems() {
         return list;
     }
 
@@ -66,22 +68,28 @@ public class ChatListViewAdapter extends ArrayAdapter<ChatItem> {
 
         ctext.setText(citem.getText());
 
-        Log.i("jsc", "id: "+citem.getUser().getId() +" name: " +citem.getUser().getName()+" text: "+citem.getText()+" date: "+ DateFormat.formatDate(citem.getDate(), DateFormat.Type.SECOND));
+        Log.i("jsc", "id: " + citem.getUser().getId() + " name: " + citem.getUser().getName() + " text: " + citem.getText() + " date: " + DateFormat.formatDate(citem.getDate(), DateFormat.Type.SECOND));
 
         if (list.size() >= position - 1 && list.size() != 0 && position - 1 != -1) {
             ChatItem previous_citem = list.get(position - 1);
 
+            if (previous_citem.getUser().getId() != citem.getUser().getId() && citem.getUser().getId() != UserManager.getLocalUser().getId()) {
+                ImageView cicon = (ImageView) item.findViewById(R.id.item_icon);
+                TextView cname = (TextView) item.findViewById(R.id.item_name);
+                if (citem.getIconId() != null) {
+                    cicon.setImageResource(citem.getIconId());
+                    cicon.setVisibility(View.VISIBLE);
+                } else {
+                    AnimalType type = Animal.animal.getAnimalType();
+                    cicon.setImageResource(type == AnimalType.CHICKEN?R.drawable.profile_chicken:type==AnimalType.CAT?R.drawable.profile_cat:R.drawable.profile_dog);
+                    cicon.setVisibility(View.VISIBLE);
+                }
+                cname.setText(citem.getUser().getName());
+                cname.setVisibility(View.VISIBLE);
+            }
+
             if (!isSame(previous_citem.getDate(), citem.getDate())) {
-                if (previous_citem.getUser().getId() != citem.getUser().getId())
-                    if (!isLocalUser) {
-                        ImageView cicon = (ImageView) item.findViewById(R.id.item_icon);
-                        TextView cname = (TextView) item.findViewById(R.id.item_name);
-                        if (citem.getIconId() != null) {
-                            cicon.setImageResource(citem.getIconId());
-                            cicon.setVisibility(View.VISIBLE);
-                            cname.setText(citem.getUser().getName());
-                        }
-                    }
+
             }
         }
 

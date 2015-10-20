@@ -1,11 +1,13 @@
 package jsc.cactus.com.weanimal.f_list;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -91,7 +93,17 @@ public class View_family extends AppCompatActivity {
 
         int msg = Variable.user_familycode;
 
+        TelephonyManager tm = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+        String msgpn = tm.getLine1Number();
+
+        Variable.user_phonenumber = msgpn;
+
+        Log.i("jsc","phone number: "+ msgpn);
+
+
         data.put("CO", msg);
+
+        data.put("PN", msgpn);
 
         MyService.mSocket.emit("NU", data);
 
@@ -129,6 +141,7 @@ public class View_family extends AppCompatActivity {
                             String fna = fam.getString("name");
                             String fge = fam.getString("gender");
                             String fbd = fam.getString("birth");
+                            String fpn = fam.getString("phone");
 
                             if (!(fid.equals(OI))) {
                                 Adapter.add(new Family_Item(fna, fid + "\n" + fge + "\n" + fbd));
@@ -139,9 +152,9 @@ public class View_family extends AppCompatActivity {
 
                             if (fid != Variable.user_id) {
                                 if (fge.equals("male"))
-                                    UserManager.addUser(new User(fid, fna, fbd, UserGender.MALE));
+                                    UserManager.addUser(new User(fid, fna, fbd, UserGender.MALE,fpn));
                                 else if (fge.equals("female"))
-                                    UserManager.addUser(new User(fid, fna, fbd, UserGender.FEMALE));
+                                    UserManager.addUser(new User(fid, fna, fbd, UserGender.FEMALE,fpn));
 
                                 Log.i("TEST","유저 생성 시도 : " + UserManager.getUser(fid).getName());
                             }

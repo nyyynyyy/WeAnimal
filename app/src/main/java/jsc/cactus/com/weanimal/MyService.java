@@ -32,6 +32,7 @@ import jsc.cactus.com.weanimal.g_animal.main.familychat.ChatManager;
 import jsc.cactus.com.weanimal.g_animal.main.main.weanimal.MainActivity;
 import jsc.cactus.com.weanimal.g_animal.main.users.User;
 import jsc.cactus.com.weanimal.g_animal.main.users.UserGender;
+import jsc.cactus.com.weanimal.g_animal.main.users.UserManager;
 
 /**
  * Created by nyyyn on 2015-10-03.
@@ -40,6 +41,7 @@ public class MyService extends Service {
 
     public static Boolean AppTurn = false;
     public static Boolean push = false;
+    public static Boolean settingPush;
 
     private Handler toastHandler;
 
@@ -92,22 +94,22 @@ public class MyService extends Service {
     }
 
     private void loginPush(String user_name, long time) {
-        if (!AppTurn)
+        if (!AppTurn && settingPush)
             noti(1, "누군가가 접속하였습니다.", user_name, "님이 접속하였습니다.", time);
     }
 
     private void statusPush(String user_name, String type, long time) {
-        if (!AppTurn)
+        if (!AppTurn && settingPush)
             noti(2, "동물의 상태가 변화하였습니다.", user_name, "님이 " + type + " 주셨습니다.", time);
     }
 
     private void levelupPush(String animal_name, long time) {
-        if (!AppTurn)
+        if (!AppTurn && settingPush)
             noti(3, "동물이 성장하였습니다.", animal_name, "이(가) 성장하였습니다.", time);
     }
 
     private void chatPush(String user_name, String msg, long time) {
-        if (!AppTurn)
+        if (!AppTurn && settingPush)
             noti(4, user_name + " : " + msg, user_name, msg, time);
     }
     //--------------------------------------------------------
@@ -486,7 +488,7 @@ public class MyService extends Service {
                         Log.i("TEST", day.split(" ")[0]);
                         Log.i("TEST", day.split(" ")[1]);
 
-                        ChatManager.callChatEvent(new User(id, name, Variable.user_birthday, UserGender.FEMALE), text, new Date(time));
+                        ChatManager.callChatEvent(UserManager.getUser(id), text, new Date(time));
                         Log.i("jsc", "채팅 옴");
                         chatPush(name, text, time);
                     } catch (Exception e) {

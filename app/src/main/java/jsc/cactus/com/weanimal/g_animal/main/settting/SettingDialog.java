@@ -9,6 +9,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.Switch;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 
 import jsc.cactus.com.weanimal.MyService;
 import jsc.cactus.com.weanimal.R;
@@ -20,6 +30,7 @@ import jsc.cactus.com.weanimal.g_animal.main.main.weanimal.MainActivity;
 public class SettingDialog extends Dialog {
 
     private Button lgout;
+    private Switch pushSwitch;
 
     public SettingDialog(Activity activity) {
         super(activity);
@@ -28,6 +39,37 @@ public class SettingDialog extends Dialog {
         setCanceledOnTouchOutside(true);
         lgout = (Button) findViewById(R.id.logoutButton);
         lgout.setOnClickListener(clickListener);
+        pushSwitch = (Switch) findViewById(R.id.settingSwitch);
+        pushSwitch.setChecked(settingLoad());
+        pushSwitch.setOnCheckedChangeListener(changeListener);
+        MyService.settingPush = pushSwitch.isChecked();
+    }
+
+    private Switch.OnCheckedChangeListener changeListener = new CompoundButton.OnCheckedChangeListener() {
+        @Override
+        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            settingInit(isChecked);
+        }
+    };
+
+    private void settingInit(boolean b) {
+        try {
+            BufferedWriter bw = new BufferedWriter(new FileWriter(new File(MainActivity.mainActivity.getFilesDir() + "setting.txt"), false));
+            bw.append(b ? "true" : "false");
+            MyService.settingPush = b;
+            bw.flush();
+            bw.close();
+        } catch (IOException e) {
+        }
+    }
+
+    private boolean settingLoad() {
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(new File(MainActivity.mainActivity.getFilesDir() + "setting.txt")));
+            Boolean.parseBoolean(br.readLine());
+        } catch (Exception e) {
+        }
+        return false;
     }
 
     private View.OnClickListener clickListener = new View.OnClickListener() {
@@ -36,7 +78,6 @@ public class SettingDialog extends Dialog {
             MainActivity mainActivity = MainActivity.mainActivity;
             mainActivity.sendLogout();
             mainActivity.clearFile();
-            mainActivity.finish();
             MyService.login = false;
         }
     };

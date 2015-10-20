@@ -61,6 +61,10 @@ public class Animal implements StatusChangeListener {
         return status;
     }
 
+    public AnimalType getAnimalType(){
+        return type;
+    }
+
     public void addAge(int age) {
         this.age += age;
         if (ready)

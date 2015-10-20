@@ -12,12 +12,14 @@ public class User {
     private String name;
     private String birth;
     private UserGender gender;
+    private String phoneN;
 
-    public User(String id, String name, String birth, UserGender gender) {
+    public User(String id, String name, String birth, UserGender gender, String phoneN) {
         this.id = id;
         this.name = name;
         this.birth = birth;
         this.gender = gender;
+        this.phoneN = phoneN;
     }
 
     public void setProfileImage(Integer profileImageId){
@@ -38,6 +40,10 @@ public class User {
 
     public Integer getProfileImageId(){
         return profileImage;
+    }
+
+    public String getPhoneNumber(){
+        return phoneN;
     }
 
     public boolean isTodayBirthDay() {
