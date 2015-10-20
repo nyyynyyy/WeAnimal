@@ -23,14 +23,19 @@
         android:background="@drawable/background_name">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:text="가족번호"
             android:id="@+id/txt_familynumber"
             android:layout_gravity="center"
             android:layout_weight="1"
             android:gravity="center"
+<<<<<<< HEAD
             android:textStyle="bold" />
+=======
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"/>
+
+>>>>>>> 388e3f26d695ee4fd6b384c5e613c74daa305cd7
 
         <TextView
             android:layout_width="wrap_content"
@@ -40,14 +45,23 @@
             android:id="@+id/txt_myname"
             android:layout_weight="1"
             android:gravity="center"
+<<<<<<< HEAD
             android:textStyle="bold" />
+=======
+            android:layout_gravity="center" />
+>>>>>>> 388e3f26d695ee4fd6b384c5e613c74daa305cd7
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="아이디"
+<<<<<<< HEAD
             android:id="@+id/txt_myid"
             android:layout_gravity="center_vertical|right"
+=======
+            android:id="@+id/textView14"
+            android:layout_gravity="center|right"
+>>>>>>> 388e3f26d695ee4fd6b384c5e613c74daa305cd7
             android:layout_weight="1"
             android:gravity="center"
             android:textStyle="bold" />
@@ -178,12 +192,5 @@
             android:foregroundTint="#ff0000" />
 
     </LinearLayout>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Time : 00.00"
-        android:id="@+id/textView"
-        android:layout_gravity="center_horizontal" />
 
 </LinearLayout>

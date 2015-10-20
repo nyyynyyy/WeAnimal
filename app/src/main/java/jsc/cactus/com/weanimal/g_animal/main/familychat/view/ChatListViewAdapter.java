@@ -73,7 +73,7 @@ public class ChatListViewAdapter extends ArrayAdapter<ChatItem> {
         if (list.size() >= position - 1 && list.size() != 0 && position - 1 != -1) {
             ChatItem previous_citem = list.get(position - 1);
 
-            if (previous_citem.getUser().getId() != citem.getUser().getId() && citem.getUser().getId() != UserManager.getLocalUser().getId()) {
+            if (!previous_citem.getUser().getId().equals(citem.getUser().getId()) && !citem.getUser().getId().equals(UserManager.getLocalUser().getId())) {
                 ImageView cicon = (ImageView) item.findViewById(R.id.item_icon);
                 TextView cname = (TextView) item.findViewById(R.id.item_name);
                 if (citem.getIconId() != null) {
@@ -86,10 +86,6 @@ public class ChatListViewAdapter extends ArrayAdapter<ChatItem> {
                 }
                 cname.setText(citem.getUser().getName());
                 cname.setVisibility(View.VISIBLE);
-            }
-
-            if (!isSame(previous_citem.getDate(), citem.getDate())) {
-
             }
         }
 

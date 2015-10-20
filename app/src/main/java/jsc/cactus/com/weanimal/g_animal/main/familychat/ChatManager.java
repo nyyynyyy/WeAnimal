@@ -101,8 +101,8 @@ public class ChatManager {
             try {
                 while ((s = br.readLine()) != null) {
                     str = s.split("\\|");
-                    Log.i("jsc", s);
-                    chatItems.add(new ChatItem(UserManager.getUserByName(str[1]).getProfileImageId(), str[2].replace("</n>", "\n"), UserManager.getUserByName(str[1]), new Date(Long.parseLong(str[0]))));
+                    User user = (UserManager.getUserByName(str[1]));
+                    chatItems.add(new ChatItem(user.getProfileImageId(), str[2].replace("</n>", "\n"), user, new Date(Long.parseLong(str[0].replace(" ","")))));
                     Log.i("jsc", "챗아이템 애드 성공적");
                 }
             }catch (Exception ex){

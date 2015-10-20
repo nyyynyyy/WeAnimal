@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,7 +46,7 @@ public class SettingDialog extends Dialog {
         MyService.settingPush = pushSwitch.isChecked();
     }
 
-    private Switch.OnCheckedChangeListener changeListener = new CompoundButton.OnCheckedChangeListener() {
+    private Switch.OnCheckedChangeListener changeListener = new Switch.OnCheckedChangeListener() {
         @Override
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
             settingInit(isChecked);
@@ -54,8 +55,12 @@ public class SettingDialog extends Dialog {
 
     private void settingInit(boolean b) {
         try {
-            BufferedWriter bw = new BufferedWriter(new FileWriter(new File(MainActivity.mainActivity.getFilesDir() + "setting.txt"), false));
-            bw.append(b ? "true" : "false");
+            File file = new File(MainActivity.mainActivity.getFilesDir() + "/setting.txt");
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+            BufferedWriter bw = new BufferedWriter(new FileWriter(file));
+            bw.write(b ? "true" : "false");
             MyService.settingPush = b;
             bw.flush();
             bw.close();
@@ -65,9 +70,12 @@ public class SettingDialog extends Dialog {
 
     private boolean settingLoad() {
         try {
-            BufferedReader br = new BufferedReader(new FileReader(new File(MainActivity.mainActivity.getFilesDir() + "setting.txt")));
-            Boolean.parseBoolean(br.readLine());
+            BufferedReader br = new BufferedReader(new FileReader(new File(MainActivity.mainActivity.getFilesDir() + "/setting.txt")));
+            String str = br.readLine();
+            Log.i("jsc", "Boolean: "+str);
+            return Boolean.parseBoolean(str);
         } catch (Exception e) {
+            Log.i("jsc", e.getMessage());
         }
         return false;
     }
