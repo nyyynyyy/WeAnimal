@@ -75,6 +75,10 @@ public class MainActivity extends AppCompatActivity implements MissionListener {
     private ImageView sign;
     private ImageView set;
 
+    private TextView txt_name;
+    private TextView txt_id;
+    private TextView txt_family_number;
+
     private boolean exit = false;
     private boolean run = false;
 
@@ -84,11 +88,20 @@ public class MainActivity extends AppCompatActivity implements MissionListener {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         filesDir = getFilesDir();
+
         animal_hill_t = true;
 
         animal_hill_a = this;
 
         setContentView(R.layout.activity_main);
+
+        txt_name = (TextView) findViewById(R.id.txt_myname);
+        txt_id = (TextView) findViewById(R.id.txt_myid);
+        txt_family_number = (TextView) findViewById(R.id.txt_familynumber);
+
+        txt_name.setText(Variable.user_name);
+        txt_id.setText(Variable.user_id);
+        txt_family_number.setText(Integer.toString(Variable.user_familycode));
 
 
         // 시간에 따른 배경 설정

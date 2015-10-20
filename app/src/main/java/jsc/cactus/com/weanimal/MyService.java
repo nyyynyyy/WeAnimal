@@ -169,6 +169,11 @@ public class MyService extends Service {
             Variable.user_familycode = Integer.parseInt(data[2]);
             Variable.user_birthday = data[3];
             Variable.user_gender = data[4];
+            Log.i("TEST","아이디" + Variable.user_id);
+            Log.i("TEST","이름" + Variable.user_name);
+            Log.i("TEST","생일" + Variable.user_birthday);
+            Log.i("TEST","성별" + Variable.user_gender);
+            Log.i("TEST","가족코드" + Variable.user_familycode);
             login = true;
         }
         //-------------------------------------------

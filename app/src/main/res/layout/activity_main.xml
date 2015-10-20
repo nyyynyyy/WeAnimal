@@ -7,7 +7,7 @@
     android:padding="20dp"
     android:focusableInTouchMode="true"
     android:id="@+id/AnimalHill"
-    android:visibility="gone">
+    android:visibility="visible">
 
     <!--View
         android:layout_width="match_parent"
@@ -16,37 +16,41 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="30dp"
         android:layout_gravity="center_horizontal"
         android:layout_weight="0"
-        android:gravity="center">
+        android:gravity="center"
+        android:background="@drawable/background_name">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="가족번호"
-            android:id="@+id/textView13"
+            android:id="@+id/txt_familynumber"
             android:layout_gravity="center"
             android:layout_weight="1"
-            android:gravity="center" />
+            android:gravity="center"
+            android:textStyle="bold" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="이름"
-            android:id="@+id/textView12"
+            android:id="@+id/txt_myname"
             android:layout_weight="1"
-            android:gravity="center" />
+            android:gravity="center"
+            android:textStyle="bold" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="아이디"
-            android:id="@+id/textView14"
+            android:id="@+id/txt_myid"
             android:layout_gravity="center_vertical|right"
             android:layout_weight="1"
-            android:gravity="center" />
+            android:gravity="center"
+            android:textStyle="bold" />
     </LinearLayout>
 
     <LinearLayout
