@@ -71,7 +71,9 @@ public class SettingDialog extends Dialog {
     private boolean settingLoad() {
         try {
             BufferedReader br = new BufferedReader(new FileReader(new File(MainActivity.mainActivity.getFilesDir() + "/setting.txt")));
-            Boolean.parseBoolean(br.readLine());
+            String str = br.readLine();
+            Log.i("jsc", "Boolean: "+str);
+            return Boolean.parseBoolean(str);
         } catch (Exception e) {
             Log.i("jsc", e.getMessage());
         }
