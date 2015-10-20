@@ -46,7 +46,7 @@ public class SettingManager {
     private View.OnClickListener clickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            if(!settingDialog.isShowing())
+            if (!settingDialog.isShowing())
                 settingDialog.show();
         }
     };

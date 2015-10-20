@@ -19,7 +19,7 @@ public class ChatViewManager {
     private ChatDialog familyChatDialog;
     private ImageView signImageView;
 
-    public ChatViewManager(Activity activity){
+    public ChatViewManager(Activity activity) {
         chatViewManager = this;
         signImageView = (ImageView) activity.findViewById(R.id.imageView);
         familyChatDialog = new ChatDialog(activity);
@@ -28,14 +28,14 @@ public class ChatViewManager {
         signImageView.setOnClickListener(clickSign);
     }
 
-    private View.OnClickListener clickSign = new View.OnClickListener(){
-        public void onClick(View v){
-            if(!familyChatDialog.isShowing())
+    private View.OnClickListener clickSign = new View.OnClickListener() {
+        public void onClick(View v) {
+            if (!familyChatDialog.isShowing())
                 familyChatDialog.show();
         }
     };
 
-    public ChatDialog getChatDialog(){
+    public ChatDialog getChatDialog() {
         return familyChatDialog;
     }
 }

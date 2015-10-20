@@ -85,37 +85,37 @@ public class ChatManager {
     }
 
     public static List<ChatItem> getChatData(int before) {
-            File file = new File(MainActivity.mainActivity.getFilesDir() + "/chat/" + DateFormat.formatDate(new Date(ServerTime.getTime() - (before * 86400000)), DateFormat.Type.DAY) + ".txt");
-            BufferedReader br = null;
-            try {
-                br = new BufferedReader(new FileReader(file));
-            }catch (Exception ex){
-                Log.i("jsc", "1");
+        File file = new File(MainActivity.mainActivity.getFilesDir() + "/chat/" + DateFormat.formatDate(new Date(ServerTime.getTime() - (before * 86400000)), DateFormat.Type.DAY) + ".txt");
+        BufferedReader br = null;
+        try {
+            br = new BufferedReader(new FileReader(file));
+        } catch (Exception ex) {
+            Log.i("jsc", "1");
+        }
+
+        List<ChatItem> chatItems = new ArrayList<ChatItem>();
+
+        String s = null;
+        String[] str = null;
+
+        try {
+            while ((s = br.readLine()) != null) {
+                str = s.split("\\|");
+                User user = (UserManager.getUserByName(str[1]));
+                chatItems.add(new ChatItem(user.getProfileImageId(), str[2].replace("</n>", "\n"), user, new Date(Long.parseLong(str[0].replace(" ", "")))));
+                Log.i("jsc", "챗아이템 애드 성공적");
             }
+        } catch (Exception ex) {
+            Log.i("jsc", "2");
+        }
 
-            List<ChatItem> chatItems = new ArrayList<ChatItem>();
+        try {
+            br.close();
+        } catch (Exception ex) {
+            Log.i("jsc", "3");
+        }
 
-            String s=null;
-            String[] str = null;
-
-            try {
-                while ((s = br.readLine()) != null) {
-                    str = s.split("\\|");
-                    User user = (UserManager.getUserByName(str[1]));
-                    chatItems.add(new ChatItem(user.getProfileImageId(), str[2].replace("</n>", "\n"), user, new Date(Long.parseLong(str[0].replace(" ","")))));
-                    Log.i("jsc", "챗아이템 애드 성공적");
-                }
-            }catch (Exception ex){
-                Log.i("jsc", "2");
-            }
-
-            try {
-                br.close();
-            }catch (Exception ex){
-                Log.i("jsc", "3");
-            }
-
-            return chatItems;
+        return chatItems;
 
     }
 
@@ -124,13 +124,13 @@ public class ChatManager {
         BufferedReader br = null;
         try {
             br = new BufferedReader(new FileReader(file));
-        }catch (Exception ex){
+        } catch (Exception ex) {
             Log.i("jsc", "1");
         }
 
         List<ChatItem> chatItems = new ArrayList<ChatItem>();
 
-        String s=null;
+        String s = null;
         String[] str = null;
 
         try {
@@ -140,13 +140,13 @@ public class ChatManager {
                 chatItems.add(new ChatItem(UserManager.getUserByName(str[1]).getProfileImageId(), str[2].replace("</n>", "\n"), UserManager.getUserByName(str[1]), new Date(Long.parseLong(str[0]))));
                 Log.i("jsc", "챗아이템 애드 성공적");
             }
-        }catch (Exception ex){
+        } catch (Exception ex) {
             Log.i("jsc", "2");
         }
 
         try {
             br.close();
-        }catch (Exception ex){
+        } catch (Exception ex) {
             Log.i("jsc", "3");
         }
 

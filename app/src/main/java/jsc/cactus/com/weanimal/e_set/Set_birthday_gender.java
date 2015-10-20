@@ -108,7 +108,7 @@ public class Set_birthday_gender extends AppCompatActivity {
         Variable.user_birthday = msgbirthday;
 
         MyService.mSocket.emit("PED", data);
-        Log.i("TEST","ownerRECIVE");
+        Log.i("TEST", "ownerRECIVE");
         MyService.mSocket.on("IsOwner", ownerRecive);
 
 
@@ -121,14 +121,14 @@ public class Set_birthday_gender extends AppCompatActivity {
 
             owner = (Boolean) args[0];
 
-            Log.i("TEST","Owner check" + Boolean.toString(owner));
+            Log.i("TEST", "Owner check" + Boolean.toString(owner));
 
             if (owner)
                 goin(Select_animal.class);
             else
                 goin(View_family.class);
 
-            MyService.mSocket.off("IsOwner",ownerRecive);
+            MyService.mSocket.off("IsOwner", ownerRecive);
         }
     };
 

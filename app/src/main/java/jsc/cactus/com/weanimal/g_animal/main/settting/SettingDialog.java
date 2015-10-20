@@ -72,7 +72,7 @@ public class SettingDialog extends Dialog {
         try {
             BufferedReader br = new BufferedReader(new FileReader(new File(MainActivity.mainActivity.getFilesDir() + "/setting.txt")));
             String str = br.readLine();
-            Log.i("jsc", "Boolean: "+str);
+            Log.i("jsc", "Boolean: " + str);
             return Boolean.parseBoolean(str);
         } catch (Exception e) {
             Log.i("jsc", e.getMessage());

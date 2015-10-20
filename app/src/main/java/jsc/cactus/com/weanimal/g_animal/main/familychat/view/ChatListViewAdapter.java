@@ -81,7 +81,7 @@ public class ChatListViewAdapter extends ArrayAdapter<ChatItem> {
                     cicon.setVisibility(View.VISIBLE);
                 } else {
                     AnimalType type = Animal.animal.getAnimalType();
-                    cicon.setImageResource(type == AnimalType.CHICKEN?R.drawable.profile_chicken:type==AnimalType.CAT?R.drawable.profile_cat:R.drawable.profile_dog);
+                    cicon.setImageResource(type == AnimalType.CHICKEN ? R.drawable.profile_chicken : type == AnimalType.CAT ? R.drawable.profile_cat : R.drawable.profile_dog);
                     cicon.setVisibility(View.VISIBLE);
                 }
                 cname.setText(citem.getUser().getName());

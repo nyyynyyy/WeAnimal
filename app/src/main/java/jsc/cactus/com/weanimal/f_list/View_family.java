@@ -98,7 +98,7 @@ public class View_family extends AppCompatActivity {
 
         Variable.user_phonenumber = msgpn;
 
-        Log.i("jsc","phone number: "+ msgpn);
+        Log.i("jsc", "phone number: " + msgpn);
 
 
         data.put("CO", msg);
@@ -152,11 +152,11 @@ public class View_family extends AppCompatActivity {
 
                             if (fid != Variable.user_id) {
                                 if (fge.equals("male"))
-                                    UserManager.addUser(new User(fid, fna, fbd, UserGender.MALE,fpn));
+                                    UserManager.addUser(new User(fid, fna, fbd, UserGender.MALE, fpn));
                                 else if (fge.equals("female"))
-                                    UserManager.addUser(new User(fid, fna, fbd, UserGender.FEMALE,fpn));
+                                    UserManager.addUser(new User(fid, fna, fbd, UserGender.FEMALE, fpn));
 
-                                Log.i("TEST","유저 생성 시도 : " + UserManager.getUser(fid).getName());
+                                Log.i("TEST", "유저 생성 시도 : " + UserManager.getUser(fid).getName());
                             }
                         }
 

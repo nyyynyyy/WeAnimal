@@ -22,7 +22,7 @@ public class User {
         this.phoneN = phoneN;
     }
 
-    public void setProfileImage(Integer profileImageId){
+    public void setProfileImage(Integer profileImageId) {
         this.profileImage = profileImageId;
     }
 
@@ -38,11 +38,11 @@ public class User {
         return gender;
     }
 
-    public Integer getProfileImageId(){
+    public Integer getProfileImageId() {
         return profileImage;
     }
 
-    public String getPhoneNumber(){
+    public String getPhoneNumber() {
         return phoneN;
     }
 

@@ -16,7 +16,7 @@ public class Status {
 
     private int food, water, love;
     private StatusProgressBar statusProgressBar;
-   // private StatusButton_test statusButton_test;
+    // private StatusButton_test statusButton_test;
     private StatusListenerManager statusListenerManager;
 
     public Status(Activity activity, Animal animal) {
@@ -65,7 +65,7 @@ public class Status {
         statusListenerManager.StatusChangeEventCall();
     }
 
-    public void setStatus(int food, int water, int love){
+    public void setStatus(int food, int water, int love) {
         this.food = food;
         this.water = water;
         this.love = love;

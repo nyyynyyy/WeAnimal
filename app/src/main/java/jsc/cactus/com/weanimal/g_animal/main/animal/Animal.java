@@ -61,7 +61,7 @@ public class Animal implements StatusChangeListener {
         return status;
     }
 
-    public AnimalType getAnimalType(){
+    public AnimalType getAnimalType() {
         return type;
     }
 

@@ -23,7 +23,7 @@ public class MissionItem {
         return missionType == MissionType.전화걸기 ? R.drawable.phoneicon : R.drawable.post;
     }
 
-    public Mission getMission(){
+    public Mission getMission() {
         return mission;
     }
 
@@ -34,11 +34,11 @@ public class MissionItem {
             str = telMission.second + "초 전화 걸기";
         } else if (mission instanceof MessageSendMission) {
             MessageSendMission messageSendMission = (MessageSendMission) mission;
-            str = '"'+messageSendMission.message + '"' +"라고 보내기";
+            str = '"' + messageSendMission.message + '"' + "라고 보내기";
         } else {
             MessageReceiveMission messageReceiveMission = (MessageReceiveMission) mission;
-            str = '"'+messageReceiveMission.message + '"' +"라는 말 받기";
+            str = '"' + messageReceiveMission.message + '"' + "라는 말 받기";
         }
-        return mission.target.getName() + "에게 "+str;
+        return mission.target.getName() + "에게 " + str;
     }
 }

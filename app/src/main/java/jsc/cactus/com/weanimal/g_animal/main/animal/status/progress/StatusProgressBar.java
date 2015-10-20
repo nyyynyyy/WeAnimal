@@ -16,13 +16,14 @@ import jsc.cactus.com.weanimal.g_animal.main.animal.status.StatusType;
 public class StatusProgressBar {
 
     public ProgressBar pbFood, pbWater, pbLove;
-    public StatusProgressBar(Activity activity){
+
+    public StatusProgressBar(Activity activity) {
         pbFood = ((ProgressBar) activity.findViewById(R.id.progressBar_food));
         pbWater = ((ProgressBar) activity.findViewById(R.id.progressBar_water));
         pbLove = ((ProgressBar) activity.findViewById(R.id.progressBar_love));
     }
 
-    public void notifyDataChanged(){
+    public void notifyDataChanged() {
         setProgressBar.sendMessage(Message.obtain());
     }
 
@@ -36,7 +37,7 @@ public class StatusProgressBar {
         }
     };
 
-    private void progressAnim(ProgressBar pb, int progress){
+    private void progressAnim(ProgressBar pb, int progress) {
         ProgressBarAnimation anim = new ProgressBarAnimation(pb, 600);
         anim.setProgress(progress);
     }

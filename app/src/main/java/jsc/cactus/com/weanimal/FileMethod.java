@@ -25,7 +25,7 @@ public class FileMethod {
 
     public FileMethod(File folder, String filename) {
         this.folder = folder;
-        this.file = new File(folder.getPath()+"/"+filename);
+        this.file = new File(folder.getPath() + "/" + filename);
     }
 
     public void writeFile(String append) {

@@ -109,7 +109,7 @@ public class MainActivity extends AppCompatActivity implements MissionListener {
         sign = (ImageView) findViewById(R.id.imageView);
 
         setBackground();
-        
+
         init();
 
     }
@@ -119,8 +119,8 @@ public class MainActivity extends AppCompatActivity implements MissionListener {
     }
 
     public void clearFile() {
-        file = new FileMethod(new File(filesDir+"/login/"), "login.txt");
-        FileMethod file = new FileMethod(new File(filesDir+"/login/"), "login.txt");
+        file = new FileMethod(new File(filesDir + "/login/"), "login.txt");
+        FileMethod file = new FileMethod(new File(filesDir + "/login/"), "login.txt");
 
         file.getFile().delete();
         Log.i("TEST", "CLEAR FILE");
@@ -132,7 +132,7 @@ public class MainActivity extends AppCompatActivity implements MissionListener {
     public long getLastTime() {
         String day = null;
 
-        File files[] = new File(filesDir+"/chat/").listFiles();
+        File files[] = new File(filesDir + "/chat/").listFiles();
         File f = files[files.length - 1];
 
         day = f.getName();
@@ -219,7 +219,7 @@ public class MainActivity extends AppCompatActivity implements MissionListener {
 
         long time;
 
-        if (new File(filesDir+"/chat/").listFiles() != null) {
+        if (new File(filesDir + "/chat/").listFiles() != null) {
             time = getLastTime();
         } else {
             time = -1;
@@ -309,11 +309,11 @@ public class MainActivity extends AppCompatActivity implements MissionListener {
                                 Date date = new Date();
                                 date.setTime(chatObject.getLong("time"));
 
-                                Log.i("TEST", "Filename: " + filesDir+"/chat/" + DateFormat.formatDate(date, DateFormat.Type.DAY) + ".txt");
+                                Log.i("TEST", "Filename: " + filesDir + "/chat/" + DateFormat.formatDate(date, DateFormat.Type.DAY) + ".txt");
 
                                 Log.i("TEST", "들어온 채팅내역: " + DateFormat.formatDate(date, DateFormat.Type.SECOND) + "|" + chatObject.getString("username") + "|" + chatObject.getString("msg"));
 
-                                ChatManager.callChatEvent(UserManager.getUser(chatObject.getString("userid")), chatObject.getString("msg"),new Date(chatObject.getLong("time")));
+                                ChatManager.callChatEvent(UserManager.getUser(chatObject.getString("userid")), chatObject.getString("msg"), new Date(chatObject.getLong("time")));
 
                             } catch (Exception ioex) {
                                 ioex.printStackTrace();
@@ -340,7 +340,7 @@ public class MainActivity extends AppCompatActivity implements MissionListener {
         missionViewManager = new MissionViewManager(this);
         animal = new Animal(this);
         MyService.animal = true;
-        Log.i("jsc", "베이어블 :"+Variable.user_name);
+        Log.i("jsc", "베이어블 :" + Variable.user_name);
         userManager = new UserManager(new User(Variable.user_id, Variable.user_name, Variable.user_birthday, UserGender.MALE, Variable.user_phonenumber));
         familyChatViewManager = new ChatViewManager(this);
         settingManager = new SettingManager(this);
@@ -393,7 +393,7 @@ public class MainActivity extends AppCompatActivity implements MissionListener {
             return;
 
         boolean b = ((new Date().getTime() - missionTime) / 1000) < ((TelMission) mission).second;
-        Toast.makeText(MainActivity.mainActivity, type.toKoreanString() +" 주기\n" + (b ? "전화 미션 실패.." : "전화 미션 성공 !!"), Toast.LENGTH_SHORT).show();
+        Toast.makeText(MainActivity.mainActivity, type.toKoreanString() + " 주기\n" + (b ? "전화 미션 실패.." : "전화 미션 성공 !!"), Toast.LENGTH_SHORT).show();
         SoundUtil.playSound(b ? R.raw.bass : R.raw.pong);
         if (!b)
             Animal.animal.getStatus().addStatus(type, 100);

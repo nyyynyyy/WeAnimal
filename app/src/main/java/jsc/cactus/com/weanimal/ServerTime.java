@@ -20,12 +20,12 @@ public class ServerTime {
         Log.i("TEST", "에밋끝");
         MyService.mSocket.on("TIME", Recive);
 
-        while (!isEnd) {}
+        while (!isEnd) {
+        }
         isEnd = false;
 
         return time;
     }
-
 
 
     //로그인
@@ -39,7 +39,7 @@ public class ServerTime {
                 //Log.i("TEST", "Server: " + Long.toString(time));
                 isEnd = true;
 
-             //Log.i("TEST", "Server: "+Long.toString(time));
+                //Log.i("TEST", "Server: "+Long.toString(time));
             } catch (JSONException e) {
                 e.printStackTrace();
             }

@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <item
-        android:id = "@android:id/background">
+    <item android:id="@android:id/background">
         <shape>
-            <corners android:radius="5dp"/>
+            <corners android:radius="5dp" />
             <gradient
                 android:startColor="#d779c0"
                 android:centerColor="#d779c0"
@@ -11,10 +10,10 @@
         </shape>
     </item>
 
-    <item android:id = "@android:id/progress">
+    <item android:id="@android:id/progress">
         <clip>
             <shape>
-                <corners android:radius="5dp"/>
+                <corners android:radius="5dp" />
                 <gradient
                     android:startColor="#ff92e7"
                     android:centerColor="#ff92e7"

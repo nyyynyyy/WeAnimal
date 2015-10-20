@@ -44,7 +44,7 @@ public class Family_query extends Activity {
     }
 
     @Override
-    protected void onStop(){
+    protected void onStop() {
         fa_q_t = false;
 
         super.onStop();

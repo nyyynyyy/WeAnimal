@@ -6,7 +6,7 @@ package jsc.cactus.com.weanimal.g_animal.main.animal.status;
 public enum StatusType {
     FOOD, WATER, LOVE;
 
-    public String toKoreanString(){
-        return super.equals(FOOD)?"먹이":super.equals(WATER)?"물":"애정";
+    public String toKoreanString() {
+        return super.equals(FOOD) ? "먹이" : super.equals(WATER) ? "물" : "애정";
     }
 }

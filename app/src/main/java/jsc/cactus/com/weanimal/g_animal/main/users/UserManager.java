@@ -28,14 +28,14 @@ public class UserManager {
         return null;
     }
 
-    public static User getUserByName(String name){
+    public static User getUserByName(String name) {
         for (User user : users)
             if (user.getName().equals(name))
                 return user;
         return null;
     }
 
-    public static User getLocalUser(){
+    public static User getLocalUser() {
         return getUser(localUserId);
     }
 }

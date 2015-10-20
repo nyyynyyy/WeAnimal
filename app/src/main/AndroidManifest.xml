@@ -1,86 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="jsc.cactus.com.weanimal" >
+    package="jsc.cactus.com.weanimal">
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.CALL_PHONE"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme">
         <activity
             android:name=".StartActivty"
-            android:label="@string/app_name" >
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-    </activity>
-    <activity
-            android:name=".a_logo.Logos"
-            android:label="@string/title_activity_01" >
         </activity>
+        <activity
+            android:name=".a_logo.Logos"
+            android:label="@string/title_activity_01"></activity>
         <activity
             android:name=".b_loading.Loding"
-            android:label="@string/title_activity_02" >
-        </activity>
+            android:label="@string/title_activity_02"></activity>
         <activity
             android:name=".d_regist.Family_query"
-            android:label="@string/title_activity_04" >
-        </activity>
+            android:label="@string/title_activity_04"></activity>
         <activity
             android:name=".d_regist.Havenot_family"
-            android:label="@string/title_activity_activity04_1" >
-        </activity>
+            android:label="@string/title_activity_activity04_1"></activity>
         <activity
             android:name=".e_set.Complete_regist"
-            android:label="@string/title_activity_05" >
-        </activity>
+            android:label="@string/title_activity_05"></activity>
         <activity
             android:name=".d_regist.Have_family_1"
-            android:label="@string/title_activity_activity04_2" >
-        </activity>
+            android:label="@string/title_activity_activity04_2"></activity>
         <activity
             android:name=".d_regist.Have_family_2"
-            android:label="@string/title_activity_activity04_3" >
-        </activity>
+            android:label="@string/title_activity_activity04_3"></activity>
         <activity
             android:name=".c_login.Id_query"
-            android:label="@string/title_activity_03" >
-        </activity>
+            android:label="@string/title_activity_03"></activity>
         <activity
             android:name=".c_login.Have_id"
-            android:label="@string/title_activity_activity03_1" >
-        </activity>
+            android:label="@string/title_activity_activity03_1"></activity>
         <activity
             android:name=".e_set.Set_birthday_gender"
-            android:label="@string/title_activity_activity05_1" >
-        </activity>
+            android:label="@string/title_activity_activity05_1"></activity>
         <activity
             android:name=".f_list.View_family"
-            android:label="@string/title_activity_06" >
-        </activity>
-        <activity android:name=".g_animal.main.main.weanimal.MainActivity"
-            android:screenOrientation="portrait">
-        </activity>
+            android:label="@string/title_activity_06"></activity>
+        <activity
+            android:name=".g_animal.main.main.weanimal.MainActivity"
+            android:screenOrientation="portrait"></activity>
 
         <service
             android:name=".MyService"
             android:enabled="true"
-            android:exported="true" >
-        </service>
+            android:exported="true"></service>
 
         <activity
             android:name=".e_set.Select_animal"
-            android:label="@string/title_activity_select_animal" >
-        </activity>
+            android:label="@string/title_activity_select_animal"></activity>
     </application>
 
 </manifest>

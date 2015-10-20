@@ -10,7 +10,7 @@ public class MessageSendMission extends Mission {
 
     public String message;
 
-    public MessageSendMission(String message, User target){
+    public MessageSendMission(String message, User target) {
         this.message = message;
         this.target = target;
         missionType = MissionType.문자보내기;
